@@ -68,11 +68,11 @@ public class PlainSocketFactory implements SocketFactory {
     public InetAddressAndPort getInetAddressAndPort() {
         return new InetAddressAndPort(mAddr, mPort);
     }
-    
+
     public InetAddressAndPort getInetAddressAndPort(Object session) {
         return getInetAddressAndPort();
     }
-    
+
     public long getDefaultTimeout() {
         return mTimeout;
     }
@@ -99,7 +99,7 @@ public class PlainSocketFactory implements SocketFactory {
         }
         return CheckedSocket.check(socket);
     }
-    
+
     public CheckedSocket createSocket(Object session, long timeout)
         throws ConnectException, SocketException
     {
@@ -140,10 +140,10 @@ public class PlainSocketFactory implements SocketFactory {
             }
         }
     }
-    
+
     public void clear() {
     }
-    
+
     public int getAvailableCount() {
         return 0;
     }

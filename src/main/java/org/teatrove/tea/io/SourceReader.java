@@ -39,7 +39,7 @@ public class SourceReader extends PushbackPositionReader {
     public static final int ENTER_CODE = -2;
     public static final int ENTER_TEXT = -3;
 
-    private static Reader createReader(Reader source, 
+    private static Reader createReader(Reader source,
                                        String beginTag, String endTag) {
         String[] tags = new String[4];
         int[] codes = new int[4];
@@ -93,7 +93,7 @@ public class SourceReader extends PushbackPositionReader {
      * @param source the source reader
      * @param beginTag tag that marks the beginning of a source code region
      * @param endTag tag that marks the end of a source code region
-     */ 
+     */
     public SourceReader(Reader source, String beginTag, String endTag) {
         super(createReader(source, beginTag, endTag), 2);
         mUnicodeReader = (UnicodeReader)in;
@@ -114,8 +114,8 @@ public class SourceReader extends PushbackPositionReader {
         return mEndTag;
     }
 
-    /** 
-     * All newline character patterns are are converted to \n. 
+    /**
+     * All newline character patterns are are converted to \n.
      */
     public int read() throws IOException {
         int c;
@@ -137,7 +137,7 @@ public class SourceReader extends PushbackPositionReader {
         else if (c == ENTER_TEXT) {
             mUnicodeReader.setEscapesEnabled(false);
         }
-        
+
         return c;
     }
 
@@ -185,8 +185,8 @@ public class SourceReader extends PushbackPositionReader {
         }
     }
 
-    /** 
-     * Simple test program 
+    /**
+     * Simple test program
      */
     public static void main(String[] arg) throws Exception {
         Tester.test(arg);
@@ -194,7 +194,7 @@ public class SourceReader extends PushbackPositionReader {
 
     private static class Tester {
         public static void test(String[] arg) throws Exception {
-            String str = 
+            String str =
                 "This is \\" + "u0061 test.\n" +
                 "This is \\" + "u00612 test.\n" +
                 "This is \\" + "u0061" + "\\" + "u0061" + " test.\n" +
@@ -212,7 +212,7 @@ public class SourceReader extends PushbackPositionReader {
             }
             else {
                 System.out.println("\nOriginal:\n");
-                
+
                 reader = new StringReader(str);
 
                 int c;

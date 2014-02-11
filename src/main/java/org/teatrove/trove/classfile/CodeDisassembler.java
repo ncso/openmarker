@@ -19,7 +19,7 @@ package org.teatrove.trove.classfile;
 import java.util.*;
 
 /**
- * 
+ *
  * @author Brian S O'Neill
  */
 public class CodeDisassembler {
@@ -94,10 +94,10 @@ public class CodeDisassembler {
                     return 0;
                 }
                 Location other = (Location)obj;
-                
+
                 int loca = getLocation();
                 int locb = other.getLocation();
-                
+
                 if (loca < locb) {
                     return -1;
                 }
@@ -219,7 +219,7 @@ public class CodeDisassembler {
                 assembler.swap();
                 break;
 
-            case Opcode.IADD:  case Opcode.LADD: 
+            case Opcode.IADD:  case Opcode.LADD:
             case Opcode.FADD:  case Opcode.DADD:
             case Opcode.ISUB:  case Opcode.LSUB:
             case Opcode.FSUB:  case Opcode.DSUB:
@@ -239,7 +239,7 @@ public class CodeDisassembler {
             case Opcode.IXOR:  case Opcode.LXOR:
             case Opcode.FCMPL: case Opcode.DCMPL:
             case Opcode.FCMPG: case Opcode.DCMPG:
-            case Opcode.LCMP: 
+            case Opcode.LCMP:
                 assembler.math(opcode);
                 break;
 
@@ -374,7 +374,7 @@ public class CodeDisassembler {
                 // End opcodes with no operands.
 
                 // Opcodes that load a constant from the constant pool...
-                
+
             case Opcode.LDC:
             case Opcode.LDC_W:
             case Opcode.LDC2_W:
@@ -500,7 +500,7 @@ public class CodeDisassembler {
                 // CodeAssembler had methods that accepted ConstantFieldInfo
                 // objects as parameters, it would cause problems because
                 // ConstantPools are not portable between ClassFiles.
-                
+
                 switch (opcode) {
                 case Opcode.GETSTATIC:
                     if (className == null) {
@@ -552,7 +552,7 @@ public class CodeDisassembler {
                         // TODO: raise an error.
                         break;
                     }
-                    ConstantInterfaceMethodInfo method = 
+                    ConstantInterfaceMethodInfo method =
                         (ConstantInterfaceMethodInfo)ci;
                     className =
                         method.getParentClass().getType().getRootName();
@@ -563,7 +563,7 @@ public class CodeDisassembler {
                         // TODO: raise an error.
                         break;
                     }
-                    ConstantMethodInfo method = 
+                    ConstantMethodInfo method =
                         (ConstantMethodInfo)ci;
                     className =
                         method.getParentClass().getType().getRootName();
@@ -1017,7 +1017,7 @@ public class CodeDisassembler {
                 Location defaultLocation = getLabel(opcodeAddress + readInt());
                 int[] cases;
                 Location[] locations;
-                
+
                 if (opcode == Opcode.TABLESWITCH) {
                     int lowValue = readInt();
                     int highValue = readInt();
@@ -1088,7 +1088,7 @@ public class CodeDisassembler {
                         type = null;
                         break;
                     }
-                    
+
                     index = readUnsignedShort();
 
                     switch (opcode) {
@@ -1123,7 +1123,7 @@ public class CodeDisassembler {
                         (readUnsignedShort(), TypeDesc.OBJECT);
                     assembler.ret(local);
                     break;
-                    
+
                 case Opcode.IINC:
                     local = getLocalVariable
                         (readUnsignedShort(), TypeDesc.INT);
@@ -1204,11 +1204,11 @@ public class CodeDisassembler {
                 while (((mAddress + 1) & 3) != 0) {
                     ++mAddress;
                 }
-                
+
                 // Read the default location.
                 labelKey = new Integer(opcodeAddress + readInt());
                 mLabels.put(labelKey, labelKey);
-                
+
                 if (opcode == Opcode.TABLESWITCH) {
                     int lowValue = readInt();
                     int highValue = readInt();
@@ -1264,7 +1264,7 @@ public class CodeDisassembler {
             case Opcode.DUP2_X1:
             case Opcode.DUP2_X2:
             case Opcode.SWAP:
-            case Opcode.IADD:  case Opcode.LADD: 
+            case Opcode.IADD:  case Opcode.LADD:
             case Opcode.FADD:  case Opcode.DADD:
             case Opcode.ISUB:  case Opcode.LSUB:
             case Opcode.FSUB:  case Opcode.DSUB:
@@ -1284,7 +1284,7 @@ public class CodeDisassembler {
             case Opcode.IXOR:  case Opcode.LXOR:
             case Opcode.FCMPL: case Opcode.DCMPL:
             case Opcode.FCMPG: case Opcode.DCMPG:
-            case Opcode.LCMP: 
+            case Opcode.LCMP:
             case Opcode.I2L:
             case Opcode.I2F:
             case Opcode.I2D:
@@ -1420,14 +1420,14 @@ public class CodeDisassembler {
     }
 
     private int readUnsignedShort() {
-        return 
-            ((mByteCodes[++mAddress] & 0xff) << 8) | 
+        return
+            ((mByteCodes[++mAddress] & 0xff) << 8) |
             ((mByteCodes[++mAddress] & 0xff) << 0);
     }
 
     private int readInt() {
         return
-            (mByteCodes[++mAddress] << 24) | 
+            (mByteCodes[++mAddress] << 24) |
             ((mByteCodes[++mAddress] & 0xff) << 16) |
             ((mByteCodes[++mAddress] & 0xff) << 8) |
             ((mByteCodes[++mAddress] & 0xff) << 0);

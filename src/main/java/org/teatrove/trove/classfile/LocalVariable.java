@@ -17,7 +17,7 @@
 package org.teatrove.trove.classfile;
 
 /**
- * 
+ *
  * @author Brian S O'Neill
  * @see CodeBuilder#createLocalVariable
  */
@@ -34,7 +34,7 @@ public interface LocalVariable {
     public boolean isDoubleWord();
 
     /**
-     * Returns the number used by this LocalVariable, or -1 if not yet 
+     * Returns the number used by this LocalVariable, or -1 if not yet
      * resolved.
      */
     public int getNumber();

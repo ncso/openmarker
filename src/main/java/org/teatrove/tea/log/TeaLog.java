@@ -31,7 +31,7 @@ import java.util.StringTokenizer;
  * TeaServlet so it is easier for template authors to understand.  It strips off
  * irrelevant stack trace elements in the stack trace leaving only the template
  * and application elements.  These are the only elements that are relevant
- * unless there is a bug in the Tea hosting environment - which never happens! 
+ * unless there is a bug in the Tea hosting environment - which never happens!
  * ;-)
  *
  * This TeaLog is designed to be used in hosting environments such as the
@@ -60,7 +60,7 @@ import java.util.StringTokenizer;
  *  	at org.teatrove.barista.http.HttpServletDispatcher$ServletFilterChainTransaction.service(HttpServletDispatcher.java:1409)
  *  	at org.teatrove.trove.util.tq.TransactionQueue$Worker.run(TransactionQueue.java:671)
  *  	at org.teatrove.trove.util.ThreadPool$PooledThread.run(ThreadPool.java:676)
- *  
+ *
  * The TeaLog class displays exceptions as:
  *    java.lang.NullPointerException
  *  	at line 2 of template Test1NullPointer.tea
@@ -225,7 +225,7 @@ public class TeaLog extends Log {
                     if (colonIndex >= 0) {
                         templateName = tempLine.substring(0, colonIndex);
                         try {
-                            lineNumber = 
+                            lineNumber =
                                 new Integer(tempLine.substring(colonIndex + 1));
                         }
                         catch (NumberFormatException nfe) { lineNumber = null; }

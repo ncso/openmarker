@@ -23,7 +23,7 @@ import java.lang.ref.Reference;
 import java.lang.ref.WeakReference;
 
 /**
- * 
+ *
  * @author Brian S O'Neill
  */
 public class CheckedInterruptedIOException extends InterruptedIOException {

@@ -91,7 +91,7 @@ public class TemplateRepository {
             _init(rootClassesDir, rootPackage);
         }
     }
-    
+
     private static void _init(File rootClassesDir, String rootPackage) {
         if (rootClassesDir == null || rootPackage == null)
             return;
@@ -231,7 +231,7 @@ public class TemplateRepository {
                 while(meths.hasMoreTokens())
                     methodList.add(new TemplateCallExtractor.AppMethodInfo(meths.nextToken().trim()));
             }
-            mMethodsCalled = 
+            mMethodsCalled =
                 methodList.toArray(new TemplateCallExtractor.AppMethodInfo[methodList.size()]);
             mPrecompiled = "true".equals(p.get("precompiled"));
         }
@@ -268,7 +268,7 @@ public class TemplateRepository {
         }
 
         public String getName() { return mName; }
-        
+
         public String getSourceFile() { return mSourceFile; }
 
         public TypeDesc getReturnType() { return mReturnType; }

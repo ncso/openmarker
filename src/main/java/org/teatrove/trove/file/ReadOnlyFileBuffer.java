@@ -20,7 +20,7 @@ import java.io.IOException;
 import org.teatrove.trove.util.ReadWriteLock;
 
 /**
- * 
+ *
  * @author Brian S O'Neill
  */
 public class ReadOnlyFileBuffer implements FileBuffer {
@@ -53,7 +53,7 @@ public class ReadOnlyFileBuffer implements FileBuffer {
     public void write(long position, int value) throws IOException {
         throw fail();
     }
-    
+
     public long size() throws IOException {
         return mFile.size();
     }

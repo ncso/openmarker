@@ -23,7 +23,7 @@ import org.teatrove.trove.util.ReadWriteLock;
 import org.teatrove.trove.util.SecureReadWriteLock;
 
 /**
- * 
+ *
  * @author Brian S O'Neill
  */
 public class MultiplexFileRepository implements FileRepository {

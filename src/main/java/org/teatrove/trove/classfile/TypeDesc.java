@@ -108,7 +108,7 @@ public abstract class TypeDesc extends Descriptor implements Serializable {
         return (TypeDesc)cInstances.put(type);
     }
 
-    public synchronized static TypeDesc forClass(Class<?> clazz, 
+    public synchronized static TypeDesc forClass(Class<?> clazz,
                                                  Type genericType) {
         if (clazz == null) {
             return null;
@@ -122,26 +122,26 @@ public abstract class TypeDesc extends Descriptor implements Serializable {
     protected static class ClassKey {
         private Class<?> clazz;
         private GenericTypeDesc genericType;
-        
+
         public ClassKey(Class<?> clazz, GenericTypeDesc genericType) {
             this.clazz = clazz;
             this.genericType = genericType;
         }
-        
+
         public int hashCode() {
             int hashCode = 11;
             hashCode += (13 * this.clazz.hashCode());
             if (this.genericType != null) {
                 hashCode += (17 * this.genericType.hashCode());
             }
-            
+
             return hashCode;
         }
-        
+
         public boolean equals(Object object) {
             if (object == this) { return true; }
             else if (!(object instanceof ClassKey)) { return false; }
-            
+
             ClassKey other = (ClassKey) object;
             if (!this.clazz.equals(other.clazz) ||
                 (this.genericType == null && other.genericType != null) ||
@@ -153,7 +153,7 @@ public abstract class TypeDesc extends Descriptor implements Serializable {
             return true;
         }
     }
-    
+
     public synchronized static TypeDesc forClass(Class<?> clazz,
                                                  GenericTypeDesc genericType) {
         if (clazz == null) {
@@ -362,10 +362,10 @@ public abstract class TypeDesc extends Descriptor implements Serializable {
         for (int i = 0; i < clazzes.length; i++) {
             types[i] = TypeDesc.forClass(clazzes[i]);
         }
-        
+
         return types;
     }
-    
+
     private static IllegalArgumentException invalidName(String name) {
         return new IllegalArgumentException("Invalid name: " + name);
     }
@@ -610,7 +610,7 @@ public abstract class TypeDesc extends Descriptor implements Serializable {
     public final String getDescriptor() {
         return mDescriptor;
     }
-    
+
     /**
      * Returns the class name for this descriptor. If the type is primitive,
      * then the Java primitive type name is returned. If the type is an array,

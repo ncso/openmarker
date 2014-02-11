@@ -35,15 +35,15 @@ import java.util.zip.GZIPOutputStream;
  * A special ClassLoader that allows classes to be defined by directly
  * injecting the bytecode. All classes other than those injected are loaded
  * from the parent ClassLoader, which is the ClassLoader that loaded this
- * class. If a directory is passed in, the ClassInjector looks there for 
+ * class. If a directory is passed in, the ClassInjector looks there for
  * non-injected class files before asking the parent ClassLoader for a class.
  *
  * @author Brian S O'Neill
  */
 public class ClassInjector extends ClassLoader {
-    
+
     @SuppressWarnings("unchecked")
-    private static Map<ClassLoader, Reference<ClassInjector>> cShared = 
+    private static Map<ClassLoader, Reference<ClassInjector>> cShared =
         new NullKeyMap(new IdentityMap());
 
     /**
@@ -79,7 +79,7 @@ public class ClassInjector extends ClassLoader {
     private String mRootPackage;
 
     // A set of all the classes defined by the ClassInjector.
-    private Map<String, String> mDefined = 
+    private Map<String, String> mDefined =
         Collections.synchronizedMap(new HashMap<String, String>());
 
     // A map to store raw bytecode for future use in getResourceAsStream().
@@ -182,7 +182,7 @@ public class ClassInjector extends ClassLoader {
         mRootPackage = rootPackage;
 
         if (keepRawBytecode) {
-            mGZippedBytecode = 
+            mGZippedBytecode =
                 Collections.synchronizedMap(new HashMap<String, byte[]>());
         }
     }

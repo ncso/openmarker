@@ -21,22 +21,22 @@ import java.io.*;
 /**
  * This class corresponds to the CONSTANT_Double_info structure as defined in
  * section 4.4.5 of <i>The Java Virtual Machine Specification</i>.
- * 
+ *
  * @author Brian S O'Neill
  */
 public class ConstantDoubleInfo extends ConstantInfo {
     private Double mValue;
-    
-    /** 
+
+    /**
      * Will return either a new ConstantDoubleInfo object or one already in
-     * the constant pool. If it is a new ConstantDoubleInfo, it will be 
+     * the constant pool. If it is a new ConstantDoubleInfo, it will be
      * inserted into the pool.
      */
     static ConstantDoubleInfo make(ConstantPool cp, double value) {
         ConstantInfo ci = new ConstantDoubleInfo(value);
         return (ConstantDoubleInfo)cp.addConstant(ci);
     }
-    
+
     ConstantDoubleInfo(double value) {
         super(TAG_DOUBLE);
         mValue = new Double(value);
@@ -46,7 +46,7 @@ public class ConstantDoubleInfo extends ConstantInfo {
         super(TAG_DOUBLE);
         mValue = value;
     }
-    
+
     public Double getValue() {
         return mValue;
     }
@@ -54,7 +54,7 @@ public class ConstantDoubleInfo extends ConstantInfo {
     public int hashCode() {
         return mValue.hashCode();
     }
-    
+
     public boolean equals(Object obj) {
         if (obj instanceof ConstantDoubleInfo) {
             ConstantDoubleInfo other = (ConstantDoubleInfo)obj;
@@ -63,7 +63,7 @@ public class ConstantDoubleInfo extends ConstantInfo {
 
         return false;
     }
-    
+
     int getEntryCount() {
         return 2;
     }

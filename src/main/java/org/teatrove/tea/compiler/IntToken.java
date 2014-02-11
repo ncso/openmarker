@@ -17,7 +17,7 @@
 package org.teatrove.tea.compiler;
 
 /**
- * 
+ *
  * @author Brian S O'Neill
  */
 class IntToken extends Token {

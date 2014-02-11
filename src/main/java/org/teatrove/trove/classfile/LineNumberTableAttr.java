@@ -22,17 +22,17 @@ import java.io.*;
 /**
  * This class corresponds to the LineNumberTable_attribute structure as
  * defined  in section 4.7.6 of <i>The Java Virtual Machine Specification</i>.
- * 
+ *
  * @author Brian S O'Neill
  */
 class LineNumberTableAttr extends Attribute {
     private List mEntries = new ArrayList();
     private boolean mClean = false;
-    
+
     public LineNumberTableAttr(ConstantPool cp) {
         super(cp, LINE_NUMBER_TABLE);
     }
-    
+
     public int getLineNumber(Location start) {
         clean();
         int index = Collections.binarySearch(mEntries, new Entry(start, 0));
@@ -49,18 +49,18 @@ class LineNumberTableAttr extends Attribute {
         mEntries.add(new Entry(start, line_number));
         mClean = false;
     }
-    
+
     public int getLength() {
         clean();
         return 2 + 4 * mEntries.size();
     }
-    
+
     public void writeDataTo(DataOutput dout) throws IOException {
         int size = mEntries.size();
         dout.writeShort(size);
         for (int i=0; i<size; i++) {
             Entry entry = (Entry)mEntries.get(i);
-            
+
             int start_pc = entry.mStart.getLocation();
 
             check("line number table entry start PC", start_pc);
@@ -118,7 +118,7 @@ class LineNumberTableAttr extends Attribute {
     private static class Entry implements Comparable {
         public final Location mStart;
         public final int mLineNumber;
-        
+
         public Entry(Location start, int line_number) {
             mStart = start;
             mLineNumber = line_number;
@@ -127,7 +127,7 @@ class LineNumberTableAttr extends Attribute {
         public int compareTo(Object other) {
             int thisLoc = mStart.getLocation();
             int thatLoc = ((Entry)other).mStart.getLocation();
-            
+
             if (thisLoc < thatLoc) {
                 return -1;
             }
@@ -141,7 +141,7 @@ class LineNumberTableAttr extends Attribute {
 
         public boolean equals(Object other) {
             if (other instanceof Entry) {
-                return mStart.getLocation() == 
+                return mStart.getLocation() ==
                     ((Entry)other).mStart.getLocation();
             }
             return false;

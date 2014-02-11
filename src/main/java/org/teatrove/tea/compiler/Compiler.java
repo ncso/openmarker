@@ -53,12 +53,12 @@ import org.teatrove.trove.util.StatusListener;
  * @see org.teatrove.tea.util.ResourceCompilationProvider
  */
 public class Compiler {
-    
+
     protected static final String TEMPLATE_PKG = "org.teatrove.tea.templates";
-    
+
     // Maps qualified names to CompilationProviders
     private Map<String, CompilationProvider> mTemplateProviderMap;
-    
+
     // Maps qualified names to ParseTrees.
     private final Map<String, Template> mParseTreeMap;
 
@@ -70,15 +70,15 @@ public class Compiler {
     private final Set<String> mCompiled = new HashSet<String>();
 
     // List of compilation providers
-    private final List<CompilationProvider> mCompilationProviders = 
+    private final List<CompilationProvider> mCompilationProviders =
         new ArrayList<CompilationProvider>();
-    
+
     protected boolean mForce;
     private Set<String> mPreserveTree;
 
-    private Class<?> mContextClass = 
+    private Class<?> mContextClass =
         org.teatrove.tea.runtime.Context.class;
-    
+
     private Method[] mRuntimeMethods;
     private Method[] mStringConverters;
 
@@ -98,7 +98,7 @@ public class Compiler {
     protected ClassInjector mInjector;
     protected String mEncoding;
     protected long mPrecompiledTolerance;
-    
+
     private boolean mGenerateCode = true;
     private boolean mExceptionGuardian = false;
 
@@ -112,35 +112,35 @@ public class Compiler {
     public Compiler() {
         this(ClassInjector.getInstance());
     }
-    
+
     public Compiler(ClassInjector injector) {
         this(injector, TEMPLATE_PKG);
     }
-    
+
     public Compiler(String rootPackage) {
         this(ClassInjector.getInstance(), rootPackage);
     }
-    
+
     public Compiler(ClassInjector injector, String rootPackage) {
         this(ClassInjector.getInstance(), rootPackage, null);
     }
-    
+
     public Compiler(String rootPackage, File rootDestDir) {
         this(ClassInjector.getInstance(), rootPackage, rootDestDir);
     }
-    
+
     public Compiler(ClassInjector injector,
                     String rootPackage, File rootDestDir) {
         this(injector, rootPackage, rootDestDir, "UTF-8", 0);
     }
-    
+
     public Compiler(String rootPackage, File rootDestDir, String encoding,
                     long precompiledTolerance) {
-        this(ClassInjector.getInstance(), rootPackage, rootDestDir, 
+        this(ClassInjector.getInstance(), rootPackage, rootDestDir,
              encoding, precompiledTolerance);
     }
-    
-    public Compiler(ClassInjector injector, String rootPackage, 
+
+    public Compiler(ClassInjector injector, String rootPackage,
                     File rootDestDir, String encoding,
                     long precompiledTolerance) {
         this(injector, rootPackage, rootDestDir, encoding, precompiledTolerance,
@@ -161,7 +161,7 @@ public class Compiler {
      * @param rootPackage The root package to store generate classes to
      * @param parseTreeMap map should be thread-safe
      */
-    public Compiler(ClassInjector injector, String rootPackage, 
+    public Compiler(ClassInjector injector, String rootPackage,
                     File rootDestDir, String encoding,
                     long precompiledTolerance,
                     Map<String, Template> parseTreeMap) {
@@ -171,29 +171,29 @@ public class Compiler {
         mEncoding = encoding;
         mParseTreeMap = parseTreeMap;
         mPrecompiledTolerance = precompiledTolerance;
-        
+
         mCompileListener = new CompileListener() {
             public void compileError(CompileEvent e) {
                 dispatchCompileError(e);
             }
-            
+
             public void compileWarning(CompileEvent e) {
                 dispatchCompileWarning(e);
             }
         };
-        
+
         mFormatter = MessageFormatter.lookup(this);
-        
+
         if (!TemplateRepository.isInitialized()) {
             TemplateRepository.init(rootDestDir, rootPackage);
         }
     }
-    
+
     /**
      * Get the root destination directory where class files should be written
      * to. If no root destination directory is provided, <code>null</code> will
      * be returned.
-     * 
+     *
      * @return The root destination directory or <code>null</code>
      */
     public File getRootDestDir() {
@@ -202,35 +202,35 @@ public class Compiler {
 
     /**
      * Get the root package that all templates should be packaged under.
-     * 
+     *
      * @return The root package of templates
      */
     public String getRootPackage() {
         return mRootPackage;
     }
-    
+
     /**
      * Get the class injector to write classes to in order to generate and load
      * class structures.
-     * 
+     *
      * @return The class injector
      */
     public ClassInjector getInjector() {
         return mInjector;
     }
-    
+
     /**
      * Get the encoding of the source files to use.
-     * 
+     *
      * @return The encoding of the source files to use
      */
     public String getEncoding() {
         return mEncoding;
     }
-    
+
     /**
      * Get the precompiled tolerance to use in detecting last modifications.
-     * 
+     *
      * @return The precompiled tolerance in milliseconds
      */
     public long getPrecompiledTolerance() {
@@ -240,25 +240,25 @@ public class Compiler {
     /**
      * Add the specified compilation provider as a supported provider for
      * finding and compiling templates.
-     * 
+     *
      * @param provider  The compilation provider to add
      */
     public void addCompilationProvider(CompilationProvider provider) {
         this.mTemplateProviderMap = null;
         this.mCompilationProviders.add(provider);
     }
-    
+
     /**
      * Add the specified compilation providers as supported providers for
      * finding and compiling templates.
-     * 
+     *
      * @param provider  The compilation providers to add
      */
     public void addCompilationProviders(Collection<CompilationProvider> providers) {
         this.mTemplateProviderMap = null;
         this.mCompilationProviders.addAll(providers);
     }
-    
+
     /**
      * Add an CompileListener in order receive events of compile-time events.
      * @see org.teatrove.tea.util.ConsoleReporter
@@ -290,7 +290,7 @@ public class Compiler {
             }
         }
     }
-    
+
     /**
      * Add a StatusListener in order to receive events of compilation progress.
      */
@@ -405,55 +405,55 @@ public class Compiler {
     /**
      * Get the flag of whether to force all templates to be compiled even if
      * up-to-date.
-     * 
+     *
      * @return true to compile all source, even if up-to-date
      */
     public boolean isForceCompile() {
         return mForce;
     }
-    
+
     /**
      * Set the flag of whether to force all templates to be compiled even if
      * up-to-date.
-     * 
+     *
      * @param force When true, compile all source, even if up-to-date
      */
     public void setForceCompile(boolean force) {
         mForce = force;
     }
-    
+
     protected void loadTemplates() {
         if (mTemplateProviderMap == null) {
             try { getAllTemplateNames(true); }
-            catch (IOException ioe) { 
+            catch (IOException ioe) {
                 mTemplateProviderMap = new HashMap<String, CompilationProvider>();
             }
         }
     }
-    
+
     /**
      * Get the list of all known templates to this compiler.  If the list of
      * known templates cannot be easily resolved, then <code>null</code> should
      * be returned.
-     * 
+     *
      * @return The list of all known templates.
      */
     public String[] getAllTemplateNames() throws IOException {
         return getAllTemplateNames(true);
     }
-    
+
     /**
      * Get the list of all known templates to this compiler.  If the list of
      * known templates cannot be easily resolved, then <code>null</code> should
      * be returned.
-     * 
+     *
      * @param recurse The flag of whether to recurse into sub-directories
-     * 
+     *
      * @return The list of all known templates.
      */
-    public String[] getAllTemplateNames(boolean recurse) 
+    public String[] getAllTemplateNames(boolean recurse)
         throws IOException {
-        
+
         if (mTemplateProviderMap == null) {
             synchronized (this) {
                 mTemplateProviderMap = new HashMap<String, CompilationProvider>();
@@ -467,11 +467,11 @@ public class Compiler {
                 }
             }
         }
-        
+
         return mTemplateProviderMap.keySet().toArray(
             new String[mTemplateProviderMap.size()]);
     }
-    
+
     /**
      * Recursively compiles all files in the source directory.
      *
@@ -480,18 +480,18 @@ public class Compiler {
     public String[] compileAll() throws IOException {
         return compileAll(true);
     }
-    
+
     /**
      * Compiles all files in the source directory recursively or not.
      *
      * @param recurse The flag of whether to recurse all sub-directories
-     * 
+     *
      * @return The names of all the compiled sources
      */
     public String[] compileAll(boolean recurse) throws IOException {
         return compile(getAllTemplateNames(recurse));
     }
-    
+
     /**
      * Compile a single compilation unit. This method can be called multiple
      * times, but it will not compile compilation units that have already been
@@ -520,7 +520,7 @@ public class Compiler {
         if (!TemplateRepository.isInitialized()) {
             return compile0(names);
         }
-        
+
         String[] compNames = compile0(names);
         ArrayList<String> compList =
             new ArrayList<String>(Arrays.asList(compNames));
@@ -531,18 +531,18 @@ public class Compiler {
             compList.addAll(Arrays.asList(compile0(callers)));
         String[] compiled = compList.toArray(new String[compList.size()]);
 
-        // JoshY - There's a VM bug in JVM 1.4.2 that can cause the repository 
-        // update to throw a NullPointerException when it shouldn't.  There's a 
-        // workaround in place and we also put a catch here, to allow the 
+        // JoshY - There's a VM bug in JVM 1.4.2 that can cause the repository
+        // update to throw a NullPointerException when it shouldn't.  There's a
+        // workaround in place and we also put a catch here, to allow the
         // TeaServlet init to finish just in case
         try { rep.update(compiled); } catch (Exception e) {
             System.err.println("Unable to update repository");
             e.printStackTrace(System.err);
         }
-        
+
         return compiled;
     }
-    
+
     protected String[] compile0(String[] names) throws IOException {
         synchronized (mParseTreeMap) {
             for (int i=0; i<names.length; i++) {
@@ -554,7 +554,7 @@ public class Compiler {
                 CompilationUnit unit = getCompilationUnit(names[i], null);
                 if (unit == null) {
                     String msg = mFormatter.format("not.found", names[i]);
-                    dispatchCompileError(new CompileEvent(this, 
+                    dispatchCompileError(new CompileEvent(this,
                         CompileEvent.Type.ERROR, msg, (SourceInfo) null, null));
                 } else if (!mCompiled.contains(names[i]) &&
                         unit.shouldCompile()) {
@@ -581,7 +581,7 @@ public class Compiler {
     public int getWarningCount() {
         return mWarningCount;
     }
-    
+
     /**
      * Returns a compilation unit associated with the given name, or null if
      * not found.
@@ -591,7 +591,7 @@ public class Compiler {
     public CompilationUnit getCompilationUnit(String name) {
         return getCompilationUnit(name, null);
     }
-    
+
     /**
      * Returns a compilation unit associated with the given name, or null if
      * not found.
@@ -816,13 +816,13 @@ public class Compiler {
      */
     public boolean sourceExists(String name) {
         loadTemplates();
-        
+
         // check if already known template and delegate to provider
         CompilationProvider provider = mTemplateProviderMap.get(name);
         if (provider != null) {
             return provider.sourceExists(name);
         }
-        
+
         // search for a suitable provider and delegate
         for (CompilationProvider provider2 : mCompilationProviders) {
             if (provider2.sourceExists(name)) {
@@ -830,24 +830,24 @@ public class Compiler {
                 return true;
             }
         }
-        
+
         // none found
         return false;
     }
 
     protected CompilationUnit createCompilationUnit(String name) {
         loadTemplates();
-        
+
         // check if source exists and delegate to provider
         if (sourceExists(name)) {
             CompilationProvider provider = mTemplateProviderMap.get(name);
             if (provider != null) {
                 CompilationSource source = provider.createCompilationSource(name);
-                return (source == null ? null : 
+                return (source == null ? null :
                     new CompilationUnit(name, source, this));
             }
         }
-        
+
         // none found
         return null;
     }
@@ -930,7 +930,7 @@ public class Compiler {
             } catch (IOException e) {
                 uncaughtException(e);
                 String msg = mFormatter.format("read.error", e.toString());
-                dispatchCompileError(new CompileEvent(this, 
+                dispatchCompileError(new CompileEvent(this,
                     CompileEvent.Type.ERROR, msg, (SourceInfo) null, unit));
                 return tree;
             }
@@ -962,7 +962,7 @@ public class Compiler {
                         codegen.writeTo(out);
                         out.flush();
                         out.close();
-                        
+
                         // sync times so class file matches last modified of
                         // source file to ensure times are in sync
                         unit.syncTimes();
@@ -988,7 +988,7 @@ public class Compiler {
                     uncaughtException(e);
                     String msg = mFormatter.format
                             ("write.error", e.toString());
-                    dispatchCompileError(new CompileEvent(this, 
+                    dispatchCompileError(new CompileEvent(this,
                         CompileEvent.Type.ERROR, msg, (SourceInfo) null, unit));
                     return tree;
                 }
@@ -996,7 +996,7 @@ public class Compiler {
         } catch (Throwable e) {
             uncaughtException(e);
             String msg = mFormatter.format("internal.error", e.toString());
-            dispatchCompileError(new CompileEvent(this, 
+            dispatchCompileError(new CompileEvent(this,
                 CompileEvent.Type.ERROR, msg, (SourceInfo) null, unit));
         } finally {
             removeCompileListener(unit);

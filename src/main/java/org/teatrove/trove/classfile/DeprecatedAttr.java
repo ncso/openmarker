@@ -22,7 +22,7 @@ import java.io.IOException;
 /**
  * This class defines the Deprecated attribute introduced in JDK1.1, although
  * no references to its definition can be found.
- * 
+ *
  * @author Brian S O'Neill
  */
 class DeprecatedAttr extends Attribute {

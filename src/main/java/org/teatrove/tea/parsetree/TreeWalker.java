@@ -39,10 +39,10 @@ public abstract class TreeWalker implements NodeVisitor {
         if (stmt != null) {
             stmt.accept(this);
         }
-        
+
         return null;
     }
-        
+
     public Object visit(Name node) {
         return null;
     }
@@ -50,29 +50,29 @@ public abstract class TreeWalker implements NodeVisitor {
     public Object visit(TypeName node) {
         return null;
     }
-        
+
     public Object visit(Variable node) {
         node.getTypeName().accept(this);
         return null;
     }
-        
+
     public Object visit(ExpressionList node) {
         Expression[] exprs = node.getExpressions();
         for (int i=0; i<exprs.length; i++) {
             exprs[i].accept(this);
         }
-        
+
         return null;
     }
-        
+
     public Object visit(Statement node) {
         return null;
     }
-        
+
     public Object visit(ImportDirective node) {
         return null;
     }
-        
+
     public Object visit(StatementList node) {
         Statement[] stmts = node.getStatements();
         if (stmts != null) {
@@ -80,10 +80,10 @@ public abstract class TreeWalker implements NodeVisitor {
                 stmts[i].accept(this);
             }
         }
-        
+
         return null;
     }
-        
+
     public Object visit(Block node) {
         Statement init = node.getInitializer();
         if (init != null) {
@@ -99,14 +99,14 @@ public abstract class TreeWalker implements NodeVisitor {
 
         return null;
     }
-        
+
     public Object visit(AssignmentStatement node) {
         node.getLValue().accept(this);
         node.getRValue().accept(this);
-        
+
         return null;
     }
-        
+
     public Object visit(BreakStatement node) {
         return null;
     }
@@ -132,23 +132,23 @@ public abstract class TreeWalker implements NodeVisitor {
         if (body != null) {
             body.accept(this);
         }
-        
+
         return null;
     }
-        
+
     public Object visit(IfStatement node) {
         node.getCondition().accept(this);
-            
+
         Block block = node.getThenPart();
         if (block != null) {
             block.accept(this);
         }
-        
+
         block = node.getElsePart();
         if (block != null) {
             block.accept(this);
         }
-        
+
         return null;
     }
 
@@ -208,9 +208,9 @@ public abstract class TreeWalker implements NodeVisitor {
         if (expr != null) {
             expr.accept(this);
         }
-        
+
         node.getParams().accept(this);
-        
+
         Statement init = node.getInitializer();
         if (init != null) {
             init.accept(this);
@@ -220,7 +220,7 @@ public abstract class TreeWalker implements NodeVisitor {
         if (subParam != null) {
             subParam.accept(this);
         }
-        
+
         return null;
     }
 
@@ -306,26 +306,26 @@ public abstract class TreeWalker implements NodeVisitor {
     public Object visit(CompareExpression node) {
         node.getLeftExpression().accept(this);
         node.getRightExpression().accept(this);
-        
+
         return null;
     }
-    
+
     public Object visit(NoOpExpression node) {
         return null;
     }
-    
+
     public Object visit(TypeExpression node) {
         node.getTypeName().accept(this);
         return null;
     }
-    
+
     public Object visit(SpreadExpression node) {
         node.getExpression().accept(this);
         node.getOperation().accept(this);
-        
+
         return null;
     }
-    
+
     public Object visit(NullLiteral node) {
         return null;
     }

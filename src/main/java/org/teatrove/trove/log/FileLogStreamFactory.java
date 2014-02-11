@@ -32,10 +32,10 @@ public class FileLogStreamFactory implements IntervalLogStream.Factory {
 
     /**
      * Creates log files in the given directory. The names are created by
-     * appending the name of the directory, a hyphen, a time stamp and 
+     * appending the name of the directory, a hyphen, a time stamp and
      * an extension.
-     * 
-     * For example, if the directory is "/logs/MyApp", the format is 
+     *
+     * For example, if the directory is "/logs/MyApp", the format is
      * "yyyyMMdd", and the extension is ".log", then a generated file might be:
      * "/logs/MyApp/MyApp-19990608.log".
      *
@@ -43,7 +43,7 @@ public class FileLogStreamFactory implements IntervalLogStream.Factory {
      * @param format DateFormat to use for creating new file names.
      * @param extension Extension to put at the end of new file name.
      */
-    public FileLogStreamFactory(File directory, 
+    public FileLogStreamFactory(File directory,
                                 DateFormat format,
                                 String extension) {
 
@@ -77,16 +77,16 @@ public class FileLogStreamFactory implements IntervalLogStream.Factory {
     public OutputStream openOutputStream(Date date) throws IOException {
         if (!mDirectory.exists()) {
             if (!mDirectory.mkdirs()) {
-                throw new IOException("Unable to create directory: \"" + 
+                throw new IOException("Unable to create directory: \"" +
                                       mDirectory + '"');
             }
         }
-        
+
         String fileName = mDirectory.getName() + '-';
         synchronized (mDateFormat) {
             fileName += mDateFormat.format(date);
         }
-        
+
         File file = new File(mDirectory, fileName + mExtension);
         return new FileOutputStream(file.getPath(), true);
     }

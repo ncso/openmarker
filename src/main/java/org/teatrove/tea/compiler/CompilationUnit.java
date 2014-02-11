@@ -39,7 +39,7 @@ import org.teatrove.trove.util.ClassInjector;
  * provides source details and outputs the compiled result to a given set of
  * output streams (class files, injectors, etc).  It works hand-in-hand with the
  * associated compiler during compilation.
- * 
+ *
  * @author Brian S O'Neill
  */
 public class CompilationUnit implements CompileListener {
@@ -59,7 +59,7 @@ public class CompilationUnit implements CompileListener {
         mName = name;
         mSource = source;
         mCompiler = compiler;
-        
+
         initialize();
     }
 
@@ -68,7 +68,7 @@ public class CompilationUnit implements CompileListener {
         if (slashPath.endsWith("/")) {
             slashPath = slashPath.substring(0, slashPath.length() - 1);
         }
-        
+
         File rootDestDir = mCompiler.getRootDestDir();
         if (rootDestDir != null) {
             if (slashPath.lastIndexOf('/') >= 0) {
@@ -79,16 +79,16 @@ public class CompilationUnit implements CompileListener {
             else {
                 mDestDir = rootDestDir;
             }
-            
-            mDestDir.mkdirs();          
+
+            mDestDir.mkdirs();
             mDestFile = new File(
                 mDestDir,
-                slashPath.substring(slashPath.lastIndexOf('/') + 1) + 
+                slashPath.substring(slashPath.lastIndexOf('/') + 1) +
                     ".class"
             );
         }
     }
-    
+
     public String getName() {
         return mName;
     }
@@ -102,20 +102,20 @@ public class CompilationUnit implements CompileListener {
 
         return name;
     }
-    
+
     public String getSourcePath() {
         return mSource == null ? null : mSource.getSourcePath();
     }
 
     /**
      * Get the associated compiler for this unit.
-     * 
+     *
      * @return The associated compiler for this compilation unit
      */
     protected Compiler getCompiler() {
         return mCompiler;
     }
-    
+
     /**
      * The retrieves the runtime context.  The default behavior is to delegate
      * this call to the compiler.  This is overriden to implement compiled
@@ -138,7 +138,7 @@ public class CompilationUnit implements CompileListener {
     public void compileWarning(CompileEvent e) {
         mWarningCount++;
     }
-    
+
     /**
      * Returns the number of errors generated while compiling this
      * CompilationUnit.
@@ -154,7 +154,7 @@ public class CompilationUnit implements CompileListener {
     public int getWarningCount() {
         return mWarningCount;
     }
-    
+
     public Template getParseTree() {
         if (mTree == null && mCompiler != null) {
             return mCompiler.getParseTree(this);
@@ -193,16 +193,16 @@ public class CompilationUnit implements CompileListener {
         else {
             reader = new InputStreamReader(in, encoding);
         }
-        
+
         return reader;
     }
-    
+
     public void syncTimes() {
         if (mDestFile != null) {
             mDestFile.setLastModified(getLastModified());
         }
     }
-    
+
     public boolean shouldCompile() {
         return getCompiler().isForceCompile() ||
                shouldCompile(getDestinationLastModified());
@@ -227,15 +227,15 @@ public class CompilationUnit implements CompileListener {
     public long getLastModified() {
         return mSource == null ? -1 : mSource.getLastModified();
     }
-    
+
     protected long getDestinationLastModified() {
         if (mDestFile != null && mDestFile.exists()) {
             return mDestFile.lastModified();
         }
-        
+
         return 0L;
     }
-    
+
     /**
      * Returns the truth that a is greater than or equal to b assuming the given tolerance.
      * <p>
@@ -306,7 +306,7 @@ public class CompilationUnit implements CompileListener {
 
         return new BufferedOutputStream(out);
     }
-    
+
     public void resetOutputStream() {
         if (mDestFile != null) {
             mDestFile.delete();
@@ -317,7 +317,7 @@ public class CompilationUnit implements CompileListener {
             injector.resetStream(getClassName());
         }
     }
-    
+
     protected String getClassName() {
         return getClassName(null);
     }
@@ -336,13 +336,13 @@ public class CompilationUnit implements CompileListener {
         return className;
     }
 
-    protected InputStream getTemplateSource() 
+    protected InputStream getTemplateSource()
         throws IOException {
-        
+
         if (mSource == null) {
             throw new IOException("no source defined for " + mName);
         }
-        
+
         return mSource.getSource();
     }
 

@@ -19,7 +19,7 @@ package org.teatrove.trove.classfile;
 import java.io.*;
 
 /**
- * 
+ *
  *
  * @author Nick Hagan
  */

@@ -71,7 +71,7 @@ import org.teatrove.tea.parsetree.VariableRef;
 
 /******************************************************************************
  * A class that prints a parse tree. To print, call the writeTo method.
- * 
+ *
  * @author Brian S O'Neill
  */
 public class TreePrinter extends CodeGenerator {
@@ -98,7 +98,7 @@ public class TreePrinter extends CodeGenerator {
 
     public void writeTo(OutputStream out) throws IOException {
         BufferedWriter w = new BufferedWriter(new OutputStreamWriter(out));
-        
+
         Visitor v = new Visitor(w, mIndentStr, mExtraParens);
 
         try {
@@ -107,7 +107,7 @@ public class TreePrinter extends CodeGenerator {
         catch (IOError e) {
             e.rethrow();
         }
-        
+
         w.flush();
     }
 
@@ -139,11 +139,11 @@ public class TreePrinter extends CodeGenerator {
         private static final long serialVersionUID = 1L;
 
         private IOException mException;
-        
+
         public IOError(IOException e) {
             mException = e;
         }
-        
+
         public void rethrow() throws IOException {
             throw mException;
         }
@@ -169,7 +169,7 @@ public class TreePrinter extends CodeGenerator {
                 mIndent = 0;
             }
         }
-        
+
         private void print(String str) throws IOError {
             doIndent();
 
@@ -180,7 +180,7 @@ public class TreePrinter extends CodeGenerator {
                 throw new IOError(e);
             }
         }
-        
+
         private void println() throws IOError {
             mNeedIndent = true;
 
@@ -206,11 +206,11 @@ public class TreePrinter extends CodeGenerator {
                 }
             }
         }
-        
+
         public Object visit(Template node) {
             print("template ");
             print(node.getName().getName());
-            
+
             Variable[] params = node.getParams();
             print(" (");
             if (params != null) {
@@ -222,7 +222,7 @@ public class TreePrinter extends CodeGenerator {
                 }
             }
             print(") ");
-            
+
             if (node.hasSubstitutionParam()) {
                 print("{...} ");
             }
@@ -231,15 +231,15 @@ public class TreePrinter extends CodeGenerator {
             if (stmt != null) {
                 stmt.accept(this);
             }
-            
+
             return null;
         }
-        
+
         public Object visit(Name node) {
             print(node.getName());
             return null;
         }
-        
+
         public Object visit(TypeName node) {
             print(node.getName());
             int dim = node.getDimensions();
@@ -248,7 +248,7 @@ public class TreePrinter extends CodeGenerator {
             }
             return null;
         }
-        
+
         public Object visit(Variable node) {
             TypeName typeName = node.getTypeName();
             if (typeName != null) {
@@ -258,7 +258,7 @@ public class TreePrinter extends CodeGenerator {
             print(node.getName());
             return null;
         }
-        
+
         public Object visit(ExpressionList node) {
             Expression[] exprs = node.getExpressions();
             for (int i=0; i<exprs.length; i++) {
@@ -267,18 +267,18 @@ public class TreePrinter extends CodeGenerator {
                 }
                 exprs[i].accept(this);
             }
-            
+
             return null;
         }
-        
+
         public Object visit(Statement node) {
             return null;
         }
-        
+
         public Object visit(ImportDirective node) {
             return null;
         }
-        
+
         public Object visit(StatementList node) {
             Statement[] stmts = node.getStatements();
             if (stmts != null) {
@@ -288,26 +288,26 @@ public class TreePrinter extends CodeGenerator {
                 }
                 println();
             }
-            
+
             return null;
         }
-        
+
         public Object visit(Block node) {
             print("{ ");
             indent(1);
             visit((StatementList)node);
             indent(-1);
             print("} ");
-            
+
             return null;
         }
-        
+
         public Object visit(AssignmentStatement node) {
             node.getLValue().accept(this);
             print(" = ");
             node.getRValue().accept(this);
             print(" ");
-            
+
             return null;
         }
 
@@ -335,15 +335,15 @@ public class TreePrinter extends CodeGenerator {
             if (body != null) {
                 body.accept(this);
             }
-            
+
             return null;
         }
-        
+
         public Object visit(IfStatement node) {
             print("if ");
-            
+
             node.getCondition().accept(this);
-            
+
             Statement stmt = node.getThenPart();
             if (stmt != null) {
                 print(" ");
@@ -354,7 +354,7 @@ public class TreePrinter extends CodeGenerator {
                 println();
                 print("} ");
             }
-        
+
             stmt = node.getElsePart();
             if (stmt != null) {
                 println();
@@ -445,7 +445,7 @@ public class TreePrinter extends CodeGenerator {
             print("(");
             node.getParams().accept(this);
             print(")");
-        
+
             Statement subParam = node.getSubstitutionParam();
             if (subParam != null) {
                 print(" ");
@@ -469,11 +469,11 @@ public class TreePrinter extends CodeGenerator {
             else {
                 node.getExpression().accept(this);
             }
-            
+
             if (node.isNullSafe()) {
                 print("?");
             }
-            
+
             print(".");
             print(node.getLookupName().getName());
 
@@ -489,11 +489,11 @@ public class TreePrinter extends CodeGenerator {
             else {
                 node.getExpression().accept(this);
             }
-            
+
             if (node.isNullSafe()) {
                 print("?");
             }
-            
+
             print("[");
             node.getLookupIndex().accept(this);
             print("]");
@@ -561,7 +561,7 @@ public class TreePrinter extends CodeGenerator {
                 print(" ");
                 node.getIsaTypeName().accept(this);
                 if (mExtraParens) print(")");
-                
+
                 return null;
             }
         }
@@ -587,32 +587,32 @@ public class TreePrinter extends CodeGenerator {
 
             return null;
         }
-        
+
         public Object visit(CompareExpression node) {
             node.getLeftExpression().accept(this);
             print(" <=> ");
             node.getRightExpression().accept(this);
-            
+
             return null;
         }
-        
+
         public Object visit(NoOpExpression node) {
             return null;
         }
-        
+
         public Object visit(TypeExpression node) {
         	node.getTypeName().accept(this);
         	return null;
         }
-        
+
         public Object visit(SpreadExpression node) {
             node.getExpression().accept(this);
             print("*.");
             node.getOperation().accept(this);
-            
+
             return null;
         }
-        
+
         public Object visit(NullLiteral node) {
             print(String.valueOf(node.getValue()));
             return null;

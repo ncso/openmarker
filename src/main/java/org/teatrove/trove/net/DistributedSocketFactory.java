@@ -155,11 +155,11 @@ public class DistributedSocketFactory implements SocketFactory {
             }
             catch (SocketException e) {
                 deadFactory(factory);
-                
+
                 if (timeout == 0) {
                     throw e;
                 }
-                
+
                 if (timeout > 0) {
                     timeout -= (System.currentTimeMillis() - startTime);
                     if (timeout < 0) {
@@ -206,11 +206,11 @@ public class DistributedSocketFactory implements SocketFactory {
             }
             catch (SocketException e) {
                 deadFactory(factory);
-                
+
                 if (timeout == 0) {
                     throw e;
                 }
-                
+
                 if (timeout > 0) {
                     timeout -= (System.currentTimeMillis() - startTime);
                     if (timeout < 0) {
@@ -302,7 +302,7 @@ public class DistributedSocketFactory implements SocketFactory {
             // Only remove factory if its not the last one left.
             if (mFactories.contains(factory) && mFactories.size() > 1) {
                 mFactories.remove(factory);
-                
+
                 Resurrector r = new Resurrector(this, factory);
                 Thread t = new Thread(null, r, "Resurrector " +
                                       factory.getInetAddressAndPort());
@@ -341,7 +341,7 @@ public class DistributedSocketFactory implements SocketFactory {
                     }
                     catch (IOException e) {
                     }
-                    
+
                     owner = null;
 
                     // Wait at 5 seconds before trying again.

@@ -84,7 +84,7 @@ public class PluginFactory {
 				String externalPlugin = config.getProperties().getString(cExternalNameKey);
 				Document pluginsDoc = null;
 				pluginsDoc = XMLMapFactory.createDocument(new FileReader((String)config.getProperties().get(cExternalPropKey)));
-				
+
 				if(pluginsDoc != null) {
 					Element rootElement = pluginsDoc.getRootElement();
 
@@ -120,7 +120,7 @@ public class PluginFactory {
 				throw new PluginFactoryException("Error loading external properties for " + name, e);
 			}
 		}//END external file load block
-		
+
         try {
             Class clazz = Class.forName(className);
             result = (Plugin) clazz.newInstance();
@@ -140,17 +140,17 @@ public class PluginFactory {
     }
 
     public static final Plugin[] createPlugins(PluginFactoryConfig config)
-        throws PluginFactoryException 
+        throws PluginFactoryException
     {
         return createPlugins(config, null);
     }
-    
+
     public static final Plugin[] createPlugins(PluginFactoryConfig config,
                                                StatusListener listener)
         throws PluginFactoryException
     {
         PluginContext context = config.getPluginContext();
-        
+
         Plugin[] result;
         Map plugins;
         PropertyMap properties = config.getProperties().subMap(cPluginsKey);
@@ -164,7 +164,7 @@ public class PluginFactory {
         if (listener != null) {
             listener.statusStarted(new StatusEvent(context, index, count, null));
         }
-        
+
         plugins = new HashMap(keySet.size());
         Iterator iterator = keySet.iterator();
         while (iterator.hasNext()) {
@@ -179,7 +179,7 @@ public class PluginFactory {
 				config.getLog().error("Error loading plugin: " + name);
 				config.getLog().error(e);
 			}
-            
+
             index++;
             if (listener != null) {
                 listener.statusUpdate(new StatusEvent(context, index, count, name));
@@ -196,11 +196,11 @@ public class PluginFactory {
         }
         result = new Plugin[plugins.size()];
         result = (Plugin[])plugins.values().toArray(result);
-        
+
         if (listener != null) {
             listener.statusCompleted(new StatusEvent(context, index, count, null));
         }
-        
+
         return result;
     }
 

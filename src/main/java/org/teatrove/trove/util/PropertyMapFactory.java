@@ -17,11 +17,11 @@
 package org.teatrove.trove.util;
 
 /**
- * 
+ *
  * @author Brian S O'Neill
  */
 public interface PropertyMapFactory {
     public PropertyMap createProperties() throws java.io.IOException;
-    public PropertyMap createProperties(PropertyChangeListener listener) 
+    public PropertyMap createProperties(PropertyChangeListener listener)
         throws java.io.IOException;
 }

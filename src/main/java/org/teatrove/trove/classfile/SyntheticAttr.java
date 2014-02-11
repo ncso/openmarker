@@ -21,9 +21,9 @@ import java.io.IOException;
 
 /**
  * This class corresponds to the Synthetic_attribute structure introduced in
- * JDK1.1. It is not defined in the first edition of 
+ * JDK1.1. It is not defined in the first edition of
  * <i>The Java Virual Machine Specification</i>.
- * 
+ *
  * @author Brian S O'Neill
  */
 class SyntheticAttr extends Attribute {

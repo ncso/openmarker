@@ -36,12 +36,12 @@ public interface CodeAssembler {
 
     /**
      * Creates a LocalVariable reference from a name and type. Although name
-     * is optional, it is encouraged that a name be provided. Names do not 
+     * is optional, it is encouraged that a name be provided. Names do not
      * need to be unique.
      *
      * @param name Optional name for the LocalVariable.
-     * @param type The type of data that the requested LocalVariable can 
-     * store. 
+     * @param type The type of data that the requested LocalVariable can
+     * store.
      */
     public LocalVariable createLocalVariable(String name, TypeDesc type);
 
@@ -57,7 +57,7 @@ public interface CodeAssembler {
      * </pre>
      *
      * @see Label#setLocation
-     */ 
+     */
     public Label createLabel();
 
     /**
@@ -68,16 +68,16 @@ public interface CodeAssembler {
      * code to be wrapped by an exception handler.
      * @param endLocation Location directly after the end of the
      * section of code.
-     * @param catchClassName The class name of exception to be caught; 
+     * @param catchClassName The class name of exception to be caught;
      * if null, then catch every object.
      */
     public void exceptionHandler(Location startLocation,
                                  Location endLocation,
                                  String catchClassName);
-    
+
     /**
-     * Map the location of the next code to be generated to a line number 
-     * in source code. This enables line numbers in a stack trace from the 
+     * Map the location of the next code to be generated to a line number
+     * in source code. This enables line numbers in a stack trace from the
      * generated code.
      */
     public void mapLineNumber(int lineNumber);
@@ -99,7 +99,7 @@ public interface CodeAssembler {
     public void loadConstant(boolean value);
 
     /**
-     * Generates code that loads a constant int, char, short or byte value 
+     * Generates code that loads a constant int, char, short or byte value
      * onto the stack.
      */
     public void loadConstant(int value);
@@ -131,7 +131,7 @@ public interface CodeAssembler {
     public void loadLocal(LocalVariable local);
 
     /**
-     * Loads a reference to "this" onto the stack. Static methods have no 
+     * Loads a reference to "this" onto the stack. Static methods have no
      * "this" reference, and an exception is thrown when attempting to
      * generate "this" in a static method.
      */
@@ -141,7 +141,7 @@ public interface CodeAssembler {
 
     /**
      * Generates code that pops a value off of the stack into a local variable.
-     * Parameters passed to a method and the "this" reference are all 
+     * Parameters passed to a method and the "this" reference are all
      * considered local variables, as well as any that were created.
      *
      * @param local The local variable reference
@@ -154,8 +154,8 @@ public interface CodeAssembler {
 
     /**
      * Generates code that loads a value from an array. An array
-     * reference followed by an index must be on the stack. The array 
-     * reference and index are replaced by the value retrieved from the array 
+     * reference followed by an index must be on the stack. The array
+     * reference and index are replaced by the value retrieved from the array
      * after the generated instruction has executed.
      * <p>
      * The type doesn't need to be an exact match for objects.
@@ -185,18 +185,18 @@ public interface CodeAssembler {
     // load-field-to-stack style instructions
 
     /**
-     * Generates code that loads a value from a field from this class. 
-     * An object reference must be on the stack. After the generated code 
-     * has executed, the object reference is replaced by the value retrieved 
+     * Generates code that loads a value from a field from this class.
+     * An object reference must be on the stack. After the generated code
+     * has executed, the object reference is replaced by the value retrieved
      * from the field.
      */
     public void loadField(String fieldName,
                           TypeDesc type);
 
     /**
-     * Generates code that loads a value from a field from any class. 
-     * An object reference must be on the stack. After the generated code 
-     * has executed, the object reference is replaced by the value retrieved 
+     * Generates code that loads a value from a field from any class.
+     * An object reference must be on the stack. After the generated code
+     * has executed, the object reference is replaced by the value retrieved
      * from the field.
      */
     public void loadField(String className,
@@ -204,7 +204,7 @@ public interface CodeAssembler {
                           TypeDesc type);
 
     /**
-     * Generates code that loads a value from a static field from this class. 
+     * Generates code that loads a value from a static field from this class.
      * After the generated code has executed, the value retrieved is placed
      * on the stack.
      */
@@ -212,7 +212,7 @@ public interface CodeAssembler {
                                 TypeDesc type);
 
     /**
-     * Generates code that loads a value from a static field from any class. 
+     * Generates code that loads a value from a static field from any class.
      * After the generated code has executed, the value retrieved is placed
      * on the stack.
      */
@@ -223,8 +223,8 @@ public interface CodeAssembler {
     // store-to-field-from-stack style instructions
 
     /**
-     * Generates code that stores a value into a field from this class. 
-     * An object reference and value must be on the stack. After the generated 
+     * Generates code that stores a value into a field from this class.
+     * An object reference and value must be on the stack. After the generated
      * code has executed, the object reference and value are gone from
      * the stack.
      */
@@ -232,8 +232,8 @@ public interface CodeAssembler {
                            TypeDesc type);
 
     /**
-     * Generates code that stores a value into a field from any class. 
-     * An object reference and value must be on the stack. After the generated 
+     * Generates code that stores a value into a field from any class.
+     * An object reference and value must be on the stack. After the generated
      * code has executed, the object reference and value are gone from
      * the stack.
      */
@@ -242,16 +242,16 @@ public interface CodeAssembler {
                            TypeDesc type);
 
     /**
-     * Generates code that stores a value into a field from this class. 
-     * A value must be on the stack. After the generated 
+     * Generates code that stores a value into a field from this class.
+     * A value must be on the stack. After the generated
      * code has executed, the value is gone from the stack.
      */
     public void storeStaticField(String fieldName,
                                  TypeDesc type);
 
     /**
-     * Generates code that stores a value into a field from any class. 
-     * A value must be on the stack. After the generated 
+     * Generates code that stores a value into a field from any class.
+     * A value must be on the stack. After the generated
      * code has executed, the value is gone from the stack.
      */
     public void storeStaticField(String className,
@@ -290,7 +290,7 @@ public interface CodeAssembler {
      * long to Long
      * Double to Short
      * </pre>
-     * 
+     *
      * In all, 240 conversions are supported.
      */
     public void convert(TypeDesc fromType, TypeDesc toType);
@@ -379,7 +379,7 @@ public interface CodeAssembler {
                             TypeDesc... params);
 
     /**
-     * Generates code to invoke a class constructor in this class. The object 
+     * Generates code to invoke a class constructor in this class. The object
      * reference and the constructor's argument(s) must be on the stack.
      *
      * @param params May be null if constructor takes no parameters.
@@ -387,7 +387,7 @@ public interface CodeAssembler {
     public void invokeConstructor(TypeDesc... params);
 
     /**
-     * Generates code to invoke a class constructor in any class. The object 
+     * Generates code to invoke a class constructor in any class. The object
      * reference and the constructor's argument(s) must be on the stack.
      *
      * @param params May be null if constructor takes no parameters.
@@ -395,7 +395,7 @@ public interface CodeAssembler {
     public void invokeConstructor(String className, TypeDesc... params);
 
     /**
-     * Generates code to invoke a super class constructor. The object 
+     * Generates code to invoke a super class constructor. The object
      * reference and the constructor's argument(s) must be on the stack.
      *
      * @param params May be null if constructor takes no parameters.
@@ -405,7 +405,7 @@ public interface CodeAssembler {
     // creation style instructions
 
     /**
-     * Generates code to create a new object. Unless the new object is an 
+     * Generates code to create a new object. Unless the new object is an
      * array, it is invalid until a constructor method is invoked on it.
      * <p>
      * If the specified type is an array, this call is equivalent to
@@ -520,7 +520,7 @@ public interface CodeAssembler {
      * @param choice One of "==", "!=", "<", ">=", ">" or "<="
      * @exception IllegalArgumentException When the choice is not valid
      */
-    public void ifZeroComparisonBranch(Location location, String choice) 
+    public void ifZeroComparisonBranch(Location location, String choice)
         throws IllegalArgumentException;
 
     /**
@@ -551,11 +551,11 @@ public interface CodeAssembler {
      * @param defaultLocation The location to branch to if the key on
      * the stack was not matched.
      */
-    public void switchBranch(int[] cases, 
+    public void switchBranch(int[] cases,
                              Location[] locations, Location defaultLocation);
 
     /**
-     * Generates code that performs a subroutine branch to the specified 
+     * Generates code that performs a subroutine branch to the specified
      * location. The instruction generated is either jsr or jsr_w. It is most
      * often used for implementing a finally block.
      *
@@ -628,7 +628,7 @@ public interface CodeAssembler {
     public void instanceOf(TypeDesc type);
 
     /**
-     * Generates code that increments a local integer variable by a signed 
+     * Generates code that increments a local integer variable by a signed
      * constant amount.
      */
     public void integerIncrement(LocalVariable local, int amount);

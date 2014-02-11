@@ -20,11 +20,11 @@ import java.io.*;
 
 /**
  * This reader handles unicode escapes in a character stream as defined by
- * <i>The Java Language Specification</i>. 
- * 
- * <p>A unicode escape consists of six characters: '\' and 'u' followed by 
- * four hexadecimal digits. If the format of the escape is not correct, then 
- * the escape is unprocessed. To prevent a correctly formatted unicode escape 
+ * <i>The Java Language Specification</i>.
+ *
+ * <p>A unicode escape consists of six characters: '\' and 'u' followed by
+ * four hexadecimal digits. If the format of the escape is not correct, then
+ * the escape is unprocessed. To prevent a correctly formatted unicode escape
  * from being processed, preceed it with another '\'.
  *
  * @author Brian S O'Neill
@@ -77,10 +77,10 @@ public class UnicodeReader extends EscapeReader {
         }
 
         int len = mSource.read(mMinibuf, 0, 4);
-        
+
         if (len == 4) {
             try {
-                int val = 
+                int val =
                     Integer.valueOf(new String(mMinibuf, 0, 4), 16).intValue();
 
                 return val;
@@ -106,7 +106,7 @@ public class UnicodeReader extends EscapeReader {
 
     private static class Tester {
         public static void test(String[] arg) throws Exception {
-            String str = 
+            String str =
                 "This is \\" + "u0061 test.\n" +
                 "This is \\" + "u00612 test.\n" +
                 "This is \\" + "u0061" + "\\" + "u0061" + " test.\n" +
@@ -115,7 +115,7 @@ public class UnicodeReader extends EscapeReader {
                 "This is \\" + "a test.\n";
 
             System.out.println("\nOriginal:\n");
-            
+
             Reader reader = new StringReader(str);
 
             int c;
@@ -124,7 +124,7 @@ public class UnicodeReader extends EscapeReader {
             }
 
             System.out.println("\nConverted:\n");
-            
+
             reader = new StringReader(str);
             reader = new UnicodeReader(reader);
 
@@ -133,9 +133,9 @@ public class UnicodeReader extends EscapeReader {
             }
 
             System.out.println("\nUnread test 1:\n");
-            
+
             reader = new StringReader(str);
-            PushbackPositionReader pr = 
+            PushbackPositionReader pr =
                 new PushbackPositionReader(new UnicodeReader(reader), 1);
 
             while ( (c = pr.read()) != -1 ) {
@@ -145,7 +145,7 @@ public class UnicodeReader extends EscapeReader {
             }
 
             System.out.println("\nUnread test 2:\n");
-            
+
             reader = new StringReader(str);
             pr = new PushbackPositionReader(new UnicodeReader(reader), 2);
 

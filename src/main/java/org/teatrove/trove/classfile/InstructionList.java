@@ -975,9 +975,9 @@ class InstructionList implements CodeBuffer {
             if (DEBUG) {
                 buf.append(' ').append(this.hashCode());
             }
-            
+
             buf.append(" [").append(isFlowThrough()).append(']');
-            
+
             return buf.toString();
         }
     }
@@ -1255,7 +1255,7 @@ class InstructionList implements CodeBuffer {
         public boolean isResolved() {
             return mInfo.getIndex() >= 0;
         }
-        
+
         public String toString() {
             StringBuilder buffer = new StringBuilder();
             buffer.append(super.toString()).append(' ');
@@ -1265,7 +1265,7 @@ class InstructionList implements CodeBuffer {
                       .append(info.getNameAndType().getType());
             }
             else if (mInfo instanceof ConstantInterfaceMethodInfo) {
-                ConstantInterfaceMethodInfo info = 
+                ConstantInterfaceMethodInfo info =
                     (ConstantInterfaceMethodInfo) mInfo;
                 buffer.append(info.getNameAndType().getName())
                       .append(info.getNameAndType().getType());
@@ -1275,9 +1275,9 @@ class InstructionList implements CodeBuffer {
                 buffer.append(info.getNameAndType().getType())
                       .append(' ')
                       .append(info.getNameAndType().getName());
-                
+
             }
-            
+
             return buffer.toString();
         }
     }
@@ -1997,7 +1997,7 @@ class InstructionList implements CodeBuffer {
             mLocations[j] = tempLocation;
         }
     }
-    
+
     private void printInstructions(String errorMsg) {
         System.err.println("Error generating instructions: " + errorMsg);
         System.err.println("-- Instructions --");
@@ -2005,6 +2005,6 @@ class InstructionList implements CodeBuffer {
         Iterator it = getInstructions().iterator();
         while (it.hasNext()) {
             System.err.println(it.next().toString());
-        }        
+        }
     }
 }

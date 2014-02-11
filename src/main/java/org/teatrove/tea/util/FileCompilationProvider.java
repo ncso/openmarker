@@ -27,9 +27,9 @@ import org.teatrove.tea.compiler.CompilationProvider;
 import org.teatrove.tea.compiler.CompilationSource;
 
 /**
- * FileCompilationProvider provides access to tea source files by reading them 
- * from a directory. When given a directory, all files within the directory with 
- * the extension ".tea" will be provided. 
+ * FileCompilationProvider provides access to tea source files by reading them
+ * from a directory. When given a directory, all files within the directory with
+ * the extension ".tea" will be provided.
  *
  * @author Brian S O'Neill
  */
@@ -41,7 +41,7 @@ public class FileCompilationProvider implements CompilationProvider {
      * are sent to standard out.
      *
      * <pre>
-     * Usage: java org.teatrove.tea.util.FileCompiler {options} 
+     * Usage: java org.teatrove.tea.util.FileCompiler {options}
      * &lt;template root directory&gt; {templates}
      *
      * where {options} includes:
@@ -117,7 +117,7 @@ public class FileCompilationProvider implements CompilationProvider {
                     templates.add(arg);
                     continue;
                 }
-                
+
                 usage();
                 return;
             }
@@ -189,18 +189,18 @@ public class FileCompilationProvider implements CompilationProvider {
     */
 
     private File mRootSourceDir;
-    
+
     /**
      * Create a compilation provider that loads source files from the given
      * root source directory.
-     * 
+     *
      * @param rootSourceDir Required root source directory
      */
     public FileCompilationProvider(File rootSourceDir) {
         if (rootSourceDir == null) {
             throw new IllegalArgumentException("rootSourceDir");
         }
-        
+
         mRootSourceDir = rootSourceDir;
     }
 
@@ -231,16 +231,16 @@ public class FileCompilationProvider implements CompilationProvider {
         if (sourceFile == null || !sourceFile.exists()) {
             return null;
         }
-        
+
         return new FileSource(name, sourceFile);
     }
-    
+
     /**
      * Get the source file relative to the root source directory for the given
      * template.
-     * 
+     *
      * @param name The fully-qualified name of the template
-     * 
+     *
      * @return The file reference to the source file
      */
     protected File getSourceFile(String name) {
@@ -249,14 +249,14 @@ public class FileCompilationProvider implements CompilationProvider {
         File file = new File(mRootSourceDir, fileName);
         return file;
     }
-    
+
     /**
      * Gathers all sources (template names) in the source directory.
      *
-     * @param templateNames Collection of Strings. The gatherSources method 
-     * will add the template names to this Collection.  
+     * @param templateNames Collection of Strings. The gatherSources method
+     * will add the template names to this Collection.
      * @param sourceDir the root source directory
-     * @param recurse When true, recursively gathers all sources in 
+     * @param recurse When true, recursively gathers all sources in
      * sub-directories.
      */
     protected void gatherSources(Collection<String> templateNames,
@@ -266,20 +266,20 @@ public class FileCompilationProvider implements CompilationProvider {
     }
 
     protected void gatherSources(Collection<String> toCompile,
-                                 File sourceDir, String parentName, 
+                                 File sourceDir, String parentName,
                                  boolean recurse)
         throws IOException {
-        
+
         String[] list = sourceDir.list();
         if (list != null) {
             srcDirLoop:for (int i=0; i<list.length; i++) {
                 File file = new File(sourceDir, list[i]);
-                
-                // ignore hidden files 
+
+                // ignore hidden files
                 if(file.isHidden()) {
                     continue srcDirLoop;
                 }
-                
+
                 if (file.isDirectory()) {
                     if (recurse) {
                         String name = file.getName();
@@ -295,7 +295,7 @@ public class FileCompilationProvider implements CompilationProvider {
                     String name = file.getName();
                     int index = name.lastIndexOf('.');
                     name = name.substring(0, index);
-                    
+
                     if (parentName != null) {
                         name = parentName + '.' + name;
                     }
@@ -309,32 +309,32 @@ public class FileCompilationProvider implements CompilationProvider {
     }
 
     public static class FileSource implements CompilationSource {
-        
+
         private final File mSourceFile;
 
         public FileSource(String name, File sourceFile) {
             mSourceFile = sourceFile;
         }
-        
+
         public File getSourceFile() {
             return mSourceFile;
         }
-        
+
         @Override
         public String getSourcePath() {
             return mSourceFile.getAbsolutePath();
         }
 
         @Override
-        public InputStream getSource() 
+        public InputStream getSource()
             throws IOException {
-         
+
             return new FileInputStream(mSourceFile);
         }
 
         @Override
         public long getLastModified() {
-            return mSourceFile.lastModified();            
+            return mSourceFile.lastModified();
         }
     }
 }

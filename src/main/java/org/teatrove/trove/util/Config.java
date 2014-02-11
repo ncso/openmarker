@@ -19,24 +19,24 @@ package org.teatrove.trove.util;
 import org.teatrove.trove.log.Log;
 
 /**
- * The Config interface encapulates the most commonly used resources when 
+ * The Config interface encapulates the most commonly used resources when
  * configuring an object.
  *
  * @author Scott Jappinen
  */
 public interface Config {
-    
+
     /**
      * Returns initialization parameters in an easier to use map format.
      */
     public PropertyMap getProperties();
-    
+
     /**
      * Returns a log object that the target for this config object
-     * should use for reporting information pertaining to the 
+     * should use for reporting information pertaining to the
      * operation of the target.
-     */	
+     */
     public Log getLog();
-    
+
 }
 

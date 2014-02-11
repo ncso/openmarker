@@ -17,7 +17,7 @@
 package org.teatrove.trove.util;
 
 /**
- * 
+ *
  * @author Sean T. Treat
  */
 public interface PropertyChangeListener {

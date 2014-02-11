@@ -22,12 +22,12 @@ import java.lang.reflect.Modifier;
 
 /**
  * This class corresponds to the method_info data structure as defined in
- * section 4.6 of <i>The Java Virtual Machine Specification</i>. 
- * To make it easier to create bytecode for a method's CodeAttr, the 
+ * section 4.6 of <i>The Java Virtual Machine Specification</i>.
+ * To make it easier to create bytecode for a method's CodeAttr, the
  * CodeBuilder class is provided.
- * 
+ *
  * @author Brian S O'Neill, Nick Hagan
- * 
+ *
  * @see ClassFile
  * @see CodeBuilder
  */

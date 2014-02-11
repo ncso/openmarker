@@ -28,9 +28,9 @@ public abstract class Descriptor {
      */
     public abstract String toString();
 
-    public static Descriptor parse(String desc) 
+    public static Descriptor parse(String desc)
         throws IllegalArgumentException {
-        
+
         if (desc != null && desc.startsWith("(")) {
             return MethodDesc.forDescriptor(desc);
         }

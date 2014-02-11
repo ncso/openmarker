@@ -48,7 +48,7 @@ public interface FileBuffer {
      * Write one byte at the given position.
      */
     void write(long position, int value) throws IOException;
-    
+
     long size() throws IOException;
 
     void truncate(long size) throws IOException;

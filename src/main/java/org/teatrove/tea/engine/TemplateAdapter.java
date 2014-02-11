@@ -90,11 +90,11 @@ class TemplateAdapter extends TemplateLoader {
         public Class<?> getReturnType() {
             return mTemplate.getReturnType();
         }
-        
+
         public Type getGenericReturnType() {
             return mTemplate.getGenericReturnType();
         }
-        
+
         public String[] getParameterNames() {
             return mTemplate.getParameterNames();
         }
@@ -102,7 +102,7 @@ class TemplateAdapter extends TemplateLoader {
         public Class<?>[] getParameterTypes() {
             return mTemplate.getParameterTypes();
         }
-        
+
         public Type[] getGenericParameterTypes() {
             return mTemplate.getGenericParameterTypes();
         }

@@ -15,14 +15,14 @@ public class ResourceCompilerTest {
 
     private Compiler compiler;
     private ResourceCompilationProvider provider;
-    
+
     @Before
     public void init() {
         provider = new ResourceCompilationProvider();
         compiler = new Compiler(new ClassInjector());
         compiler.addCompilationProvider(provider);
     }
-    
+
     @Test
     public void testSourceExists() {
         assertTrue(compiler.sourceExists("test"));

@@ -21,7 +21,7 @@ import java.io.IOException;
 
 /**
  * A Writer that writes into a CharToByteBuffer.
- * 
+ *
  * @author Brian S O'Neill
  */
 public class CharToByteBufferWriter extends Writer {
@@ -42,7 +42,7 @@ public class CharToByteBufferWriter extends Writer {
         mBuffer.append(chars);
     }
 
-    public void write(char[] chars, int offset, int length) 
+    public void write(char[] chars, int offset, int length)
         throws IOException {
         checkIfClosed();
         mBuffer.append(chars, offset, length);

@@ -26,7 +26,7 @@ import org.teatrove.trove.classfile.MethodDesc;
 import org.teatrove.trove.classfile.TypeDesc;
 
 /**
- * 
+ *
  *
  * @author Nick Hagan
  */

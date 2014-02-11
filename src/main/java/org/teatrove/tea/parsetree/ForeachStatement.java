@@ -19,13 +19,13 @@ package org.teatrove.tea.parsetree;
 import org.teatrove.tea.compiler.SourceInfo;
 
 /**
- * A ForeachStatement iterates over the values of an array or a Collection, 
- * storing each value in a variable, allowing a statement or statements to 
+ * A ForeachStatement iterates over the values of an array or a Collection,
+ * storing each value in a variable, allowing a statement or statements to
  * operate on each. Reverse looping is supported for arrays and Lists.
  *
- * <p>Because Collections don't know the type of elements they 
+ * <p>Because Collections don't know the type of elements they
  * contain (they only know that they are Objects), the only operations allowed
- * on the loop variable are those that are defined for Object. 
+ * on the loop variable are those that are defined for Object.
  *
  * <p>Collection class can be subclassed to contain a special
  * field that defines the element type. The field must have the following

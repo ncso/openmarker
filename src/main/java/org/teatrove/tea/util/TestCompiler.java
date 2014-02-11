@@ -31,7 +31,7 @@ import org.teatrove.tea.runtime.TemplateLoader;
  * <p>Templates are read from files that must have the extension ".tea". The
  * code generated are Java class files which are written in the same directory
  * as the source files. Compilation error messages are sent to standard out.
- * 
+ *
  * @author Brian S O'Neill
  */
 public class TestCompiler extends Compiler {
@@ -66,7 +66,7 @@ public class TestCompiler extends Compiler {
             System.out.println(msg);
             return;
         }
-        
+
         TemplateLoader loader = new TemplateLoader();
         TemplateLoader.Template template = loader.getTemplate(args[0]);
 
@@ -81,7 +81,7 @@ public class TestCompiler extends Compiler {
         template.execute(new Context(System.out), params);
     }
 
-    public TestCompiler(File rootSourceDir, 
+    public TestCompiler(File rootSourceDir,
                         String rootPackage,
                         File rootDestDir) {
 

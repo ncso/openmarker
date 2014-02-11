@@ -24,7 +24,7 @@ import java.util.HashSet;
  * A CharToByteBuffer implementation that converts ISO-8859-1 encoded
  * characters faster. To force fast conversion, construct FastCharToByteBuffer
  * with ISO-8859-1 as the default encoding.
- * 
+ *
  * @author Brian S O'Neill
  */
 public class FastCharToByteBuffer implements CharToByteBuffer, Serializable {
@@ -56,7 +56,7 @@ public class FastCharToByteBuffer implements CharToByteBuffer, Serializable {
 
     /**
      * @param buffer Buffer that receives the characters converted to bytes.
-     */    
+     */
     public FastCharToByteBuffer(ByteBuffer buffer) {
         this(buffer, null);
     }
@@ -65,7 +65,7 @@ public class FastCharToByteBuffer implements CharToByteBuffer, Serializable {
      * @param buffer Buffer that receives the characters converted to bytes.
      * @param defaultEncoding Default character encoding to use if setEncoding
      * is not called.
-     */    
+     */
     public FastCharToByteBuffer(ByteBuffer buffer, String defaultEncoding) {
         mBuffer = buffer;
         try {
@@ -201,7 +201,7 @@ public class FastCharToByteBuffer implements CharToByteBuffer, Serializable {
             mSlowConvertor.clear();
         }
     }
-    
+
     public void drain() throws IOException {
         if (mSlowConvertor != null) {
             mSlowConvertor.drain();

@@ -23,7 +23,7 @@ import java.lang.reflect.TypeVariable;
 import java.lang.reflect.WildcardType;
 
 /**
- * 
+ *
  *
  * @author Nick Hagan
  */
@@ -133,7 +133,7 @@ public class GenericType {
     public boolean isInterface() {
         return this.type.isInterface();
     }
-    
+
     public boolean isArray() {
         return this.getDimensions() > 0;
     }

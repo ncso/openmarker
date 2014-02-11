@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class is used to build method descriptor strings as 
+ * This class is used to build method descriptor strings as
  * defined in <i>The Java Virtual Machine Specification</i>, section 4.3.3.
  * MethodDesc instances are canonicalized and therefore "==" comparable.
  *
@@ -84,7 +84,7 @@ public class MethodDesc extends Descriptor implements Serializable {
      * Acquire a MethodDesc from a type descriptor. This syntax is described in
      * section 4.3.3, Method Descriptors.
      */
-    public static MethodDesc forDescriptor(String desc) 
+    public static MethodDesc forDescriptor(String desc)
         throws IllegalArgumentException
     {
         try {

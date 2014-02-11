@@ -22,25 +22,25 @@ import java.io.*;
 /**
  * This class corresponds to the Code_attribute structure as defined in
  * section 4.7.4 of <i>The Java Virtual Machine Specification</i>.
- * To make it easier to create bytecode for the CodeAttr, use the 
+ * To make it easier to create bytecode for the CodeAttr, use the
  * CodeBuilder.
  *
  * @author Brian S O'Neill
- * 
+ *
  * @see Opcode
  * @see CodeBuilder
  */
 public class CodeAttr extends Attribute {
     private CodeBuffer mCodeBuffer;
     private List mAttributes = new ArrayList(2);
-    
+
     private LineNumberTableAttr mLineNumberTable;
     private LocalVariableTableAttr mLocalVariableTable;
 
     CodeAttr(ConstantPool cp) {
         super(cp, CODE);
     }
-    
+
     /**
      * Returns null if no CodeBuffer is defined for this CodeAttr.
      */
@@ -51,7 +51,7 @@ public class CodeAttr extends Attribute {
     public void setCodeBuffer(CodeBuffer code) {
         mCodeBuffer = code;
     }
-    
+
     /**
      * Returns the line number in the source code from the given bytecode
      * address (start_pc).
@@ -109,7 +109,7 @@ public class CodeAttr extends Attribute {
 
         mAttributes.add(attr);
     }
-    
+
     public Attribute[] getAttributes() {
         Attribute[] attrs = new Attribute[mAttributes.size()];
         return (Attribute[])mAttributes.toArray(attrs);
@@ -128,13 +128,13 @@ public class CodeAttr extends Attribute {
                 length += 8 * handlers.length;
             }
         }
-        
+
         int size = mAttributes.size();
         for (int i=0; i<size; i++) {
             length += ((Attribute)mAttributes.get(i)).getLength();
             length += 6; // attributes have an intial 6 byte length
         }
-        
+
         return length;
     }
 
@@ -144,10 +144,10 @@ public class CodeAttr extends Attribute {
         }
 
         ExceptionHandler[] handlers = mCodeBuffer.getExceptionHandlers();
-        
+
         dout.writeShort(mCodeBuffer.getMaxStackDepth());
         dout.writeShort(mCodeBuffer.getMaxLocals());
-        
+
         byte[] byteCodes = mCodeBuffer.getByteCodes();
         dout.writeInt(byteCodes.length);
         dout.write(byteCodes);
@@ -163,7 +163,7 @@ public class CodeAttr extends Attribute {
         else {
             dout.writeShort(0);
         }
-        
+
         int size = mAttributes.size();
         dout.writeShort(size);
         for (int i=0; i<size; i++) {
@@ -188,26 +188,26 @@ public class CodeAttr extends Attribute {
         din.readFully(byteCodes);
 
         int exceptionHandlerCount = din.readUnsignedShort();
-        final ExceptionHandler[] handlers = 
+        final ExceptionHandler[] handlers =
             new ExceptionHandler[exceptionHandlerCount];
 
         for (int i=0; i<exceptionHandlerCount; i++) {
             handlers[i] = ExceptionHandler.readFrom(cp, din);
         }
-        
+
         code.mCodeBuffer = new CodeBuffer() {
             public int getMaxStackDepth() {
                 return maxStackDepth;
             }
-            
+
             public int getMaxLocals() {
                 return maxLocals;
             }
-            
+
             public byte[] getByteCodes() {
                 return (byte[])byteCodes.clone();
             }
-            
+
             public ExceptionHandler[] getExceptionHandlers() {
                 return (ExceptionHandler[])handlers.clone();
             }

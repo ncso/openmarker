@@ -124,8 +124,8 @@ public final class SecureReadWriteLock implements ReadWriteLock {
                 mReadLocks++;
             }
             info.mType = READ;
-        }     
-        
+        }
+
         info.mCount++;
         return true;
     }
@@ -141,7 +141,7 @@ public final class SecureReadWriteLock implements ReadWriteLock {
 
     /**
      * An upgradable lock is obtained when no threads currently hold write or
-     * upgradable locks. When a thread has an upgradable lock, it blocks 
+     * upgradable locks. When a thread has an upgradable lock, it blocks
      * threads that wish to acquire upgradable or write locks.
      * <p>
      * Upgradable locks are to be used when a thread needs a read lock, but
@@ -151,10 +151,10 @@ public final class SecureReadWriteLock implements ReadWriteLock {
      * would be deadlocked with itself.
      * <p>
      * To prevent deadlock, threads that may need to upgrade a read lock
-     * to a write lock should acquire an upgradable lock instead of a read 
+     * to a write lock should acquire an upgradable lock instead of a read
      * lock. Upgradable locks will not block threads that wish to only read.
      * <p>
-     * To perform an upgrade, call acquireWriteLock while the upgradable 
+     * To perform an upgrade, call acquireWriteLock while the upgradable
      * lock is still held.
      *
      * @param timeout milliseconds to wait for lock acquisition. If negative,
@@ -205,7 +205,7 @@ public final class SecureReadWriteLock implements ReadWriteLock {
                 mUpgradableLockHeld = Thread.currentThread();
             }
             info.mType = UPGRADABLE;
-        }     
+        }
 
         info.mCount++;
         return true;
@@ -221,7 +221,7 @@ public final class SecureReadWriteLock implements ReadWriteLock {
     }
 
     /**
-     * A write lock is obtained only when there are no read, upgradable or 
+     * A write lock is obtained only when there are no read, upgradable or
      * write locks held by any other thread. When a thread has a write lock,
      * it blocks any thread that wishes to acquire any kind of lock.
      * <p>
@@ -242,7 +242,7 @@ public final class SecureReadWriteLock implements ReadWriteLock {
 
         if (type == READ) {
             throw new IllegalStateException
-                ("Cannot acquire a write lock while thread holds " + 
+                ("Cannot acquire a write lock while thread holds " +
                  "only a read lock. " +
                  "Use an upgradable lock instead of a read lock.");
         }
@@ -254,7 +254,7 @@ public final class SecureReadWriteLock implements ReadWriteLock {
                     // the lock is released.
                     info.mUpgradeCount = info.mCount;
                 }
-                
+
                 if (!writeLockAvailable(type)) {
                     if (timeout < 0) {
                         mWriteLockAttempts++;
@@ -309,7 +309,7 @@ public final class SecureReadWriteLock implements ReadWriteLock {
             }
             info.mType = WRITE;
         }
-        
+
         info.mCount++;
         return true;
     }

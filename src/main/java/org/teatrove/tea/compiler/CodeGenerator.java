@@ -30,8 +30,8 @@ import org.teatrove.tea.parsetree.Template;
 public abstract class CodeGenerator {
     protected Template mTree;
     protected Vector<CompileListener> mListeners = new Vector<CompileListener>(1);
-    
-    
+
+
     public CodeGenerator(Template tree) {
         mTree = tree;
     }
@@ -43,13 +43,13 @@ public abstract class CodeGenerator {
     public void removeCompileListener(CompileListener listener) {
         mListeners.removeElement(listener);
     }
-    
+
     public Template getParseTree() {
         return mTree;
     }
 
     public abstract void writeTo(OutputStream out) throws IOException;
-    
+
     protected void dispatchCompileError(CompileEvent e) {
         synchronized (mListeners) {
             for (int i = 0; i < mListeners.size(); i++) {
@@ -57,7 +57,7 @@ public abstract class CodeGenerator {
             }
         }
     }
-    
+
     protected void dispatchCompileWarning(CompileEvent e) {
         synchronized (mListeners) {
             for (int i = 0; i < mListeners.size(); i++) {

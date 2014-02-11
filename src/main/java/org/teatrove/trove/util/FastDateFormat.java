@@ -96,7 +96,7 @@ public class FastDateFormat {
      * system locale
      */
     public static FastDateFormat getInstance
-        (String pattern, DateFormatSymbols symbols) 
+        (String pattern, DateFormatSymbols symbols)
         throws IllegalArgumentException
     {
         return getInstance(pattern, null, null, symbols);
@@ -125,7 +125,7 @@ public class FastDateFormat {
      */
     public static synchronized FastDateFormat getInstance
         (String pattern, TimeZone timeZone, Locale locale,
-         DateFormatSymbols symbols) 
+         DateFormatSymbols symbols)
         throws IllegalArgumentException
     {
         Object key = pattern;
@@ -293,11 +293,11 @@ public class FastDateFormat {
                 throw new IllegalArgumentException
                     ("Illegal time style: " + timeStyle);
             }
-            
+
             if (locale == null) {
                 locale = Locale.getDefault();
             }
-            
+
             try {
                 String pattern = ((SimpleDateFormat)DateFormat.getDateTimeInstance(ds, ts, locale)).toPattern();
                 format = getInstance(pattern, timeZone, locale);
@@ -495,7 +495,7 @@ public class FastDateFormat {
 
             for (; i < length; i++) {
                 c = pattern.charAt(i);
-                
+
                 if (c == '\'') {
                     if (i + 1 < length && pattern.charAt(i + 1) == '\'') {
                         // '' is treated as escaped '
@@ -620,7 +620,7 @@ public class FastDateFormat {
     public String getPattern() {
         return mPattern;
     }
-    
+
     /**
      * Returns the time zone used by this formatter, or null if time zone of
      * formatted dates is used instead.
@@ -805,10 +805,10 @@ public class FastDateFormat {
             }
         }
     }
-    
+
     private static class TwoDigitNumberField implements NumberRule {
         private final int mField;
-        
+
         TwoDigitNumberField(int field) {
             mField = field;
         }
@@ -861,7 +861,7 @@ public class FastDateFormat {
         public void appendTo(StringBuffer buffer, Calendar calendar) {
             appendTo(buffer, calendar.get(Calendar.MONTH) + 1);
         }
-        
+
         public final void appendTo(StringBuffer buffer, int value) {
             buffer.append((char)(value / 10 + '0'));
             buffer.append((char)(value % 10 + '0'));

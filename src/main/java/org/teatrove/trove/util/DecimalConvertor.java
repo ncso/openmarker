@@ -46,7 +46,7 @@ public class DecimalConvertor {
 
     static final int[] I_TENTH_POWERS;
     static final long[] L_TENTH_POWERS;
-    
+
     static {
         I_TENTH_POWERS = new int[10];
         {
@@ -56,7 +56,7 @@ public class DecimalConvertor {
                 v *= 10;
             }
         }
-        
+
         L_TENTH_POWERS = new long[19];
         {
             long v = 1;
@@ -66,7 +66,7 @@ public class DecimalConvertor {
             }
         }
     }
-        
+
     /**
      * Formats a floating point value like Float.toString, except values
      * are never formatted in scientific notation.
@@ -148,7 +148,7 @@ public class DecimalConvertor {
      * @param v value
      * @param buf buffer to receive formatted number
      * @param maxDigits maximum number of manstissa digits to produce
-     * @param maxFractDigits maximum number of fractional digits to produce 
+     * @param maxFractDigits maximum number of fractional digits to produce
      * @param roundMode i.e. ROUND_HALF_UP
      * @param minWholeDigits minimum number of whole digits to produce
      * @param minFractDigits minimum number of fractional digits to produce
@@ -340,7 +340,7 @@ public class DecimalConvertor {
 
         char[] digits = new char[Math.min(10, maxDigits) + 1];
         int result = toDecimalDigits(v, digits, 0, maxDigits, 100, roundMode);
-        
+
         return formatScientificResult(digits, result, buf, exponentMultiple,
                                       minWholeDigits, minFractDigits,
                                       decimalSeparator, decimalScale,
@@ -386,7 +386,7 @@ public class DecimalConvertor {
         char[] digits = new char[Math.min(20, maxDigits) + 1];
         int result = toDecimalDigits
             (v, digits, 0, maxDigits, 100, roundMode);
-        
+
         return formatScientificResult(digits, result, buf, exponentMultiple,
                                       minWholeDigits, minFractDigits,
                                       decimalSeparator, decimalScale,
@@ -684,7 +684,7 @@ public class DecimalConvertor {
         while (ndigits > 0 && digits[ndigits - 1] == '0') {
             ndigits--;
         }
-        
+
         int decimal = (result >> 16) + decimalScale;
         int wholeDigits = decimal <= 0 ? 0 : decimal;
         int fractOffset = 0;
@@ -916,7 +916,7 @@ public class DecimalConvertor {
         int S = 1;
         int R = f;
         int mlo = 1;
-        
+
         if (p > e) {
             S <<= p - e;
         }
@@ -990,7 +990,7 @@ public class DecimalConvertor {
             int temp = R * 10;
             digits[cursor++] = (char)((temp / S) + '0');
             R = temp % S;
-            
+
             if (mlo == mhi) {
                 mlo = (mhi *= 10);
             }
@@ -998,7 +998,7 @@ public class DecimalConvertor {
                 mlo *= 10;
                 mhi *= 10;
             }
-            
+
             temp = R << 1;
             if (temp < mlo) {
                 if (temp > (S2 - mhi)) {
@@ -1014,7 +1014,7 @@ public class DecimalConvertor {
                 k += increment(digits, offset, cursor);
                 break;
             }
-            
+
             if (cursor >= limit) {
                 if (roundMode != ROUND_HALF_UP_DECIMAL) {
                     if (temp >= S) {
@@ -1024,7 +1024,7 @@ public class DecimalConvertor {
                 break;
             }
         }
-        
+
         if (cursor >= limit && roundMode == ROUND_HALF_UP_DECIMAL) {
             // Chop off extra digit.
             cursor--;
@@ -1073,7 +1073,7 @@ public class DecimalConvertor {
         long S = 1L;
         long R = f;
         long mlo = 1L;
-        
+
         if (p > e) {
             S <<= p - e;
         }
@@ -1147,7 +1147,7 @@ public class DecimalConvertor {
             long temp = R * 10;
             digits[cursor++] = (char)((temp / S) + '0');
             R = temp % S;
-            
+
             if (mlo == mhi) {
                 mlo = (mhi *= 10);
             }
@@ -1155,7 +1155,7 @@ public class DecimalConvertor {
                 mlo *= 10;
                 mhi *= 10;
             }
-            
+
             temp = R << 1;
             if (temp < mlo) {
                 if (temp > (S2 - mhi)) {
@@ -1171,7 +1171,7 @@ public class DecimalConvertor {
                 k += increment(digits, offset, cursor);
                 break;
             }
-            
+
             if (cursor >= ilimit) {
                 if (roundMode != ROUND_HALF_UP_DECIMAL) {
                     if (temp >= S) {
@@ -1222,7 +1222,7 @@ public class DecimalConvertor {
         LargeUInt R = new LargeUInt(f);
         LargeUInt mlo = new LargeUInt();
         mlo.setValue(1);
-        
+
         if (p > e) {
             S.shiftLeft(p - e);
         }
@@ -1245,7 +1245,7 @@ public class DecimalConvertor {
             // Set this again later to be 2 * mlo.
             mhi = null;
         }
-        
+
         int k = 0;
         temp.setValue(S);
         temp.add(9);
@@ -1312,7 +1312,7 @@ public class DecimalConvertor {
         while (true) {
             R.multiplyByTen();
             digits[cursor++] = (char)(R.divideClose(S) + '0');
-            
+
             if (mlo == mhi) {
                 mlo.multiplyByTen();
             }
@@ -1320,12 +1320,12 @@ public class DecimalConvertor {
                 mlo.multiplyByTen();
                 mhi.multiplyByTen();
             }
-            
+
             temp.setValue(R);
             temp.shiftLeft(1);
             temp2.setValue(S2);
             temp2.subtract(mhi);
-            
+
             if (temp.compare(mlo) < 0) {
                 if (temp.compare(temp2) > 0) {
                     // low and high
@@ -1340,7 +1340,7 @@ public class DecimalConvertor {
                 k += increment(digits, offset, cursor);
                 break;
             }
-            
+
             if (cursor >= limit) {
                 if (roundMode != ROUND_HALF_UP_DECIMAL) {
                     if (temp.compare(S) >= 0) {
@@ -1399,17 +1399,17 @@ public class DecimalConvertor {
         // digits.  Digits are stored little-endian: least-significant digit is
         // at index 0. This facilitates expansion and contraction as precision
         // requirements change.
-        
+
         private int[] mDigits;
-        
+
         // Amount of valid digits stored in mDigits.
         private int mLength;
-        
+
         public LargeUInt() {
             mDigits = new int[8];
             mLength = 1;
         }
-        
+
         public LargeUInt(int initialCapacity) {
             if (initialCapacity < 1) {
                 throw new IllegalArgumentException();
@@ -1417,7 +1417,7 @@ public class DecimalConvertor {
             mDigits = new int[initialCapacity];
             mLength = 1;
         }
-        
+
         public LargeUInt(LargeUInt v) {
             int[] vdigits = v.mDigits;
             int[] digits = new int[vdigits.length];
@@ -1427,7 +1427,7 @@ public class DecimalConvertor {
             }
             mDigits = digits;
         }
-        
+
         public void setZero() {
             int[] digits = mDigits;
             int length = mLength;
@@ -1436,7 +1436,7 @@ public class DecimalConvertor {
             }
             mLength = 1;
         }
-        
+
         public void setValue(int v) {
             int[] digits = mDigits;
             int length = mLength;
@@ -1465,28 +1465,28 @@ public class DecimalConvertor {
                 }
             }
         }
-        
+
         public void setValue(LargeUInt v) {
             int[] digits = mDigits;
             int vlength = v.mLength;
-            
+
             if (vlength > digits.length) {
                 mDigits = (int[])v.mDigits.clone();
             }
             else {
                 System.arraycopy(v.mDigits, 0, digits, 0, vlength);
             }
-            
+
             mLength = vlength;
         }
-        
+
         /**
          * Add v into this LargeUInt. (0 <= v <= 0xffffffffL)
          */
         public void add(long v) {
             int[] digits = mDigits;
             int length = mLength;
-            
+
             int i;
             for (i=0; i<length; i++) {
                 v += (digits[i] & 0xffffffffL);
@@ -1498,10 +1498,10 @@ public class DecimalConvertor {
                     v = 1;
                 }
             }
-            
+
             expand(1)[i] = 1;
         }
-        
+
         /**
          * Add v into this LargeUInt.
          */
@@ -1510,7 +1510,7 @@ public class DecimalConvertor {
             int[] vdigits = v.mDigits;
             int length = mLength;
             int vlength = v.mLength;
-            
+
             if (length < vlength) {
                 digits = expand(vlength - length);
                 length = vlength;
@@ -1534,12 +1534,12 @@ public class DecimalConvertor {
                     c = 1;
                 }
             }
-            
+
             if (c != 0) {
                 expand(1)[i] = 1;
             }
         }
-        
+
         /**
          * Subtract v from this LargeUInt. (0 <= v <= 0xffffffffL)
          *
@@ -1548,7 +1548,7 @@ public class DecimalConvertor {
         public int subtract(long v) {
             int[] digits = mDigits;
             int length = mLength;
-            
+
             int i;
             for (i=0; i<length; i++) {
                 v = (digits[i] & 0xffffffffL) - v;
@@ -1559,10 +1559,10 @@ public class DecimalConvertor {
                 }
                 v = 1;
             }
-            
+
             return 1;
         }
-        
+
         /**
          * Subtract v from this LargeUInt.
          *
@@ -1573,12 +1573,12 @@ public class DecimalConvertor {
             int[] vdigits = v.mDigits;
             int length = mLength;
             int vlength = v.mLength;
-            
+
             if (length < vlength) {
                 digits = expand(vlength - length);
                 length = vlength;
             }
-            
+
             long c = 0;
             int i, j;
             for (i=0,j=0; i<length; i++) {
@@ -1598,10 +1598,10 @@ public class DecimalConvertor {
                     c = 1;
                 }
             }
-            
+
             return (int)c;
         }
-        
+
         /**
          * Bitwise shift left, which is equivalent to multiplying this
          * LargeUInt by 2^v.
@@ -1609,7 +1609,7 @@ public class DecimalConvertor {
         public void shiftLeft(int v) {
             int[] digits;
             int length;
-            
+
             if (v <= 31) {
                 digits = mDigits;
                 length = mLength;
@@ -1619,7 +1619,7 @@ public class DecimalConvertor {
                 int coarse = v >>> 5; // v>>>5 == v/32
                 digits = expand(coarse);
                 length = mLength;
-                
+
                 int i = length - 1;
                 while (i >= 0) {
                     int k = i - coarse;
@@ -1633,29 +1633,29 @@ public class DecimalConvertor {
                         break;
                     }
                 }
-                
+
                 v &= 31;
             }
-            
+
             // Fine shift. This is essentially a specialized version of
             // multiply by 2^n. The '* v' expression is replaced by '<< v'.
 
             if (v == 0) {
                 return;
             }
-            
+
             long p = 0;
             for (int i=0; i<length; i++) {
                 p += (digits[i] & 0xffffffffL) << v;
                 digits[i] = (int)p;
                 p >>>= 32;
             }
-            
+
             if (p != 0) {
                 expand(1)[mLength - 1] = (int)p;
             }
         }
-        
+
         /**
          * Multiply this LargeUInt by v. (0 <= v <= 0xffffffffL)
          */
@@ -1667,41 +1667,41 @@ public class DecimalConvertor {
             if (v == 1) {
                 return;
             }
-            
+
             int[] digits = mDigits;
             int length = mLength;
-            
+
             long p = 0;
             for (int i=0; i<length; i++) {
                 p += (digits[i] & 0xffffffffL) * v;
                 digits[i] = (int)p;
                 p >>>= 32;
             }
-            
+
             if (p != 0) {
                 expand(1)[mLength - 1] = (int)p;
             }
         }
-        
+
         /**
          * Multiply this LargeUInt by ten.
          */
         public void multiplyByTen() {
             int[] digits = mDigits;
             int length = mLength;
-            
+
             long p = 0;
             for (int i=0; i<length; i++) {
                 p += (digits[i] & 0xffffffffL) * 10;
                 digits[i] = (int)p;
                 p >>>= 32;
             }
-            
+
             if (p != 0) {
                 expand(1)[mLength - 1] = (int)p;
             }
         }
-        
+
         /**
          * Multiply this LargeUInt by 10^v.
          */
@@ -1716,7 +1716,7 @@ public class DecimalConvertor {
                 multiply(L_TENTH_POWERS[v]);
             }
         }
-        
+
         /**
          * Divide this LargeUInt by v. (0 <= v <= 0xffffffffL)
          */
@@ -1727,10 +1727,10 @@ public class DecimalConvertor {
             if (v == 1) {
                 return;
             }
-            
+
             int[] digits = mDigits;
             int length = mLength;
-            
+
             long divChunk = 0;
             for (int i=length; --i >= 0; ) {
                 divChunk += digits[i] & 0xffffffffL;
@@ -1749,14 +1749,14 @@ public class DecimalConvertor {
                 divChunk <<= 32;
             }
         }
-        
+
         /**
          * Divide this LargeUInt by ten.
          */
         public void divideByTen() {
             int[] digits = mDigits;
             int length = mLength;
-            
+
             long divChunk = 0;
             for (int i=length; --i >= 0; ) {
                 divChunk += digits[i] & 0xffffffffL;
@@ -1775,7 +1775,7 @@ public class DecimalConvertor {
                 divChunk <<= 32;
             }
         }
-        
+
         /**
          * Divide this LargeUInt by v, storing the remainder in this and
          * returning the quotient. This method assumes that (this / v) is very
@@ -1785,7 +1785,7 @@ public class DecimalConvertor {
             if (v.isZero()) {
                 throw new ArithmeticException("/ by zero");
             }
-            
+
             // Just subtract until remainder is less than divisor. I don't want
             // to implement a full-blown long division routine.
             int q = 0;
@@ -1804,7 +1804,7 @@ public class DecimalConvertor {
             int[] vdigits = v.mDigits;
             int length = mLength;
             int vlength = v.mLength;
-            
+
             if (length == vlength) {
                 for (int i = length; --i >= 0; ) {
                     int a = digits[i];
@@ -1825,19 +1825,19 @@ public class DecimalConvertor {
                 return length - vlength;
             }
         }
-        
+
         public boolean isZero() {
             return mLength == 1 && mDigits[0] == 0;
         }
-        
+
         public String toString() {
             int[] digits = mDigits;
             int length = mLength;
-            
+
             StringBuffer buf = new StringBuffer(2 + length * 8);
             buf.append('0');
             buf.append('x');
-            
+
             for (int i=length; --i>=0; ) {
                 int digitsi = digits[i];
                 String sub = Long.toHexString(((long)digitsi) & 0xffffffffL);
@@ -1849,30 +1849,30 @@ public class DecimalConvertor {
                 }
                 buf.append(sub);
             }
-            
+
             return buf.toString();
         }
-        
+
         private void shrinkLength() {
             int[] digits = mDigits;
             int length = mLength;
-            
+
             int i;
             for (i = length; --i >= 0; ) {
                 if (digits[i] != 0) {
                     break;
                 }
             }
-            
+
             if (i + 1 < length) {
                 mLength = (i < 0) ? 1 : i + 1;
             }
         }
-        
+
         private int[] expand(int amt) {
             int[] digits = mDigits;
             int length = mLength;
-            
+
             if (length + amt > digits.length) {
                 // Double the storage capacity.
                 int newLength = length * 2;
@@ -1883,7 +1883,7 @@ public class DecimalConvertor {
                 System.arraycopy(digits, 0, newDigits, 0, length);
                 digits = mDigits = newDigits;
             }
-            
+
             mLength = length + amt;
             return digits;
         }

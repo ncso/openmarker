@@ -21,7 +21,7 @@ import org.teatrove.tea.compiler.SourceInfo;
 /**
  * The superclass of all parse tree nodes. Every Node contains source
  * information and can accept a NodeVisitor.
- * 
+ *
  * @author Brian S O'Neill
  * @see NodeVisitor
  */

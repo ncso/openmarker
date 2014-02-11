@@ -22,25 +22,25 @@ package org.teatrove.trove.util.plugin;
  * @author Scott Jappinen
  */
 public interface Plugin extends PluginListener {
-    
+
     /**
      * Initializes resources used by the Plugin.
      *
      * @param config the plugins's configuration object
      * @throws PluginException
-     */	
+     */
     public void init(PluginConfig config) throws PluginException;
-    
+
     /**
      * Return the name of the Plugin.
      *
      * @return String the name of the plugin.
      */
     public String getName();
-    
+
     /**
      * Called by the host container when the plugin is no longer needed.
-     */	
+     */
     public void destroy();
-    
+
 }

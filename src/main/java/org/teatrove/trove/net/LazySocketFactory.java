@@ -28,7 +28,7 @@ import java.net.*;
  * recycled connection is requested. The connection is tested by writing the
  * data to it. If this fails, a new connection is requested and the operation
  * is tried again.
- * 
+ *
  * @author Brian S O'Neill
  */
 public class LazySocketFactory implements SocketFactory {
@@ -45,7 +45,7 @@ public class LazySocketFactory implements SocketFactory {
     public InetAddressAndPort getInetAddressAndPort(Object session) {
         return mFactory.getInetAddressAndPort(session);
     }
-    
+
     public long getDefaultTimeout() {
         return mFactory.getDefaultTimeout();
     }
@@ -76,14 +76,14 @@ public class LazySocketFactory implements SocketFactory {
 
     /**
      * Returns a socket that will lazily connect.
-     */    
+     */
     public CheckedSocket getSocket() throws ConnectException, SocketException {
         return CheckedSocket.check(new LazySocket(mFactory));
     }
 
     /**
      * Returns a socket that will lazily connect.
-     */    
+     */
     public CheckedSocket getSocket(Object session)
         throws ConnectException, SocketException
     {
@@ -92,7 +92,7 @@ public class LazySocketFactory implements SocketFactory {
 
     /**
      * Returns a socket that will lazily connect.
-     */    
+     */
     public CheckedSocket getSocket(long timeout)
         throws ConnectException, SocketException
     {
@@ -101,7 +101,7 @@ public class LazySocketFactory implements SocketFactory {
 
     /**
      * Returns a socket that will lazily connect.
-     */    
+     */
     public CheckedSocket getSocket(Object session, long timeout)
         throws ConnectException, SocketException
     {

@@ -22,7 +22,7 @@ import org.teatrove.tea.compiler.CompilationUnit;
 /**
  * A CallExpression to a template is specified in a template with the "call"
  * keyword.
- * 
+ *
  * @author Brian S O'Neill
  * @see FunctionCallExpression
  */
@@ -31,7 +31,7 @@ public class TemplateCallExpression extends CallExpression {
 
     private CompilationUnit mCalledTemplate;
 
-    public TemplateCallExpression(SourceInfo info, 
+    public TemplateCallExpression(SourceInfo info,
                                   Expression expression, Name target,
                                   ExpressionList params,
                                   Block subParam) {

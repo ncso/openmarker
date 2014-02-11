@@ -31,7 +31,7 @@ public class MultiKey implements java.io.Serializable {
     /**
      * Computes an object hashcode for any kind of object including null,
      * arrays, and arrays of arrays.
-     */    
+     */
     static int hashCode(Object obj) {
         if (obj == null) {
             return 0;
@@ -42,11 +42,11 @@ public class MultiKey implements java.io.Serializable {
         //if (!clazz.isArray()) {
             //return obj.hashCode();
         //}
-        
+
         // Compute hashcode of array.
 
         int hash = clazz.hashCode();
-        
+
         if (obj instanceof int[]) {
             int[] array = (int[])obj;
             for (int i = array.length; --i >= 0; ) {
@@ -106,15 +106,15 @@ public class MultiKey implements java.io.Serializable {
         else {
             hash = obj.hashCode();
         }
-        
-        
+
+
         return hash;
     }
-    
+
     /**
      * Performans an object equality for any kind of objects including null,
      * arrays, and arrays of arrays.
-     */    
+     */
     static boolean equals(Object obj1, Object obj2) {
         if (obj1 == obj2) {
             return true;
@@ -128,11 +128,11 @@ public class MultiKey implements java.io.Serializable {
         //if (!(clazz1.isArray())) {
             //return obj1.equals(obj2);
         //}
-        
+
         if (clazz1 != obj2.getClass()) {
             return false;
         }
-        
+
         // Perform array equality test.
         if (obj1 instanceof int[]) {
             return Arrays.equals((int[])obj1, (int[])obj2);
@@ -142,18 +142,18 @@ public class MultiKey implements java.io.Serializable {
             // recurse into arrays of arrays.
             Object[] array1 = (Object[])obj1;
             Object[] array2 = (Object[])obj2;
-            
+
             int i;
             if ((i = array1.length) != array2.length) {
                 return false;
             }
-            
+
             while (--i >= 0) {
                 if (!equals(array1[i], array2[i])) {
                     return false;
                 }
             }
-            
+
             return true;
         }
         else if (obj1 instanceof float[]) {

@@ -33,7 +33,7 @@ public class BasicMulticastTransceiverFactory implements MessageTransceiverFacto
             port = Integer.parseInt(props.getProperty("port"));
         }
         catch (NumberFormatException ignore) {}
-     
+
         InetAddress group = null;
         InetAddress bindAddress = null;
         try {

@@ -28,7 +28,7 @@ public interface PluginFactoryConfig extends Config {
 
     /**
      * Returns a reference to the PluginContext.
-     * 
+     *
      * @returns PluginContext the PluginContext object.
      */
     public PluginContext getPluginContext();

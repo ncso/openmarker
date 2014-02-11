@@ -23,7 +23,7 @@ import java.util.*;
  * Most recently used keys appear first in the Map. Keys are marked as being
  * used whenever they are put into to the Map. To re-position a key, put it
  * back in.
- * 
+ *
  * @author Brian S O'Neill
  */
 public class UsageMap extends AbstractMap implements java.io.Serializable {
@@ -161,7 +161,7 @@ public class UsageMap extends AbstractMap implements java.io.Serializable {
 
     public Object remove(Object key) {
         Entry e = (Entry)mRecentMap.remove(key);
-        
+
         if (e == null) {
             return null;
         }
@@ -274,7 +274,7 @@ public class UsageMap extends AbstractMap implements java.io.Serializable {
             public boolean isEmpty() {
                 return mRecentMap.isEmpty();
             }
-            
+
             public boolean contains(Object obj) {
                 if (!(obj instanceof Map.Entry)) {
                     return false;

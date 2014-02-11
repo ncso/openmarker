@@ -24,7 +24,7 @@ import org.teatrove.tea.compiler.Token;
  * operation and contains a left expression and a right expression to which
  * a comparison is done between the two returning -1 if less then, 0 if equal,
  * or 1 if greater than.
- * 
+ *
  * @author Nick Hagan
  */
 public class CompareExpression extends BinaryExpression {
@@ -39,14 +39,14 @@ public class CompareExpression extends BinaryExpression {
         if (getLeftExpression().isExceptionPossible()) {
             return true;
         }
-            
+
         if (getRightExpression().isExceptionPossible()) {
             return true;
         }
 
         return false;
     }
-    
+
     public Object accept(NodeVisitor visitor) {
         return visitor.visit(this);
     }

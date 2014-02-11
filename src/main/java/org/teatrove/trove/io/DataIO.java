@@ -25,7 +25,7 @@ import java.io.DataInput;
 import java.io.DataOutput;
 
 /**
- * 
+ *
  * @author Brian S O'Neill
  */
 public class DataIO {
@@ -94,7 +94,7 @@ public class DataIO {
         readFully(in, temp, 0, 2);
         return ((temp[0] & 0xff) << 8) | (temp[1] & 0xff);
     }
- 
+
     public static final int readUnsignedShort(byte[] b, int offset) {
         return ((b[offset] & 0xff) << 8) | (b[offset + 1] & 0xff);
     }
@@ -130,11 +130,11 @@ public class DataIO {
         return
             (((long)(((temp[0]       ) << 24) |
                      ((temp[1] & 0xff) << 16) |
-                     ((temp[2] & 0xff) << 8 ) | 
+                     ((temp[2] & 0xff) << 8 ) |
                      ((temp[3] & 0xff)      ))              ) << 32) |
             (((long)(((temp[4]       ) << 24) |
                      ((temp[5] & 0xff) << 16) |
-                     ((temp[6] & 0xff) << 8 ) | 
+                     ((temp[6] & 0xff) << 8 ) |
                      ((temp[7] & 0xff)      )) & 0xffffffffL)      );
     }
 
@@ -142,11 +142,11 @@ public class DataIO {
         return
             (((long)(((b[offset    ]       ) << 24) |
                      ((b[offset + 1] & 0xff) << 16) |
-                     ((b[offset + 2] & 0xff) << 8 ) | 
+                     ((b[offset + 2] & 0xff) << 8 ) |
                      ((b[offset + 3] & 0xff)      ))              ) << 32) |
             (((long)(((b[offset + 4]       ) << 24) |
                      ((b[offset + 5] & 0xff) << 16) |
-                     ((b[offset + 6] & 0xff) << 8 ) | 
+                     ((b[offset + 6] & 0xff) << 8 ) |
                      ((b[offset + 7] & 0xff)      )) & 0xffffffffL)      );
     }
 
@@ -549,7 +549,7 @@ public class DataIO {
         int strlen = s.length();
         char[] chars = new char[strlen];
         s.getChars(0, strlen, chars, 0);
-        
+
         byte[] bytes = new byte[strlen];
 
         for (int i = 0; i < strlen; ) {
@@ -565,7 +565,7 @@ public class DataIO {
         int strlen = s.length();
         char[] chars = new char[strlen];
         s.getChars(0, strlen, chars, 0);
-        
+
         byte[] bytes = new byte[strlen * 2];
 
         for (int i = 0, j = 0; i < strlen; ) {

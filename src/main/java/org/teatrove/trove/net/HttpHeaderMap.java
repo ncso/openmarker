@@ -22,7 +22,7 @@ import java.io.*;
 import org.teatrove.trove.io.*;
 
 /**
- * 
+ *
  * @author Brian S O'Neill
  */
 public class HttpHeaderMap implements Map, Serializable {
@@ -31,7 +31,7 @@ public class HttpHeaderMap implements Map, Serializable {
     private final static DateFormat DATE_PARSER_2;
     private final static String[] DAYS;
     private final static String[] MONTHS;
-    
+
     private static final int MAX_HEADER_LENGTH = 10 * 1024;
 
     static {
@@ -153,7 +153,7 @@ public class HttpHeaderMap implements Map, Serializable {
         if (index < 0) {
             return;
         }
-        
+
         String name = header.substring(0, index);
 
         String value;
@@ -168,7 +168,7 @@ public class HttpHeaderMap implements Map, Serializable {
 
             value = header.substring(index);
         }
-        
+
         if ("Cookie".equalsIgnoreCase(name) ||
             "Set-Cookie".equalsIgnoreCase(name) ||
             (value.indexOf(',') == 3 &&
@@ -179,7 +179,7 @@ public class HttpHeaderMap implements Map, Serializable {
               value.startsWith("Fri") ||
               value.startsWith("Sat") ||
               value.startsWith("Sun")))) {
-            
+
             add(name, value.trim());
         }
         else {
@@ -189,7 +189,7 @@ public class HttpHeaderMap implements Map, Serializable {
                 add(name, value.substring(0, index).trim());
                 value = value.substring(index + 1);
             }
-            
+
             add(name, value.trim());
         }
     }
@@ -201,7 +201,7 @@ public class HttpHeaderMap implements Map, Serializable {
         appendTo(buffer);
         buffer.writeTo(out);
     }
-    
+
     public void appendTo(CharToByteBuffer buffer) throws IOException {
         Iterator it = mMap.entrySet().iterator();
         while (it.hasNext()) {
@@ -264,7 +264,7 @@ public class HttpHeaderMap implements Map, Serializable {
                                 }
                                 buffer.append(strVal);
                             }
-                            else {  
+                            else {
                                 // Comma in value, so must isolate header.
                                 if (count > 1) {
                                     buffer.append("\r\n");
@@ -322,7 +322,7 @@ public class HttpHeaderMap implements Map, Serializable {
         }
         return false;
     }
-    
+
     /**
      * Returns the first value associated with the given key.
      */
@@ -400,7 +400,7 @@ public class HttpHeaderMap implements Map, Serializable {
 
         return date;
     }
-    
+
 
     /**
      * Returns all the values associated with the given key. Changes to the

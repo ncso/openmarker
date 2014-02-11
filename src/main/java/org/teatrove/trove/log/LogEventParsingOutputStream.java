@@ -24,7 +24,7 @@ import java.util.*;
  * to LogEvent objects. Add a LogListener to intercept LogEvents. Events are
  * parsed based on newline characters (LF, CRLF or CR) or a switch to a
  * different thread.
- * 
+ *
  * @author Brian S O'Neill
  */
 public class LogEventParsingOutputStream extends OutputStream {
@@ -79,7 +79,7 @@ public class LogEventParsingOutputStream extends OutputStream {
         mListeners.removeElement(listener);
     }
 
-    private synchronized void flushLogEvent() 
+    private synchronized void flushLogEvent()
         throws UnsupportedEncodingException {
 
         if (mMessageThread == null) {
@@ -107,7 +107,7 @@ public class LogEventParsingOutputStream extends OutputStream {
             e = new LogEvent(mSource, mType, message, mMessageThread);
         }
         else {
-            e = new LogEvent(mSource, mType, message, mMessageThread, 
+            e = new LogEvent(mSource, mType, message, mMessageThread,
                              mTimestamp);
             mTimestamp = null;
         }
@@ -125,7 +125,7 @@ public class LogEventParsingOutputStream extends OutputStream {
         write(mOneByte, 0, 1);
     }
 
-    public synchronized void write(byte[] array, int off, int len) 
+    public synchronized void write(byte[] array, int off, int len)
         throws IOException {
 
         if (!isEnabled()) {
@@ -162,7 +162,7 @@ public class LogEventParsingOutputStream extends OutputStream {
                     writtenLength++;
                 }
                 else {
-                    writeToBuffer(array, writtenLength + off, 
+                    writeToBuffer(array, writtenLength + off,
                                   i - writtenLength);
                     // Add one more than i to skip the LF.
                     writtenLength = i + 1;
@@ -182,8 +182,8 @@ public class LogEventParsingOutputStream extends OutputStream {
     }
 
     /**
-     * Returning false discards written data, and events are not generated. 
-     * Default implementation always returns true. 
+     * Returning false discards written data, and events are not generated.
+     * Default implementation always returns true.
      */
     public boolean isEnabled() {
         return true;

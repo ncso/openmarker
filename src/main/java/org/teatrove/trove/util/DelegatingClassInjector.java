@@ -25,8 +25,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * A ClassInjector that delegates responsibility to a list of ClassInjectors 
- * on a per-class basis.  This is an alternative to a monolithic Class Injector, 
+ * A ClassInjector that delegates responsibility to a list of ClassInjectors
+ * on a per-class basis.  This is an alternative to a monolithic Class Injector,
  * which carries the risk of a single reference to a loaded class preventing
  * collection of the Loader and all of the associated bytecode, which can result
  * in overflow of the Permanent heap region.
@@ -65,7 +65,7 @@ public class DelegatingClassInjector extends ClassInjector {
 
     // Parent ClassLoader, used to load classes that aren't defined by this.
     private ClassLoader mSuperLoader;
-    
+
     private File[] mRootClassDirs;
     private String mRootPackage;
     private boolean mStoreBytecode;
@@ -102,19 +102,19 @@ public class DelegatingClassInjector extends ClassInjector {
         this(null, (rootClassDir == null) ? null : new File[]{rootClassDir},
              rootPackage);
     }
-    
+
     /**
      * @param parent optional parent ClassLoader to default to when a class
      * cannot be loaded with this ClassInjector.
      * @param rootClassDir optional directory to look for non-injected classes
      * @param rootPackage optional package name for the root directory
      */
-    public DelegatingClassInjector(ClassLoader parent, 
+    public DelegatingClassInjector(ClassLoader parent,
                          File rootClassDir, String rootPackage) {
         this(parent, (rootClassDir == null) ? null : new File[]{rootClassDir},
              rootPackage);
     }
-    
+
     /**
      * Construct a ClassInjector that uses the ClassLoader that loaded this
      * class as a parent.
@@ -126,7 +126,7 @@ public class DelegatingClassInjector extends ClassInjector {
     public DelegatingClassInjector(File[] rootClassDirs, String rootPackage) {
         this(null, rootClassDirs, rootPackage);
     }
-    
+
     /**
      * @param parent optional parent ClassLoader to default to when a class
      * cannot be loaded with this ClassInjector.
@@ -134,8 +134,8 @@ public class DelegatingClassInjector extends ClassInjector {
      * classes
      * @param rootPackage optional package name for the root directory
      */
-    public DelegatingClassInjector(ClassLoader parent, 
-                         File[] rootClassDirs, 
+    public DelegatingClassInjector(ClassLoader parent,
+                         File[] rootClassDirs,
                          String rootPackage) {
         this(parent, rootClassDirs, rootPackage, false);
     }
@@ -149,8 +149,8 @@ public class DelegatingClassInjector extends ClassInjector {
      * @param keepRawBytecode if true, will cause the ClassInjector to store
      * the raw bytecode of defined classes.
      */
-    public DelegatingClassInjector(ClassLoader parent, 
-                         File[] rootClassDirs, 
+    public DelegatingClassInjector(ClassLoader parent,
+                         File[] rootClassDirs,
                          String rootPackage,
                          boolean keepRawBytecode) {
         super();
@@ -172,7 +172,7 @@ public class DelegatingClassInjector extends ClassInjector {
     public URL getResource(String name) {
         return mSuperLoader.getResource(name);
     }
-    
+
     private ClassInjector getSubLoader(String name) {
     	ClassInjector ci = (ClassInjector)m_loaderMap.get(name);
     	if (ci == null) {
@@ -198,7 +198,7 @@ public class DelegatingClassInjector extends ClassInjector {
     	}
     	return clazz;
     }
-    
+
     protected void define(String name, byte[] data) {
         getSubLoader(name).define(name, data);
     }

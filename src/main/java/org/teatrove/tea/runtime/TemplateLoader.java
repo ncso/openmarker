@@ -149,12 +149,12 @@ public class TemplateLoader {
          * Returns the type that this template returns.
          */
         public Class<?> getReturnType();
-        
+
         /**
          * Returns the generic type that this template returns.
          */
         public Type getGenericReturnType();
-        
+
         /**
          * Returns the parameter names that this template accepts. The length
          * of the returned array is the same as returned by getParameterTypes.
@@ -167,7 +167,7 @@ public class TemplateLoader {
          * of the returned array is the same as returned by getParameterNames.
          */
         public Class<?>[] getParameterTypes();
-        
+
         /**
          * Returns the generic parameter types that this template accepts. The
          * length of the returned array is the same as returned by
@@ -231,11 +231,11 @@ public class TemplateLoader {
         public Class<?> getReturnType() {
             return mReturnType;
         }
-        
+
         public Type getGenericReturnType() {
             return mGenericReturnType;
         }
-        
+
         public String[] getParameterNames() {
             return mParameterNames.clone();
         }
@@ -243,7 +243,7 @@ public class TemplateLoader {
         public Class<?>[] getParameterTypes() {
             return mParameterTypes.clone();
         }
-        
+
         public Type[] getGenericParameterTypes() {
             return mGenericParameterTypes.clone();
         }

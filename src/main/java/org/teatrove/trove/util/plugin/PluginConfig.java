@@ -26,7 +26,7 @@ public interface PluginConfig extends PluginBasicConfig {
 
     /**
      * Returns a reference to the PluginContext.
-     * 
+     *
      * @return PluginContext the PluginContext object.
      */
     public PluginContext getPluginContext();

@@ -36,12 +36,12 @@ public class FlyweightSet extends AbstractSet {
     // This implementation is basically a stripped down version of
     // IdentityMap in which the entries contain only a referenced key and
     // no value.
-    
+
     private Entry mTable[];
     private int mCount;
     private int mThreshold;
     private float mLoadFactor;
-    
+
     public FlyweightSet() {
         final int initialCapacity = 101;
         final float loadFactor = 0.75f;
@@ -57,18 +57,18 @@ public class FlyweightSet extends AbstractSet {
      * set, it will be added to the set, becoming a flyweight.
      *
      * @param obj candidate flyweight; null is also accepted
-     */    
+     */
     public synchronized Object put(Object obj) {
         // This implementation is based on the IdentityMap.put method.
-        
+
         if (obj == null) {
             return null;
         }
-        
+
         Entry tab[] = mTable;
         int hash = hashCode(obj);
         int index = (hash & 0x7FFFFFFF) % tab.length;
-        
+
         for (Entry e = tab[index], prev = null; e != null; e = e.mNext) {
             Object iobj = e.get();
             if (iobj == null) {
@@ -91,25 +91,25 @@ public class FlyweightSet extends AbstractSet {
                 prev = e;
             }
         }
-        
+
         if (mCount >= mThreshold) {
             // Cleanup the table if the threshold is exceeded.
             cleanup();
         }
-        
+
         if (mCount >= mThreshold) {
             // Rehash the table if the threshold is still exceeded.
             rehash();
             tab = mTable;
             index = (hash & 0x7FFFFFFF) % tab.length;
         }
-        
+
         // Create a new entry.
         tab[index] = new Entry(obj, hash, tab[index]);
         mCount++;
         return obj;
     }
-    
+
     public Iterator iterator() {
         return new SetIterator();
     }
@@ -122,11 +122,11 @@ public class FlyweightSet extends AbstractSet {
         if (obj == null) {
             return false;
         }
-        
+
         Entry tab[] = mTable;
         int hash = hashCode(obj);
         int index = (hash & 0x7FFFFFFF) % tab.length;
-        
+
         for (Entry e = tab[index], prev = null; e != null; e = e.mNext) {
             Object iobj = e.get();
             if (iobj == null) {
@@ -185,22 +185,22 @@ public class FlyweightSet extends AbstractSet {
             }
         }
     }
-    
+
     private void rehash() {
         int oldCapacity = mTable.length;
         Entry[] tab = mTable;
-        
+
         int newCapacity = oldCapacity * 2 + 1;
         Entry[] newTab = new Entry[newCapacity];
-        
+
         mThreshold = (int)(newCapacity * mLoadFactor);
         mTable = newTab;
-        
+
         for (int i = oldCapacity; i-- > 0; ) {
             for (Entry old = tab[i]; old != null; ) {
                 Entry e = old;
                 old = old.mNext;
-                
+
                 // Only copy entry if it hasn't been cleared.
                 if (e.get() == null) {
                     mCount--;
@@ -213,11 +213,11 @@ public class FlyweightSet extends AbstractSet {
             }
         }
     }
-    
+
     private static class Entry extends WeakReference {
         int mHash;
         Entry mNext;
-        
+
         Entry(Object flyweight, int hash, Entry next) {
             super(flyweight);
             mHash = hash;
@@ -233,7 +233,7 @@ public class FlyweightSet extends AbstractSet {
         // hard reference to the flyweight. Its existence will prevent the weak
         // reference from being cleared.
         private Object mEntryFlyweight;
-        
+
         public boolean hasNext() {
             while (mEntry == null ||
                    (mEntryFlyweight = mEntry.get()) == null) {
@@ -253,7 +253,7 @@ public class FlyweightSet extends AbstractSet {
 
             return true;
         }
-        
+
         public Object next() {
             if (!hasNext()) {
                 throw new NoSuchElementException();
@@ -262,7 +262,7 @@ public class FlyweightSet extends AbstractSet {
             mEntry = mEntry.mNext;
             return mEntryFlyweight;
         }
-        
+
         public void remove() {
             throw new UnsupportedOperationException();
         }

@@ -82,7 +82,7 @@ import java.util.Vector;
  *
  * section = test
  * section.level = 4
- * section.message = Message: 
+ * section.message = Message:
  * </pre>
  *
  * @author Brian S O'Neill
@@ -128,28 +128,28 @@ public class PropertyParser {
     }
 
     private void propertyChange(String key, String value, SourceInfo info) {
-        dispatchPropertyChange(new PropertyChangeEvent(this, key, value, 
+        dispatchPropertyChange(new PropertyChangeEvent(this, key, value,
                                                        info));
     }
 
     public void addErrorListener(ErrorListener listener) {
         mErrorListeners.addElement(listener);
     }
-    
+
     public void removeErrorListener(ErrorListener listener) {
         mErrorListeners.removeElement(listener);
     }
-    
+
     private void dispatchParseError(ErrorEvent e) {
         mErrorCount++;
-        
+
         synchronized (mErrorListeners) {
             for (int i = 0; i < mErrorListeners.size(); i++) {
                 ((ErrorListener)mErrorListeners.elementAt(i)).parseError(e);
             }
         }
     }
-    
+
     private void error(String str, SourceInfo info) {
         dispatchParseError(new ErrorEvent(this, str, info));
     }
@@ -161,7 +161,7 @@ public class PropertyParser {
     /**
      * Parses properties from the given reader and stores them in the Map. To
      * capture any parsing errors, call addErrorListener prior to parsing.
-     */    
+     */
     public void parse(Reader reader) throws IOException {
         mScanner = new Scanner(reader);
 
@@ -185,7 +185,7 @@ public class PropertyParser {
             switch (token.getId()) {
 
             case Token.KEY:
-            case Token.LBRACE:  
+            case Token.LBRACE:
             case Token.COMMENT:
                 parsePropertyList(null);
                 break;
@@ -214,7 +214,7 @@ public class PropertyParser {
                 token = read();
                 parseProperty(keyPrefix, token);
                 break;
-                
+
             case Token.COMMENT:
                 read();
                 break;
@@ -224,7 +224,7 @@ public class PropertyParser {
                 error("Nested properties must have a base name", token);
                 parseBlock(keyPrefix);
                 break;
-                
+
             default:
                 break loop;
             }
@@ -263,7 +263,7 @@ public class PropertyParser {
     // When this is called, the LBRACE token has already been read.
     private void parseBlock(String keyPrefix) throws IOException {
         parsePropertyList(keyPrefix);
-            
+
         Token token;
         if ((token = peek()).getId() == Token.RBRACE) {
             read();
@@ -279,7 +279,7 @@ public class PropertyParser {
         }
         mMap.put(key, value);
     }
-    
+
     /**
      * Total number of errors accumulated by this PropertyParser instance.
      */
@@ -296,7 +296,7 @@ public class PropertyParser {
     }
 
     /**
-     * 
+     *
      * @author Brian S O'Neill
      * @version
 
@@ -306,7 +306,7 @@ public class PropertyParser {
     }
 
     /**
-     * 
+     *
      * @author Brian S O'Neill
      * @version
 
@@ -320,11 +320,11 @@ public class PropertyParser {
             mErrorMsg = errorMsg;
             mInfo = info;
         }
-        
+
         public String getErrorMessage() {
             return mErrorMsg;
         }
-        
+
         /**
          * Returns the error message prepended with source file information.
          */
@@ -346,7 +346,7 @@ public class PropertyParser {
                 return String.valueOf(mInfo.getLine());
             }
         }
-        
+
         /**
          * This method reports on where in the source code an error was found.
          *
@@ -358,7 +358,7 @@ public class PropertyParser {
     }
 
     /**
-     * 
+     *
      * @author Brian S O'Neill
      * @version
 
@@ -366,52 +366,52 @@ public class PropertyParser {
     private static class Token implements java.io.Serializable {
         public final static int UNKNOWN = 0;
         public final static int EOF = 1;
-        
+
         public final static int COMMENT = 2;
         public final static int KEY = 3;
         public final static int VALUE = 4;
-        
+
         public final static int LBRACE = 5;
         public final static int RBRACE = 6;
 
         private final static int LAST_ID = 6;
-    
+
         private int mTokenId;
         private String mValue;
         private SourceInfo mInfo;
 
         Token(int sourceLine,
-              int sourceStartPos, 
+              int sourceStartPos,
               int sourceEndPos,
               int tokenId,
               String value) {
-            
+
             mTokenId = tokenId;
             mValue = value;
-            
+
             if (tokenId > LAST_ID) {
                 throw new IllegalArgumentException("Token Id out of range: " +
                                                    tokenId);
             }
-            
+
             mInfo = new SourceInfo(sourceLine, sourceStartPos, sourceEndPos);
-            
+
             if (sourceStartPos > sourceEndPos) {
                 // This is an internal error.
                 throw new IllegalArgumentException
-                    ("Token start position greater than " + 
+                    ("Token start position greater than " +
                      "end position at line: " + sourceLine);
             }
         }
-    
+
         public Token(SourceInfo info, int tokenId, String value) {
             mTokenId = tokenId;
-        
+
             if (tokenId > LAST_ID) {
                 throw new IllegalArgumentException("Token Id out of range: " +
                                                    tokenId);
             }
-            
+
             mInfo = info;
         }
 
@@ -430,7 +430,7 @@ public class PropertyParser {
         public final SourceInfo getSourceInfo() {
             return mInfo;
         }
-        
+
         public String getValue() {
             return mValue;
         }
@@ -439,13 +439,13 @@ public class PropertyParser {
             StringBuffer buf = new StringBuffer(10);
 
             String image = getCode();
-            
+
             if (image != null) {
                 buf.append(image);
             }
-            
+
             String str = getValue();
-            
+
             if (str != null) {
                 if (image != null) {
                     buf.append(' ');
@@ -454,7 +454,7 @@ public class PropertyParser {
                 buf.append(str);
                 buf.append('"');
             }
-            
+
             return buf.toString();
         }
 
@@ -475,7 +475,7 @@ public class PropertyParser {
     }
 
     /**
-     * 
+     *
      * @author Brian S O'Neill
      * @version
 
@@ -495,29 +495,29 @@ public class PropertyParser {
         public Scanner(Reader in) {
             mSource = new SourceReader(in, null, null);
         }
-        
+
         public void addErrorListener(ErrorListener listener) {
             mListeners.addElement(listener);
         }
-        
+
         public void removeErrorListener(ErrorListener listener) {
             mListeners.removeElement(listener);
         }
-        
+
         private void dispatchParseError(ErrorEvent e) {
             mErrorCount++;
-            
+
             synchronized (mListeners) {
                 for (int i = 0; i < mListeners.size(); i++) {
                     ((ErrorListener)mListeners.elementAt(i)).parseError(e);
                 }
             }
         }
-        
+
         private void error(String str, SourceInfo info) {
             dispatchParseError(new ErrorEvent(this, str, info));
         }
-        
+
         private void error(String str) {
             error(str, new SourceInfo(mSource.getLineNumber(),
                                       mSource.getStartPosition(),
@@ -535,8 +535,8 @@ public class PropertyParser {
                 return (Token)mLookahead.pop();
             }
         }
-        
-        /** 
+
+        /**
          * Returns EOF as the last token.
          */
         public synchronized Token peekToken() throws IOException {
@@ -547,11 +547,11 @@ public class PropertyParser {
                 return (Token)mLookahead.peek();
             }
         }
-        
+
         public synchronized void unreadToken(Token token) throws IOException {
             mLookahead.push(token);
         }
-        
+
         public void close() throws IOException {
             mSource.close();
         }
@@ -559,25 +559,25 @@ public class PropertyParser {
         public int getErrorCount() {
             return mErrorCount;
         }
-        
+
         private Token scanToken() throws IOException {
             if (mSource.isClosed()) {
                 if (mEOFToken == null) {
                     mEOFToken = makeToken(Token.EOF, null);
                 }
-                
+
                 return mEOFToken;
             }
-            
+
             int c;
-            
+
             while ( (c = mSource.read()) != -1 ) {
                 switch (c) {
 
                 case SourceReader.ENTER_CODE:
                 case SourceReader.ENTER_TEXT:
                     continue;
-                    
+
                 case '#':
                 case '!':
                     mScanKey = true;
@@ -589,8 +589,8 @@ public class PropertyParser {
                 case '}':
                     mScanKey = true;
                     return makeToken(Token.RBRACE, "}");
-                
-                case '0': case '1': case '2': case '3': case '4': 
+
+                case '0': case '1': case '2': case '3': case '4':
                 case '5': case '6': case '7': case '8': case '9':
                 case 'a': case 'b': case 'c': case 'd': case 'e':
                 case 'f': case 'g': case 'h': case 'i': case 'j':
@@ -610,7 +610,7 @@ public class PropertyParser {
                 case '\n':
                     mScanKey = true;
                     // fall through
-                case ' ': 
+                case ' ':
                 case '\0':
                 case '\t':
                     continue;
@@ -625,15 +625,15 @@ public class PropertyParser {
                     }
                 }
             }
-            
+
             if (mEOFToken == null) {
                 mEOFToken = makeToken(Token.EOF, null);
             }
-            
+
             return mEOFToken;
         }
-    
-        private Token scanKeyOrValue() throws IOException { 
+
+        private Token scanKeyOrValue() throws IOException {
             StringBuffer buf = new StringBuffer(40);
             boolean trim = true;
 
@@ -652,7 +652,7 @@ public class PropertyParser {
                 case '\n':
                     mSource.unread();
                     break loop;
-                
+
                 case '\\':
                     int next = mSource.read();
                     if (next == -1 || next == '\n') {
@@ -669,7 +669,7 @@ public class PropertyParser {
                 case '}':
                     mSource.unread();
                     break loop;
-                
+
                 case '=':
                 case ':':
                     if (mScanKey) {
@@ -692,7 +692,7 @@ public class PropertyParser {
                         break loop;
                     }
                     // fall through
-                case '0': case '1': case '2': case '3': case '4': 
+                case '0': case '1': case '2': case '3': case '4':
                 case '5': case '6': case '7': case '8': case '9':
                 case 'a': case 'b': case 'c': case 'd': case 'e':
                 case 'f': case 'g': case 'h': case 'i': case 'j':
@@ -709,7 +709,7 @@ public class PropertyParser {
                     skipWhitespace = false;
                     break;
 
-                case ' ': 
+                case ' ':
                 case '\0':
                 case '\t':
                     if (skipWhitespace) {
@@ -758,7 +758,7 @@ public class PropertyParser {
 
             return new Token(startLine, startPos, endPos, tokenId, value);
         }
-        
+
         private Token scanComment() throws IOException {
             StringBuffer buf = new StringBuffer(40);
 
@@ -771,10 +771,10 @@ public class PropertyParser {
                 if (c == '\n') {
                     break;
                 }
-                
+
                 mSource.read();
                 buf.append((char)c);
-                
+
                 endPos = mSource.getEndPosition();
             }
 
@@ -831,9 +831,9 @@ public class PropertyParser {
                 return next;
             }
         }
-                
+
         private Token makeToken(int Id, String value) {
-            return new Token(mSource.getLineNumber(), 
+            return new Token(mSource.getLineNumber(),
                              mSource.getStartPosition(),
                              mSource.getEndPosition(),
                              Id, value);

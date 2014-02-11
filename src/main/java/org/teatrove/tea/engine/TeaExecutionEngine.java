@@ -17,7 +17,7 @@
 package org.teatrove.tea.engine;
 
 /**
- * Implementations of this interface will provide a simplified means of using 
+ * Implementations of this interface will provide a simplified means of using
  * tea in other programs.
  *
  * @author Jonathan Colwell
@@ -26,10 +26,10 @@ public interface TeaExecutionEngine {
 
     public void init(TeaEngineConfig config);
 
-    public TemplateSource getTemplateSource();   
+    public TemplateSource getTemplateSource();
 
-    public void executeTemplate(String templateName, 
+    public void executeTemplate(String templateName,
                                 Object contextParameter,
-                                Object[] templateParameters) 
+                                Object[] templateParameters)
         throws Exception;
 }

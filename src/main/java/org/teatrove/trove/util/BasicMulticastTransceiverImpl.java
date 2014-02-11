@@ -95,12 +95,12 @@ public class BasicMulticastTransceiverImpl implements MessageTransceiver {
         mPollThread.stop();
     }
 
-    
+
     public void addMessageListener(MessageListener l) {
         mListeners.add(l);
     }
 
-    
+
     public void removeMessageListener(MessageListener l) {
         mListeners.remove(l);
     }
@@ -121,7 +121,7 @@ public class BasicMulticastTransceiverImpl implements MessageTransceiver {
 
     }
 
-    
+
     private Serializable poll() {
 
         try {
@@ -155,7 +155,7 @@ public class BasicMulticastTransceiverImpl implements MessageTransceiver {
                         l.onMessage(o);
                     }
                 }
-                    
+
             }
         }
 

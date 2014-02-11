@@ -34,7 +34,7 @@ public class DeflaterOutputStream extends FilterOutputStream {
         mDeflater = def;
         mBuffer = buf;
     }
-   
+
     public DeflaterOutputStream(OutputStream out, Deflater def, int size) {
         this(out, def, new byte[size]);
     }
@@ -94,7 +94,7 @@ public class DeflaterOutputStream extends FilterOutputStream {
         finish();
         super.close();
     }
-    
+
     private int deflate() throws IOException {
         int len = mDeflater.deflate(mBuffer, 0, mBuffer.length);
         if (len > 0) {

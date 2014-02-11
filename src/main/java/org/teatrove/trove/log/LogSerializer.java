@@ -40,7 +40,7 @@ public class LogSerializer implements LogListener {
             mCurrentEvent = null;
             return;
         }
-        
+
         try {
             mCurrentEvent = event;
             mOut.writeObject(event);

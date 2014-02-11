@@ -19,9 +19,9 @@ package org.teatrove.trove.util;
 import java.util.*;
 
 /**
- * An extension of ArrayList that insures that all of the items added are 
- * sorted. A binary search method has been added to provide a quick way to 
- * auto sort this Collection. The method call for this search has been made 
+ * An extension of ArrayList that insures that all of the items added are
+ * sorted. A binary search method has been added to provide a quick way to
+ * auto sort this Collection. The method call for this search has been made
  * public so that this Collection can be searched.
  * Note: Not all methods for adding and removing elements are supported.
  *
@@ -49,7 +49,7 @@ public class SortedArrayList extends ArrayList {
 
     public SortedArrayList() {
     }
-    
+
     public SortedArrayList(Collection c) {
         addAll(c);
     }
@@ -62,9 +62,9 @@ public class SortedArrayList extends ArrayList {
     }
 
     /**
-     * Adds an Object to this Collection. 
+     * Adds an Object to this Collection.
      * @param o The Object to be added.
-     * @return true if this Collection is modified as a result of this call. 
+     * @return true if this Collection is modified as a result of this call.
      */
     public boolean add(Object o) {
         // find the index where this item should go
@@ -109,7 +109,7 @@ public class SortedArrayList extends ArrayList {
         if(isEmpty()) {
             throw new NoSuchElementException();
         }
-        
+
         return get(size()-1);
     }
 
@@ -140,11 +140,11 @@ public class SortedArrayList extends ArrayList {
     public Object set(int index, Object element) {
         throw new UnsupportedOperationException("set(int index, Object element) is not Supported");
     }
-    
+
     /**
      * @exception This method not supported.
      */
-    public boolean addAll(int index, Collection c) {        
+    public boolean addAll(int index, Collection c) {
         throw new UnsupportedOperationException("addAll(int index, Collection c) is not Supported");
     }
 
@@ -153,11 +153,11 @@ public class SortedArrayList extends ArrayList {
     //
 
     /**
-     * Compares two keys using the correct comparison method for this 
+     * Compares two keys using the correct comparison method for this
      * Collection.
      * @param k1 The first item to be compared.
      * @param k2 The second item to be compared.
-     * @return a positive or negative integer if they differ, and zero if 
+     * @return a positive or negative integer if they differ, and zero if
      *         equal.
      */
     private int compare(Object k1, Object k2) {
@@ -175,7 +175,7 @@ public class SortedArrayList extends ArrayList {
      */
     private int findInsertionPoint(Object o, int startIndex, int endIndex) {
 
-        int halfPt = ((endIndex - startIndex)/2) + startIndex;          
+        int halfPt = ((endIndex - startIndex)/2) + startIndex;
         int delta = compare(get(halfPt), o);
 
         if(delta < 0) {

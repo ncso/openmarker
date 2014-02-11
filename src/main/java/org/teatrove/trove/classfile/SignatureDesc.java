@@ -29,7 +29,7 @@ import org.teatrove.trove.classfile.generics.TypeVariableDesc;
 import org.teatrove.trove.util.FlyweightSet;
 
 /**
- * 
+ *
  *
  * @author Nick Hagan
  */
@@ -153,7 +153,7 @@ public class SignatureDesc {
         if (superClass == null) {
             superClass = ClassTypeDesc.OBJECT_TYPE;
         }
-        
+
         StringBuilder buffer = new StringBuilder(256);
 
         appendTypeArguments(buffer, typeArguments);

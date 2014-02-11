@@ -22,7 +22,7 @@ import org.teatrove.tea.compiler.Token;
 /**
  * A ConcatenateExpression takes two Expressions, converts their values to
  * strings and returns a new string with the concatenated result.
- * The operator should only be Token.CONCAT. 
+ * The operator should only be Token.CONCAT.
  *
  * @author Brian S O'Neill
  */

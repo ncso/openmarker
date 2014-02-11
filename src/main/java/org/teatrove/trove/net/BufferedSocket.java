@@ -51,7 +51,7 @@ public class BufferedSocket extends SocketFaceWrapper {
         mInBufSize = inputBufferSize;
         mOutBufSize = outputBufferSize;
     }
-    
+
     /**
      * @param inputBufferSize specify 0 for no buffering, -1 for default
      * @param outputBufferSize specify 0 for no buffering, -1 for default
@@ -63,7 +63,7 @@ public class BufferedSocket extends SocketFaceWrapper {
         mInBufSize = inputBufferSize;
         mOutBufSize = outputBufferSize;
     }
-    
+
     public synchronized InputStream getInputStream() throws IOException {
         if (mIn == null) {
             InputStream in = super.getInputStream();
@@ -80,7 +80,7 @@ public class BufferedSocket extends SocketFaceWrapper {
         }
         return mIn;
     }
-    
+
     public synchronized OutputStream getOutputStream() throws IOException {
         if (mOut == null) {
             OutputStream out = super.getOutputStream();
@@ -97,7 +97,7 @@ public class BufferedSocket extends SocketFaceWrapper {
         }
         return mOut;
     }
-    
+
     public synchronized void close() throws IOException {
         // Ensure buffered output is flushed.
         if (mOutBufSize != 0 && mOut != null) {

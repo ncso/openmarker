@@ -19,13 +19,13 @@ package org.teatrove.tea.io;
 import java.io.*;
 
 /**
- * The PositionReader tracks the postion in the stream of the next character 
+ * The PositionReader tracks the postion in the stream of the next character
  * to be read. PositionReaders chain together such that the position is
  * read from the earliest PositionReader in the chain.
  *
  * <p>Position readers automatically close the underlying input stream when
  * the end of file is reached. Ordinary input streams don't do this.
- * 
+ *
  * @author Brian S O'Neill
  * @deprecated Moved to org.teatrove.trove.io package.
  */

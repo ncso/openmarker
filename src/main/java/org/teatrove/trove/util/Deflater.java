@@ -86,18 +86,18 @@ public class Deflater {
         mInputOffset = off;
         mInputBuf = b;
     }
-    
+
     public synchronized void setInput(byte[] b) {
         mInputLength = b.length;
         mInputOffset = 0;
         mInputBuf = b;
     }
-    
+
     public synchronized void setDictionary(byte[] b, int off, int len) {
         boundsCheck(b, off, len);
         setDictionary(mStream, b, off, len);
     }
-    
+
     public synchronized void setDictionary(byte[] b) {
         setDictionary(mStream, b, 0, b.length);
     }
@@ -106,7 +106,7 @@ public class Deflater {
         mStrategy = strategy;
         mSetParams = true;
     }
-    
+
     public synchronized void setLevel(int level) {
         mLevel = level;
         mSetParams = true;

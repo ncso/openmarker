@@ -29,7 +29,7 @@ import org.teatrove.trove.io.LinePositionReader;
  * ConsoleReporter takes CompileEvents and prints
  * detailed messages to a PrintStream. When no longer needed, close the
  * ConsoleReporter to ensure all open resources (except the PrintStream)
- * are closed. 
+ * are closed.
  *
  * @author Brian S O'Neill
  */
@@ -57,11 +57,11 @@ public class ConsoleReporter implements CompileListener {
     public void compileError(CompileEvent e) {
         compileIssue(e);
     }
-    
+
     public void compileWarning(CompileEvent e) {
         compileIssue(e);
     }
-    
+
     public void compileIssue(CompileEvent e) {
         mOut.println(e.getType().toString() + ": " + e.getDetailedMessage());
 

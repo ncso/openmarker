@@ -18,7 +18,7 @@ package org.teatrove.trove.classfile;
 
 /**
  * A collection of opcode constants for creating class file byte code. These
- * opcodes are defined in chapter 6 of 
+ * opcodes are defined in chapter 6 of
  * <i>The Java Virual Machine Specification</i>.
  *
  * @author Brian S O'Neill
@@ -232,7 +232,7 @@ public class Opcode {
     /**
      * @exception IllegalArgumentException if opcode is invalid
      */
-    public final static String getMnemonic(byte opcode) 
+    public final static String getMnemonic(byte opcode)
         throws IllegalArgumentException {
         try {
             return Mnemonic.m[opcode & 0xff];
@@ -250,7 +250,7 @@ public class Opcode {
     public final static byte reverseIfOpcode(byte opcode) {
         // Actually, because the numbers assigned to the "if" opcodes
         // were so cleverly chosen, all I really need to do is toggle
-        // bit 0. I'm not going to do that because I still need to check if 
+        // bit 0. I'm not going to do that because I still need to check if
         // an invalid opcode was passed in.
 
         switch (opcode) {

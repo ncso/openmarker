@@ -71,7 +71,7 @@ public class Template extends Node implements Returnable {
         t.mParams = newParams;
 
         t.mStatement = (Statement)mStatement.clone();
- 
+
         if (mDirectiveList != null) {
             t.mDirectiveList = new ArrayList<Directive>();
             for (Directive directive : mDirectiveList) {

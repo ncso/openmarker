@@ -29,7 +29,7 @@ public class ExceptionHandler implements LocationRange {
     private Location mEnd;
     private Location mCatch;
     private ConstantClassInfo mCatchType;
-    
+
     /**
      * @param startLocation
      * @param endLocation
@@ -45,19 +45,19 @@ public class ExceptionHandler implements LocationRange {
         mCatch = catchLocation;
         mCatchType = catchType;
     }
-    
+
     public Location getStartLocation() {
         return mStart;
     }
-    
+
     public Location getEndLocation() {
         return mEnd;
     }
-    
+
     public Location getCatchLocation() {
         return mCatch;
     }
-    
+
     /**
      * Returns null if every object is caught by this handler.
      */
@@ -85,7 +85,7 @@ public class ExceptionHandler implements LocationRange {
 
         return result;
     }
-    
+
     public void writeTo(DataOutput dout) throws IOException {
         int start_pc = getStartLocation().getLocation();
         int end_pc = getEndLocation().getLocation();

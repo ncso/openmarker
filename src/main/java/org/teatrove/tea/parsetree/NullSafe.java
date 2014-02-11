@@ -17,7 +17,7 @@
 package org.teatrove.tea.parsetree;
 
 /**
- * 
+ *
  * @author Nick Hagan
  */
 public interface NullSafe {

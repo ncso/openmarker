@@ -19,7 +19,7 @@ package org.teatrove.trove.io;
 import java.io.*;
 
 /**
- * 
+ *
  * @author Brian S O'Neill
  */
 public class TagReader extends EscapeReader {
@@ -55,7 +55,7 @@ public class TagReader extends EscapeReader {
             mTagEnds[i] = tags[i].substring(1);
             mCodes[i] = codes[i];
         }
-        
+
         mMinibuf = new char[maxLength(tags)];
     }
 
@@ -78,7 +78,7 @@ public class TagReader extends EscapeReader {
                         return mCodes[i];
                     }
                 }
-     
+
                 if (len > 0) {
                     mSource.unread(len);
                 }
@@ -99,9 +99,9 @@ public class TagReader extends EscapeReader {
             System.out.println("\nOriginal: " + str);
 
             System.out.println("\nConverted:\n");
-            
+
             Reader reader = new StringReader(str);
-            
+
             TagReader tr = new TagReader
                 (reader, new String[] {"<%", "%>"}, new int[] {-2, -3});
 

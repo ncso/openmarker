@@ -24,29 +24,29 @@ import java.net.InetAddress;
  * @author Jonathan Colwell
  */
 public class MultiPooledSSLSocketFactory extends MultiPooledSocketFactory {
-    public MultiPooledSSLSocketFactory(String[] hosts, 
-                                       int[] ports, 
+    public MultiPooledSSLSocketFactory(String[] hosts,
+                                       int[] ports,
                                        long timeout) {
         super(hosts, ports, timeout);
     }
 
-    public MultiPooledSSLSocketFactory(String[] hosts, 
-                                       int[] ports, 
+    public MultiPooledSSLSocketFactory(String[] hosts,
+                                       int[] ports,
                                        long timeout,
                                        java.util.Random rnd) {
         super(hosts, ports, timeout, rnd);
     }
 
-    public MultiPooledSSLSocketFactory(String[] hosts, 
-                                       int[] ports, 
+    public MultiPooledSSLSocketFactory(String[] hosts,
+                                       int[] ports,
                                        InetAddress localAddr,
                                        int localPort,
                                        long timeout) {
         super(hosts, ports, localAddr, localPort, timeout);
     }
 
-    public MultiPooledSSLSocketFactory(String[] hosts, 
-                                       int[] ports, 
+    public MultiPooledSSLSocketFactory(String[] hosts,
+                                       int[] ports,
                                        InetAddress localAddr,
                                        int localPort,
                                        long timeout,

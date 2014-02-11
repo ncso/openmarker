@@ -52,7 +52,7 @@ public class DelegateClassLoader extends ClassLoader {
         }
         throw new ClassNotFoundException(name);
     }
-    
+
     protected URL findResource(String name) {
         URL resource = null;
 

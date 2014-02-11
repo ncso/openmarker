@@ -12,7 +12,7 @@ public class SpreadExpression extends Expression {
 
     private Expression mExpr;
     private Expression mOperation;
-    
+
     public SpreadExpression(SourceInfo info, Expression expr,
                             Expression operation) {
         super(info);
@@ -42,7 +42,7 @@ public class SpreadExpression extends Expression {
                 return true;
             }
         }
-        
+
         if (mOperation != null) {
             if (mOperation.isExceptionPossible()) {
                 return true;

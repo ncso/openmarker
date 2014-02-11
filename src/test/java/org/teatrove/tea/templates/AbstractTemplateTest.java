@@ -25,9 +25,9 @@ import org.teatrove.trove.util.ClassInjector;
 
 public abstract class AbstractTemplateTest {
 
-    protected static boolean SHOW_OUTPUT = true; 
+    protected static boolean SHOW_OUTPUT = true;
     protected static boolean ENABLE_CODEGEN = false;
-    
+
     protected static final String DEST = "target/templates";
     protected static final String PKG = "org.teatrove.tea.templates";
 
@@ -57,12 +57,12 @@ public abstract class AbstractTemplateTest {
     public void addCompileListener(CompileListener listener) {
         this.listeners.add(listener);
     }
-    
+
     public void adddMockListener(int expectedErrors, int expectedWarnings) {
-        addCompileListener(new MockCompileListener(expectedErrors, 
+        addCompileListener(new MockCompileListener(expectedErrors,
                                                    expectedWarnings));
     }
-    
+
     public void addContext(final String name, final Object context) {
         contexts.put(name.concat("$"), new ContextSource() {
 
@@ -164,7 +164,7 @@ public abstract class AbstractTemplateTest {
         if (results == null || results.length < 1) {
             throw new IllegalStateException("unable to compile");
         }
-        
+
         // validate expectations
         for (CompileListener listener : listeners) {
             if (listener instanceof MockCompileListener) {
@@ -200,7 +200,7 @@ public abstract class AbstractTemplateTest {
         if (results == null || results.length < 1) {
             throw new IllegalStateException("unable to compile");
         }
-        
+
         // validate expectations
         for (CompileListener listener : listeners) {
             if (listener instanceof MockCompileListener) {
@@ -234,8 +234,8 @@ public abstract class AbstractTemplateTest {
     public String executeSource(String source, Object... params)
         throws Exception {
 
-        int index = counter.incrementAndGet(); 
-        return execute(getTemplateName(index), 
+        int index = counter.incrementAndGet();
+        return execute(getTemplateName(index),
                        getTemplateSource(index, source), params);
     }
 
@@ -243,8 +243,8 @@ public abstract class AbstractTemplateTest {
                                 Object... params)
         throws Exception {
 
-        int index = counter.incrementAndGet(); 
-        return execute(getTemplateName(index), 
+        int index = counter.incrementAndGet();
+        return execute(getTemplateName(index),
                        getTemplateSource(index, source, signature), params);
     }
 
@@ -285,7 +285,7 @@ public abstract class AbstractTemplateTest {
         // create context
         ByteArrayOutputStream output = new ByteArrayOutputStream(1024);
         Context ctx = (Context) getContext().createContext(output);
-        
+
         // setup params
         Object[] args = new Object[params.length + 1];
         args[0] = ctx;
@@ -308,7 +308,7 @@ public abstract class AbstractTemplateTest {
         // return code
         return outcome;
     }
-    
+
     protected CompileListener createCompileListener() {
         return new CompileListener() {
             @Override
@@ -318,7 +318,7 @@ public abstract class AbstractTemplateTest {
                     listener.compileError(e);
                 }
             }
-            
+
             @Override
             public void compileWarning(CompileEvent e) {
                 System.out.println("WARNING: " + e.getDetailedMessage());
@@ -328,29 +328,29 @@ public abstract class AbstractTemplateTest {
             }
         };
     }
-    
+
     public class MockCompileListener implements CompileListener {
 
         private int expectedErrors;
         private int expectedWarnings;
-        
+
         public MockCompileListener(int expectedErrors, int expectedWarnings) {
             this.expectedErrors = expectedErrors;
             this.expectedWarnings = expectedWarnings;
         }
-        
+
         public void validate() {
             if (this.expectedErrors != 0) {
-                fail("did not meet expected errors: " + 
+                fail("did not meet expected errors: " +
                      this.expectedErrors + " remaining");
             }
-            
+
             if (this.expectedWarnings != 0) {
-                fail("did not meet expected warnings: " + 
+                fail("did not meet expected warnings: " +
                      this.expectedWarnings + " remaining");
             }
         }
-        
+
         @Override
         public void compileError(CompileEvent e) {
             this.expectedErrors--;
@@ -366,6 +366,6 @@ public abstract class AbstractTemplateTest {
                 fail("exceeded number of expected warnings");
             }
         }
-        
+
     }
 }

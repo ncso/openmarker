@@ -19,7 +19,7 @@ package org.teatrove.tea.parsetree;
 import org.teatrove.tea.compiler.SourceInfo;
 
 /**
- * 
+ *
  * @author Nick Hagan
  */
 public class TernaryExpression extends Expression {

@@ -22,14 +22,14 @@ import java.io.*;
 /**
  * This class corresponds to the constant_pool structure as defined in
  * section 4.4 of <i>The Java Virtual Machine Specification</i>.
- * 
+ *
  * <p>ConstantPool entries are not written out in the order in which they were
  * added to it. Instead, their ordering is changed such that String, Integer
- * and Float constants are written out first. This provides a slight 
+ * and Float constants are written out first. This provides a slight
  * optimization for referencing these constants from a code attribute.
- * It means that Opcode.LDC will more likely be used (one-byte index) than 
+ * It means that Opcode.LDC will more likely be used (one-byte index) than
  * Opcode.LDC_W (two-byte index).
- * 
+ *
  * @author Brian S O'Neill
  * @see CodeAttr
  * @see Opcode
@@ -87,7 +87,7 @@ public class ConstantPool {
 
     /**
      * Returns the number of constants in the pool.
-     */    
+     */
     public int getSize() {
         return mEntries;
     }
@@ -108,7 +108,7 @@ public class ConstantPool {
     public ConstantClassInfo addConstantClass(String className, int dim) {
         return ConstantClassInfo.make(this, className, dim);
     }
-    
+
     /**
      * Get or create a constant from the constant pool representing a class.
      */
@@ -121,10 +121,10 @@ public class ConstantPool {
      * any class.
      */
     public ConstantFieldInfo addConstantField(String className,
-                                              String fieldName, 
+                                              String fieldName,
                                               TypeDesc type) {
         return ConstantFieldInfo.make
-            (this, 
+            (this,
              ConstantClassInfo.make(this, className),
              ConstantNameAndTypeInfo.make(this, fieldName, type));
     }
@@ -137,7 +137,7 @@ public class ConstantPool {
                                                 String methodName,
                                                 TypeDesc ret,
                                                 TypeDesc[] params) {
-        
+
         MethodDesc md = MethodDesc.forArguments(ret, params);
 
         return ConstantMethodInfo.make
@@ -145,7 +145,7 @@ public class ConstantPool {
              ConstantClassInfo.make(this, className),
              ConstantNameAndTypeInfo.make(this, methodName, md));
     }
-    
+
     /**
      * Get or create a constant from the constant pool representing an
      * interface method in any interface.
@@ -155,9 +155,9 @@ public class ConstantPool {
          String methodName,
          TypeDesc ret,
          TypeDesc[] params) {
-        
+
         MethodDesc md = MethodDesc.forArguments(ret, params);
-        
+
         return ConstantInterfaceMethodInfo.make
             (this,
              ConstantClassInfo.make(this, className),
@@ -223,9 +223,9 @@ public class ConstantPool {
         return ConstantNameAndTypeInfo.make(this, name, type);
     }
 
-    /** 
+    /**
      * Will only insert into the pool if the constant is not already in the
-     * pool. 
+     * pool.
      *
      * @return The actual constant in the pool.
      */
@@ -234,7 +234,7 @@ public class ConstantPool {
         if (info != null) {
             return info;
         }
-        
+
         int entryCount = constant.getEntryCount();
 
         if (mIndexedConstants != null && mPreserveOrder) {
@@ -263,13 +263,13 @@ public class ConstantPool {
             mIndexedConstants = new Vector(size);
             mIndexedConstants.setSize(size);
             int index = 1; // one-based constant pool index
-            
-            // First write constants of higher priority -- String, Integer, 
+
+            // First write constants of higher priority -- String, Integer,
             // Float.
-            // This is a slight optimization. It means that Opcode.LDC will 
+            // This is a slight optimization. It means that Opcode.LDC will
             // more likely be used (one-byte index) than Opcode.LDC_W (two-byte
             // index).
-            
+
             Iterator it = mConstants.keySet().iterator();
             while (it.hasNext()) {
                 ConstantInfo constant = (ConstantInfo)it.next();
@@ -279,9 +279,9 @@ public class ConstantPool {
                     index += constant.getEntryCount();
                 }
             }
-            
+
             // Now write all non-priority constants.
-            
+
             it = mConstants.keySet().iterator();
             while (it.hasNext()) {
                 ConstantInfo constant = (ConstantInfo)it.next();
@@ -371,7 +371,7 @@ public class ConstantPool {
         if (constant == null) {
             return null;
         }
-        
+
         if (constant instanceof ConstantInfo) {
             return (ConstantInfo)constant;
         }
@@ -405,10 +405,10 @@ public class ConstantPool {
         case ConstantInfo.TAG_INTERFACE_METHOD:
         case ConstantInfo.TAG_NAME_AND_TYPE:
             int index2 = data >> 16;
-            
+
             ConstantInfo ci2;
             Object constant2 = constants.get(index2);
-            
+
             if (constant2 instanceof ConstantInfo) {
                 ci2 = (ConstantInfo)constant2;
             }

@@ -39,7 +39,7 @@ public class Scanner {
 
     /** The scanner supports any amount of lookahead. */
     private Stack<Token> mLookahead = new Stack<Token>();
-    
+
     private Token mEOFToken;
 
     private Vector<CompileListener> mListeners = new Vector<CompileListener>(1);
@@ -109,7 +109,7 @@ public class Scanner {
         }
     }
 
-    /** 
+    /**
      * Returns EOF as the last token.
      */
     public synchronized Token peekToken() throws IOException {
@@ -136,7 +136,7 @@ public class Scanner {
     private Token scanToken() throws IOException {
         int c;
         int peek;
-        
+
         int startPos;
 
         while ((c = mSource.read()) != -1) {
@@ -187,16 +187,16 @@ public class Scanner {
                 return makeToken(Token.LBRACK);
             case ']':
                 return makeToken(Token.RBRACK);
-                
+
             case ';':
                 return makeToken(Token.SEMI);
-                
+
             case ',':
                 return makeToken(Token.COMMA);
-                
+
             case ':':
                 return makeToken(Token.COLON);
-                
+
             case '?':
                 return makeToken(Token.QUESTION);
 
@@ -225,10 +225,10 @@ public class Scanner {
                 else {
                     return makeToken(Token.DOT);
                 }
-                
+
             case '#':
                 peek = mSource.peek();
-                
+
                 if (peek == '#') {
                     startPos = mSource.getStartPosition();
                     mSource.read();
@@ -237,7 +237,7 @@ public class Scanner {
                 else {
                     return makeToken(Token.HASH);
                 }
-                
+
             case '!':
                 if (mSource.peek() == '=') {
                     startPos = mSource.getStartPosition();
@@ -248,7 +248,7 @@ public class Scanner {
                     return makeStringToken(Token.UNKNOWN,
                                            String.valueOf((char)c));
                 }
-                
+
             case '<':
                 if (mSource.peek() == '=') {
                     startPos = mSource.getStartPosition();
@@ -264,7 +264,7 @@ public class Scanner {
                 else {
                     return makeToken(Token.LT);
                 }
-                
+
             case '>':
                 if (mSource.peek() == '=') {
                     startPos = mSource.getStartPosition();
@@ -295,10 +295,10 @@ public class Scanner {
 
             case '+':
                 return makeToken(Token.PLUS);
-                
+
             case '-':
                 return makeToken(Token.MINUS);
-                
+
             case '*':
                 if (mSource.peek() == '.') {
                     startPos = mSource.getStartPosition();
@@ -308,10 +308,10 @@ public class Scanner {
                 else {
                     return makeToken(Token.MULT);
                 }
-                
+
             case '%':
                 return makeToken(Token.MOD);
-                
+
             case '/':
                 startPos = mSource.getStartPosition();
                 peek = mSource.peek();
@@ -341,18 +341,18 @@ public class Scanner {
                 else {
                     return makeToken(Token.DIV);
                 }
-                
+
             case '\"':
             case '\'':
                 mSource.ignoreTags(true);
                 t = scanString(c);
                 mSource.ignoreTags(false);
                 return t;
-                
-            case '0': case '1': case '2': case '3': case '4': 
+
+            case '0': case '1': case '2': case '3': case '4':
             case '5': case '6': case '7': case '8': case '9':
                 return scanNumber(c);
-                
+
             case 'a': case 'b': case 'c': case 'd': case 'e':
             case 'f': case 'g': case 'h': case 'i': case 'j':
             case 'k': case 'l': case 'm': case 'n': case 'o':
@@ -367,10 +367,10 @@ public class Scanner {
             case 'Z': case '_':
                 return scanIdentifier(c);
 
-            case ' ': 
+            case ' ':
             case '\0':
-            case '\t': 
-            case '\r': 
+            case '\t':
+            case '\r':
             case '\n':
                 continue;
 
@@ -392,7 +392,7 @@ public class Scanner {
         if (mEOFToken == null) {
             mEOFToken = makeToken(Token.EOF);
         }
-        
+
         return mEOFToken;
     }
 
@@ -434,7 +434,7 @@ public class Scanner {
             // whitespace from it.
 
             int length = buf.length();
-            
+
             int i;
             for (i = length - 1; i >= 0; i--) {
                 if (buf.charAt(i) > ' ') {
@@ -449,13 +449,13 @@ public class Scanner {
         return new StringToken(startLine, startPos, endPos,
                                Token.STRING, str);
     }
-    
+
     private Token scanString(int delimiter) throws IOException {
         int c;
         int startLine = mSource.getLineNumber();
         int startPos = mSource.getStartPosition();
         mWord.setLength(0);
-        
+
         while ( (c = mSource.read()) != -1 ) {
             if (c == delimiter) {
                 break;
@@ -465,7 +465,7 @@ public class Scanner {
                 error("string.newline");
                 break;
             }
-            
+
             if (c == '\\') {
                 int next = mSource.read();
                 switch (next) {
@@ -502,7 +502,7 @@ public class Scanner {
                     break;
                 }
             }
-            
+
             mWord.append((char)c);
         }
 
@@ -511,11 +511,11 @@ public class Scanner {
         }
 
         Token t = new StringToken(startLine,
-                                  startPos, 
+                                  startPos,
                                   mSource.getEndPosition(),
                                   Token.STRING,
-                                  mWord.toString()); 
-        
+                                  mWord.toString());
+
         return t;
     }
 
@@ -524,18 +524,18 @@ public class Scanner {
         int startLine = mSource.getLineNumber();
         int startPos = mSource.getStartPosition();
         mWord.setLength(0);
-        
+
         int errorPos = -1;
 
-        // 0 is decimal int, 
-        // 1 is hex int, 
-        // 2 is decimal long, 
-        // 3 is hex long, 
-        // 4 is float, 
+        // 0 is decimal int,
+        // 1 is hex int,
+        // 2 is decimal long,
+        // 3 is hex long,
+        // 4 is float,
         // 5 is double,
         // 6 is auto-double by decimal
         // 7 is auto-double by exponent ('e' or 'E')
-        int type = 0; 
+        int type = 0;
 
         if (c == '0') {
             if (mSource.peek() == 'x' || mSource.peek() == 'X') {
@@ -650,7 +650,7 @@ public class Scanner {
                 break;
             }
         }
-        
+
         String str = mWord.toString();
         int endPos = mSource.getEndPosition();
         Token token;
@@ -712,7 +712,7 @@ public class Scanner {
 
         return token;
     }
-    
+
     private int parseHexInt(String str) {
         if (str.length() > 8) {
             // Strip off any leading zeros.
@@ -763,7 +763,7 @@ public class Scanner {
         int startPos = mSource.getStartPosition();
         int endPos = mSource.getEndPosition();
         mWord.setLength(0);
-        
+
         mWord.append((char)c);
 
     loop:
@@ -781,14 +781,14 @@ public class Scanner {
             case 'P': case 'Q': case 'R': case 'S': case 'T':
             case 'U': case 'V': case 'W': case 'X': case 'Y':
             case 'Z': case '_': case '$':
-            case '0': case '1': case '2': case '3': case '4': 
+            case '0': case '1': case '2': case '3': case '4':
             case '5': case '6': case '7': case '8': case '9':
                 mSource.read();
                 endPos = mSource.getEndPosition();
                 mWord.append((char)c);
                 continue loop;
             }
-                
+
             if (Character.isLetterOrDigit((char)c)) {
                 mSource.read();
                 endPos = mSource.getEndPosition();
@@ -798,9 +798,9 @@ public class Scanner {
                 break;
             }
         }
-        
+
         int id = Token.findReservedWordID(mWord);
-        
+
         Token t;
 
         if (id != Token.UNKNOWN) {
@@ -814,7 +814,7 @@ public class Scanner {
         mWord.setLength(0);
         return t;
     }
-    
+
     // The two leading slashes have already been scanned when this is
     // called.
     private Token scanOneLineComment(int startPos) throws IOException {
@@ -828,7 +828,7 @@ public class Scanner {
             if (c == '\r' || c == '\n') {
                 break;
             }
-            
+
             mSource.read();
             mWord.append((char)c);
 
@@ -868,36 +868,36 @@ public class Scanner {
     }
 
     private Token makeToken(int ID) {
-        return new Token(mSource.getLineNumber(), 
+        return new Token(mSource.getLineNumber(),
                          mSource.getStartPosition(),
                          mSource.getEndPosition(),
                          ID);
     }
 
     private Token makeToken(int ID, int startPos) {
-        return new Token(mSource.getLineNumber(), 
+        return new Token(mSource.getLineNumber(),
                          startPos,
                          mSource.getEndPosition(),
                          ID);
     }
 
     private Token makeStringToken(int ID, String str) {
-        return new StringToken(mSource.getLineNumber(), 
+        return new StringToken(mSource.getLineNumber(),
                                mSource.getStartPosition(),
                                mSource.getEndPosition(),
                                ID,
                                str);
     }
 
-    /** 
-     * Simple test program 
+    /**
+     * Simple test program
      */
     public static void main(String[] arg) throws Exception {
         Tester.test(arg);
     }
 
     /**
-     * 
+     *
      * @author Brian S O'Neill
      */
     private static class Tester {
@@ -912,15 +912,15 @@ public class Scanner {
 
             while ( (token = s.readToken()).getID() != Token.EOF ) {
                 int id = token.getID();
-                
+
                 if (id == Token.LBRACE) {
                     System.out.println();
                 }
-                
+
                 System.out.print(token + " ");
-                
-                if (id == Token.LBRACE || 
-                    id == Token.RBRACE || 
+
+                if (id == Token.LBRACE ||
+                    id == Token.RBRACE ||
                     id == Token.SEMI) {
                     System.out.println();
 
@@ -929,7 +929,7 @@ public class Scanner {
                     }
                 }
             }
-            
+
             System.out.println("\n\n*** Full Token Dump ***\n");
 
             // Second run, display detailed token information

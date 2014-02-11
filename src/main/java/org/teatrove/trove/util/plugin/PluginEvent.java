@@ -26,24 +26,24 @@ import java.util.EventObject;
 public class PluginEvent extends EventObject {
 
     private Plugin mPlugin;
-    
+
     public PluginEvent(Object src, Plugin plugin) {
         super(src);
         mPlugin = plugin;
     }
-    
+
     /**
      * Returns the Plugin that this event pertains to.
-     * 
+     *
      * @returns Plugin the Plugin object.
      */
     public Plugin getPlugin() {
         return mPlugin;
     }
-    
+
     /**
      * Returns the name of the Plugin that this event pertains to.
-     * 
+     *
      * @returns String the name of the Plugin.
      */
     public String getPluginName() {

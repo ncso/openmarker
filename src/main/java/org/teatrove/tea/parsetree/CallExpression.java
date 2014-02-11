@@ -19,7 +19,7 @@ package org.teatrove.tea.parsetree;
 import org.teatrove.tea.compiler.SourceInfo;
 
 /**
- * 
+ *
  * @author Brian S O'Neill
  */
 public abstract class CallExpression extends Expression implements NullSafe {
@@ -33,7 +33,7 @@ public abstract class CallExpression extends Expression implements NullSafe {
     private boolean mVoidPermitted;
     private boolean mNullSafe;
 
-    public CallExpression(SourceInfo info, 
+    public CallExpression(SourceInfo info,
                           Expression expression, Name target,
                           ExpressionList params,
                           Block subParam) {
@@ -64,11 +64,11 @@ public abstract class CallExpression extends Expression implements NullSafe {
     public Name getTarget() {
         return mTarget;
     }
-    
+
     public void setTarget(Name target) {
     	mTarget = target;
     }
-    
+
     public Expression getExpression() {
         return mExpression;
     }
@@ -76,7 +76,7 @@ public abstract class CallExpression extends Expression implements NullSafe {
     public void setExpression(Expression expression) {
         mExpression = expression;
     }
-    
+
     public ExpressionList getParams() {
         return mParams;
     }
@@ -117,11 +117,11 @@ public abstract class CallExpression extends Expression implements NullSafe {
     public void setVoidPermitted(boolean b) {
         mVoidPermitted = b;
     }
-    
+
     public boolean isNullSafe() {
         return mNullSafe;
     }
-    
+
     public void setNullSafe(boolean nullSafe) {
         mNullSafe = nullSafe;
     }

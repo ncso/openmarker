@@ -24,7 +24,7 @@ import java.util.*;
  * to LogEvent objects. Add a LogListener to intercept LogEvents. Events are
  * parsed based on newline characters (LF, CRLF or CR) or a switch to a
  * different thread.
- * 
+ *
  * @author Brian S O'Neill
  */
 public class LogEventParsingWriter extends Writer {
@@ -80,9 +80,9 @@ public class LogEventParsingWriter extends Writer {
             if (mMessageThread == null) {
                 return;
             }
-            
+
             String message = mMessageBuffer.toString();
-            
+
             if (mMessageBuffer.size() > 10000) {
                 mMessageBuffer = new CharArrayWriter();
             }
@@ -95,11 +95,11 @@ public class LogEventParsingWriter extends Writer {
                 e = new LogEvent(mSource, mType, message, mMessageThread);
             }
             else {
-                e = new LogEvent(mSource, mType, message, mMessageThread, 
+                e = new LogEvent(mSource, mType, message, mMessageThread,
                                  mTimestamp);
                 mTimestamp = null;
             }
-            
+
             synchronized (mListeners) {
                 Enumeration en = mListeners.elements();
                 while (en.hasMoreElements()) {
@@ -125,15 +125,15 @@ public class LogEventParsingWriter extends Writer {
                 }
                 mMessageThread = current;
             }
-            
+
             int writtenLength = 0;
-            
+
             int i = 0;
             for (i=0; i<len; i++) {
                 char c = array[i + off];
                 if (c == '\r') {
                     mTrackLF = true;
-                    writeToBuffer(array, writtenLength + off, 
+                    writeToBuffer(array, writtenLength + off,
                                   i - writtenLength);
                     // Add one more than i to skip the CR.
                     writtenLength = i + 1;
@@ -146,7 +146,7 @@ public class LogEventParsingWriter extends Writer {
                         writtenLength++;
                     }
                     else {
-                        writeToBuffer(array, writtenLength + off, 
+                        writeToBuffer(array, writtenLength + off,
                                       i - writtenLength);
                         // Add one more than i to skip the LF.
                         writtenLength = i + 1;
@@ -157,7 +157,7 @@ public class LogEventParsingWriter extends Writer {
                     mTrackLF = false;
                 }
             }
-            
+
             writeToBuffer(array, writtenLength + off, i - writtenLength);
         }
     }
@@ -172,8 +172,8 @@ public class LogEventParsingWriter extends Writer {
     }
 
     /**
-     * Returning false discards written data, and events are not generated. 
-     * Default implementation always returns true. 
+     * Returning false discards written data, and events are not generated.
+     * Default implementation always returns true.
      */
     public boolean isEnabled() {
         return true;

@@ -20,7 +20,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
- * 
+ *
  * @author Brian S O'Neill
  */
 public class StringReplacer {
@@ -28,24 +28,24 @@ public class StringReplacer {
     }
 
     /**
-     * Replaces all exact matches of the given pattern in the source string 
+     * Replaces all exact matches of the given pattern in the source string
      * with the provided replacement.
-     * 
+     *
      * @param source the source string
      * @param pattern the simple string pattern to search for
      * @param replacement the string to use for replacing matched patterns.
      *
      * @return the string with any replacements applied.
      */
-    public static String replace(String source, String pattern, 
+    public static String replace(String source, String pattern,
                                  String replacement) {
         return replace(source, pattern, replacement, 0);
     }
 
     /**
-     * Replaces all exact matches of the given pattern in the source string 
+     * Replaces all exact matches of the given pattern in the source string
      * with the provided replacement, starting from the given index.
-     * 
+     *
      * @param source the source string
      * @param pattern the simple string pattern to search for
      * @param replacement the string to use for replacing matched patterns.
@@ -83,12 +83,12 @@ public class StringReplacer {
         else {
             return source;
         }
-        
+
     sourceScan:
         for (int s = fromIndex; s < sourceLength; ) {
             int k = s;
             for (int j=0; j<patternLength; j++, k++) {
-                if (k >= sourceLength || 
+                if (k >= sourceLength ||
                     source.charAt(k) != pattern.charAt(j)) {
 
                     buf.append(source.charAt(s));
@@ -112,7 +112,7 @@ public class StringReplacer {
      * @param source the source string
      * @param patternReplacements pattern-replacement pairs
      */
-    public static 
+    public static
     String replace(String source, Map<String, String> patternReplacements) {
         if (source == null) {
             return null;
@@ -122,12 +122,12 @@ public class StringReplacer {
         String[] patterns = new String[mapSize];
         String[] replacements = new String[mapSize];
 
-        Iterator<Map.Entry<String, String>> it = 
+        Iterator<Map.Entry<String, String>> it =
             patternReplacements.entrySet().iterator();
-        
+
         for (int i=0; it.hasNext(); i++) {
             Map.Entry<String, String> entry = it.next();
-            
+
             patterns[i] = entry.getKey();
             replacements[i] = entry.getValue();
         }
@@ -135,7 +135,7 @@ public class StringReplacer {
         return replace(source, patterns, replacements);
     }
 
-    public static String replace(String source, String[] patterns, 
+    public static String replace(String source, String[] patterns,
                                  String[] replacements)
     {
         int patternsLength = patterns.length;
@@ -154,9 +154,9 @@ public class StringReplacer {
 
                 if (patternLength > 0) {
                     for (int j=0, k=s; j<patternLength; j++, k++) {
-                        if (k >= sourceLength || 
+                        if (k >= sourceLength ||
                             source.charAt(k) != pattern.charAt(j)) {
-                            
+
                             continue patternScan;
                         }
                     }
@@ -188,7 +188,7 @@ public class StringReplacer {
      * @param source the source string
      * @param pattern the simple string pattern to search for
      * @param replacement the string to use for replacing matched patterns
-     * 
+     *
      * @return the string with any replacements applied
      */
     public static String replaceFirst(String source, String pattern,
@@ -205,7 +205,7 @@ public class StringReplacer {
      * @param pattern the simple string pattern to search for
      * @param replacement the string to use for replacing matched patterns
      * @param fromIndex index to start the replace
-     * 
+     *
      * @return the string with any replacements applied
      */
     public static String replaceFirst(String source, String pattern,
@@ -221,7 +221,7 @@ public class StringReplacer {
      * @param source the source string
      * @param pattern the simple string pattern to search for
      * @param replacement the string to use for replacing matched patterns
-     * 
+     *
      * @return the string with any replacements applied
      */
     public static String replaceLast(String source, String pattern,
@@ -238,7 +238,7 @@ public class StringReplacer {
      * @param pattern the simple string pattern to search for
      * @param replacement the string to use for replacing matched patterns
      * @param fromIndex index to start the replace
-     * 
+     *
      * @return the string with any replacements applied
      */
     public static String replaceLast(String source, String pattern,

@@ -22,7 +22,7 @@ import java.util.EventObject;
  * An event that contains information from a {@link ThreadPool}.
  * ThreadPoolEvents can be received by implementing a
  * {@link ThreadPoolListener}.
- * 
+ *
  * @author Brian S O'Neill
  */
 public class ThreadPoolEvent extends EventObject {

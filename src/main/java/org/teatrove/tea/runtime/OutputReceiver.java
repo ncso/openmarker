@@ -19,16 +19,16 @@ package org.teatrove.tea.runtime;
 import java.io.IOException;
 
 /**
- * Defines a simple interface for Tea templates to output information. 
+ * Defines a simple interface for Tea templates to output information.
  *
  * @author Brian S O'Neill
  * @see org.teatrove.tea.compiler.Compiler#getRuntimeReceiver
  */
 public interface OutputReceiver {
     /**
-     * This method receives the output of a template. 
+     * This method receives the output of a template.
      *
-     * NOTE:  This method should <b>not</b> be called directly within a 
+     * NOTE:  This method should <b>not</b> be called directly within a
      * template.
      *
      * @exclude

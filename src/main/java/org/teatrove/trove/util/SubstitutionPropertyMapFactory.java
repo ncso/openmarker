@@ -22,33 +22,33 @@ public class SubstitutionPropertyMapFactory implements PropertyMapFactory {
 
     private PropertyMap substitutions;
     private PropertyMapFactory factory;
-    
+
     public SubstitutionPropertyMapFactory(PropertyMapFactory factory) {
         this.factory = factory;
     }
-    
+
     public SubstitutionPropertyMapFactory(PropertyMapFactory factory,
                                           PropertyMap substitutions) {
         this.factory = factory;
         this.substitutions = substitutions;
     }
-    
+
     @Override
-    public PropertyMap createProperties() 
+    public PropertyMap createProperties()
         throws IOException {
-        
+
         return createProperties(null);
     }
 
     @Override
     public PropertyMap createProperties(PropertyChangeListener listener)
         throws IOException {
-        
+
         PropertyMap props = factory.createProperties(listener);
         substitute(props);
         return props;
     }
-    
+
     @SuppressWarnings({ "unchecked" })
     protected void substitute(PropertyMap props) {
         Object[] keys = props.keySet().toArray(new Object[props.size()]);

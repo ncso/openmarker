@@ -122,13 +122,13 @@ public class CodeBuilder implements CodeBuffer, CodeAssembler {
             error.append("error generating code: ")
                  .append(mClassFile.getClassName()).append('.').append(mName)
                  .append('(');
-            
+
             for (int i = 0; i < mParameters.length; i++) {
                 if (i > 0) { error.append(", "); }
                 error.append(mParameters[i].getType()).append(' ')
                      .append(mParameters[i].getName());
             }
-            
+
             error.append(')');
             throw new RuntimeException(error.toString(), exception);
         }
@@ -223,7 +223,7 @@ public class CodeBuilder implements CodeBuffer, CodeAssembler {
     public void loadNull() {
         addCode(1, Opcode.ACONST_NULL);
     }
-    
+
     public void loadConstant(String value) {
         if (value == null) {
             loadNull();
@@ -410,16 +410,16 @@ public class CodeBuilder implements CodeBuffer, CodeAssembler {
     public void loadThisClass() {
         loadClass(mClassFile.getType());
     }
-    
+
     public void loadClass(Class clazz) {
         loadClass(TypeDesc.forClass(clazz));
     }
-    
+
     public void loadClass(TypeDesc clazz) {
         ConstantInfo info = mCp.addConstantClass(clazz.getFullName());
         mInstructions.new LoadConstantInstruction(1, info);
     }
-    
+
     // load-local-to-stack style instructions
 
     public void loadLocal(LocalVariable local) {
@@ -1159,7 +1159,7 @@ public class CodeBuilder implements CodeBuffer, CodeAssembler {
 
         addCode(stackAdjust, Opcode.INVOKESPECIAL, info);
     }
-    
+
     public void invokeConstructor(MethodInfo mi) {
         invokeConstructor(mi.getClassFile().getClassName(),
                           mi.getMethodDescriptor().getParameterTypes());

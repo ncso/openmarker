@@ -20,7 +20,7 @@ import org.teatrove.tea.compiler.SourceInfo;
 import org.teatrove.tea.compiler.Token;
 
 /**
- * AndExpression defines a logical "and" operation with short-circuit 
+ * AndExpression defines a logical "and" operation with short-circuit
  * semantics. The type of an AndExpression is Boolean, and it operates only
  * on expressions that return Booleans.
  *

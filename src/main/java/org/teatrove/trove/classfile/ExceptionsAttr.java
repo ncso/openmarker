@@ -22,16 +22,16 @@ import java.io.*;
 /**
  * This class corresponds to the Exceptions_attribute structure as defined in
  * section 4.7.5 of <i>The Java Virtual Machine Specification</i>.
- * 
+ *
  * @author Brian S O'Neill
  */
 class ExceptionsAttr extends Attribute {
     private List mExceptions = new ArrayList(2);
-    
+
     public ExceptionsAttr(ConstantPool cp) {
         super(cp, EXCEPTIONS);
     }
-    
+
     public String[] getExceptions() {
         int size = mExceptions.size();
         String[] names = new String[size];
@@ -47,11 +47,11 @@ class ExceptionsAttr extends Attribute {
     public void addException(ConstantClassInfo type) {
         mExceptions.add(type);
     }
-    
+
     public int getLength() {
         return 2 + 2 * mExceptions.size();
     }
-    
+
     public void writeDataTo(DataOutput dout) throws IOException {
         int size = mExceptions.size();
         dout.writeShort(size);
@@ -67,7 +67,7 @@ class ExceptionsAttr extends Attribute {
                             DataInput din) throws IOException {
 
         ExceptionsAttr attr = new ExceptionsAttr(cp);
-        
+
         int size = din.readUnsignedShort();
         length -= 2;
 
@@ -81,7 +81,7 @@ class ExceptionsAttr extends Attribute {
         if (length > 0) {
             din.skipBytes(length);
         }
-        
+
         return attr;
     }
 }

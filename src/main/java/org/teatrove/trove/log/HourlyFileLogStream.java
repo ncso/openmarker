@@ -42,8 +42,8 @@ public class HourlyFileLogStream extends HourlyLogStream {
         this(directory, format, DEFAULT_EXTENSION);
     }
 
-    public HourlyFileLogStream(File directory, 
-                               DateFormat format, 
+    public HourlyFileLogStream(File directory,
+                               DateFormat format,
                                String extension) {
 
         super(new FileLogStreamFactory(directory, format, extension));

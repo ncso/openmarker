@@ -25,11 +25,11 @@ import java.util.concurrent.LinkedBlockingQueue;
  *  and Queue implementations in java.util.concurrent in that there is an
  *  implementation of the remove method that runs in constant time (vs. the
  *  typical linear time implementation that exists in the java.util.concurrent
- *  libraries). 
+ *  libraries).
  *
  *  IMPORTANT NOTE:  Once a Node reference has been passed into the remove()
- *  call, its reference should be promptly discarded. 
- * 
+ *  call, its reference should be promptly discarded.
+ *
  *  @author Guy A. Molinari
  *
  *  TODO: Implement the java.util.Collection and java.util.Queue interfaces.
@@ -55,9 +55,9 @@ public class ConcurrentLinkedList<E> {
 
     /**
      *  Add a new item to the tail of the queue and return a Node reference.
-     *  This reference can be used as a handle that can be passed to 
+     *  This reference can be used as a handle that can be passed to
      *  remove(Node) where constand time removes are necessary.  Calls to
-     *  this method and poll() do not mutually block, however, concurrent 
+     *  this method and poll() do not mutually block, however, concurrent
      *  calls to this method are serialized.
      */
     public Node<E> offerAndGetNode(E e) {
@@ -94,7 +94,7 @@ public class ConcurrentLinkedList<E> {
      */
     public int size() { return mSize.get(); }
 
-    
+
     /**
      *  Clears the contents of the queue.   This is a blocking operation.
      */
@@ -120,20 +120,20 @@ public class ConcurrentLinkedList<E> {
               try{
                   if (e == null)
                       return false;
-          
+
                   if (e.mRemoved)
                       return false;
-          
+
                   if (mSize.get() == 0)
                       return false;
-    
+
                   if (e == mTail) {
                       return true;
                   }
-                  
+
                   if (e.mPrev == null || e.mNext == null)
                       return false;
-    
+
                   e.mPrev.mNext = e.mNext;
                   e.mNext.mPrev = e.mPrev;
               }
@@ -173,10 +173,10 @@ public class ConcurrentLinkedList<E> {
         try {
             if (e == null)
                 return false;
-    
+
             if (e.mRemoved)
                 return false;
-    
+
             if (mSize.get() == 0)
                 return false;
 
@@ -237,7 +237,7 @@ public class ConcurrentLinkedList<E> {
             value = e.mEntry;
             mNodePool.returnNode(e);
         }
-        else 
+        else
             mHead.mNext = mTail;
         mSize.decrementAndGet();
         return value;
@@ -246,7 +246,7 @@ public class ConcurrentLinkedList<E> {
 
     /**
      *  Removes and returns the item at the head of the queue.  Concurrent calls to
-     *  this method and offerAndGetNode() do not mutually block, however, concurrent 
+     *  this method and offerAndGetNode() do not mutually block, however, concurrent
      *  calls to this method are serialized.
      */
     public E poll() {
@@ -279,9 +279,9 @@ public class ConcurrentLinkedList<E> {
                 a = a.mNext;
             }
             if (a != mTail)
-                throw new IllegalArgumentException("Last item in the list should be the tail, scount = " + 
+                throw new IllegalArgumentException("Last item in the list should be the tail, scount = " +
                         i + ", item = " + a + ", tail = " + mTail);
-    
+
             // backwards traversal
             a = mTail;
             for (i = 0; i < mSize.get() - 1; i++) {
@@ -290,7 +290,7 @@ public class ConcurrentLinkedList<E> {
                 a = a.mPrev;
             }
             if (a != mHead.mNext)
-                throw new IllegalArgumentException("First item in the list should be the head, count = " + 
+                throw new IllegalArgumentException("First item in the list should be the head, count = " +
                         i + ", item = " + a + ", head = " + mHead.mNext);
         }
         finally {
@@ -299,7 +299,7 @@ public class ConcurrentLinkedList<E> {
         }
     }
 
-    
+
     /**
      *  This class is a representation of Nodes in a linked list.  It is fully accessible internally, but
      *  when passed to the external world via offerAndGetNode() it is immutable and can be used as a
@@ -320,8 +320,8 @@ public class ConcurrentLinkedList<E> {
         public E getValue() { return mEntry; }
 
         public String toString() {
-            return "This = " + (mEntry != null ? mEntry.toString() : "null") + 
-                ", next = " + (mNext != null && mNext.mEntry != null ? mNext.mEntry.toString() : "null") + 
+            return "This = " + (mEntry != null ? mEntry.toString() : "null") +
+                ", next = " + (mNext != null && mNext.mEntry != null ? mNext.mEntry.toString() : "null") +
                 ", prev = " + (mPrev != null && mPrev.mEntry != null ? mPrev.mEntry.toString() : "null");
         }
     }
@@ -353,12 +353,12 @@ public class ConcurrentLinkedList<E> {
          *  The call to offer does nothing if the pool is full (should not happen normally.
          */
         public void returnNode(Node<E> e) {
-            e.mNext = null; 
-            e.mPrev = null; 
+            e.mNext = null;
+            e.mPrev = null;
             e.mRemoved = false;
             e.mEntry = null;
             mPool.offer(e);
         }
- 
+
     }
 }

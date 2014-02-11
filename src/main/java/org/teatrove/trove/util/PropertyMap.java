@@ -113,7 +113,7 @@ public class PropertyMap extends AbstractMap {
      * "" = "h"
      * null = "i"
      * </pre>
-     * 
+     *
      * using a key of "foo" results in
      *
      * <pre>
@@ -160,7 +160,7 @@ public class PropertyMap extends AbstractMap {
     }
 
     /**
-     * Returns the all the sub-keys in this PropertyMap. 
+     * Returns the all the sub-keys in this PropertyMap.
      * The returned set is unmodifiable.
      */
     public Set subKeySet() {
@@ -187,7 +187,7 @@ public class PropertyMap extends AbstractMap {
             return super.isEmpty();
         }
     }
-    
+
     public boolean containsKey(Object key) {
         if (key == null) {
             return containsKey((String)null);
@@ -196,7 +196,7 @@ public class PropertyMap extends AbstractMap {
             return containsKey(key.toString());
         }
     }
-    
+
     public boolean containsKey(String key) {
         if (mPrefix == null) {
             return mMappings.containsKey(internStr(key));
@@ -205,7 +205,7 @@ public class PropertyMap extends AbstractMap {
             return mMappings.containsKey(mPrefix + mSeparator + key);
         }
     }
-    
+
     public Object get(Object key) {
         if (key == null) {
             return get((String)null);
@@ -238,7 +238,7 @@ public class PropertyMap extends AbstractMap {
             return value.toString();
         }
     }
-    
+
     /**
      * Returns the default value if the given key isn't in this PropertyMap.
      *
@@ -254,7 +254,7 @@ public class PropertyMap extends AbstractMap {
             return value.toString();
         }
     }
-    
+
     /**
      * Returns 0 if the given key isn't in this PropertyMap.
      *
@@ -473,7 +473,7 @@ public class PropertyMap extends AbstractMap {
             }
         }
     }
-    
+
     public Object remove(Object key) {
         if (key == null) {
             return remove((String)null);
@@ -482,7 +482,7 @@ public class PropertyMap extends AbstractMap {
             return remove(key.toString());
         }
     }
-    
+
     public Object remove(String key) {
         if (mPrefix == null) {
             return mMappings.remove(internStr(key));
@@ -491,7 +491,7 @@ public class PropertyMap extends AbstractMap {
             return mMappings.remove(mPrefix + mSeparator + key);
         }
     }
-    
+
     public void clear() {
         if (mPrefix == null) {
             mMappings.clear();
@@ -563,7 +563,7 @@ public class PropertyMap extends AbstractMap {
             }
             return size;
         }
-        
+
         public Iterator iterator() {
             return new Iterator() {
                 final Iterator mIterator = keySet().iterator();
@@ -623,7 +623,7 @@ public class PropertyMap extends AbstractMap {
             }
             return size;
         }
-        
+
         public boolean remove(Object obj) {
             if (obj instanceof Map.Entry) {
                 Object key = ((Map.Entry)obj).getKey();
@@ -645,7 +645,7 @@ public class PropertyMap extends AbstractMap {
             }
             return false;
         }
-        
+
         public void clear() {
             Iterator it = iterator();
             while (it.hasNext()) {
@@ -694,7 +694,7 @@ public class PropertyMap extends AbstractMap {
                                 public Object getValue() {
                                     return entry.getValue();
                                 }
-                                
+
                                 public Object setValue(Object value) {
                                     return put(subKey, value);
                                 }

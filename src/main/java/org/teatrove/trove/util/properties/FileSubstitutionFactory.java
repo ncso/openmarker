@@ -29,7 +29,7 @@ import org.teatrove.trove.util.PropertyMap;
 public class FileSubstitutionFactory implements SubstitutionFactory {
 
     private Properties m_subs = new Properties();
-    
+
     public void init(PropertyMap props) {
         String sFile = props.getString("file");
         if (sFile == null) {

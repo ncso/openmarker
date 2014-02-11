@@ -30,7 +30,7 @@ public class FunctionCallExpression extends CallExpression {
 
     private Method mCalledMethod;
 
-    public FunctionCallExpression(SourceInfo info, 
+    public FunctionCallExpression(SourceInfo info,
                                   Expression expression, Name target,
                                   ExpressionList params,
                                   Block subParam) {

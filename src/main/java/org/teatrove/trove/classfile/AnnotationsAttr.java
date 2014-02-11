@@ -31,20 +31,20 @@ import java.util.List;
 public abstract class AnnotationsAttr extends Attribute {
 
     private List<Annotation> mAnnotations;
-    
+
     public AnnotationsAttr(ConstantPool cp, String name) {
         super(cp, name);
         mAnnotations = new ArrayList<Annotation>(2);
     }
-    
+
     public AnnotationsAttr(ConstantPool cp, String name, int length, DataInput din)
         throws IOException
     {
         super(cp, name);
-        
+
         int size = din.readUnsignedShort();
         mAnnotations = new ArrayList<Annotation>(size);
-        
+
         for (int i=0; i<size; i++) {
             addAnnotation(new Annotation(cp, din));
         }
@@ -57,7 +57,7 @@ public abstract class AnnotationsAttr extends Attribute {
     public void addAnnotation(Annotation annotation) {
         mAnnotations.add(annotation);
     }
-    
+
     public int getLength() {
         int length = 2;
         for (int i=mAnnotations.size(); --i>=0; ) {
@@ -65,7 +65,7 @@ public abstract class AnnotationsAttr extends Attribute {
         }
         return length;
     }
-    
+
     public void writeDataTo(DataOutput dout) throws IOException {
         int size = mAnnotations.size();
         dout.writeShort(size);

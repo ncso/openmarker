@@ -20,7 +20,7 @@ import org.teatrove.tea.compiler.SourceInfo;
 import org.teatrove.tea.compiler.Type;
 
 /**
- * Base class for all Literals that have a numeric type. 
+ * Base class for all Literals that have a numeric type.
  *
  * @author Brian S O'Neill
  */

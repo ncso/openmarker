@@ -19,7 +19,7 @@ package org.teatrove.tea.engine;
 import org.teatrove.trove.util.Config;
 
 /**
- * 
+ *
  * @author Jonathan Colwell
  */
 public interface TemplateSourceConfig extends Config {

@@ -37,7 +37,7 @@ public class PluginFactoryException extends FilterException {
     protected PluginFactoryException(Throwable rootCause) {
         super(rootCause);
     }
-    
+
     protected PluginFactoryException(String message, Throwable rootCause) {
         super(message, rootCause);
     }

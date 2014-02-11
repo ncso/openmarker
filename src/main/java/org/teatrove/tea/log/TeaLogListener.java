@@ -21,13 +21,13 @@ import org.teatrove.trove.log.LogListener;
 /**
  * The TeaLogListener works with the TeaLog class to simplify stack traces for
  * Tea templates.
- * 
+ *
  * @author Reece Wilton
  */
 public interface TeaLogListener extends LogListener {
 
 	/**
-     * Called for LogEvents that should be logged as a TeaStackTrace. The 
+     * Called for LogEvents that should be logged as a TeaStackTrace. The
      * LogEvent object will have a TeaStackTrace object in it.
      */
     public void logTeaStackTrace(TeaLogEvent e);

@@ -27,6 +27,6 @@ import java.net.*;
  */
 public interface InetAddressListener {
     public void unknown(UnknownHostException e);
-    
+
     public void resolved(InetAddress[] addresses);
 }

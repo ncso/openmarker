@@ -21,24 +21,24 @@ import java.io.*;
 /**
  * This class corresponds to the CONSTANT_String_info structure as defined in
  * section 4.4.3 of <i>The Java Virtual Machine Specification</i>.
- * 
+ *
  * @author Brian S O'Neill
  */
 public class ConstantStringInfo extends ConstantInfo {
     private String mStr;
-    
+
     private ConstantUTFInfo mStringConstant;
-    
-    /** 
+
+    /**
      * Will return either a new ConstantStringInfo object or one already in
-     * the constant pool. If it is a new ConstantStringInfo, it will be 
+     * the constant pool. If it is a new ConstantStringInfo, it will be
      * inserted into the pool.
      */
     static ConstantStringInfo make(ConstantPool cp, String str) {
         ConstantInfo ci = new ConstantStringInfo(cp, str);
         return (ConstantStringInfo)cp.addConstant(ci);
     }
-    
+
     ConstantStringInfo(ConstantUTFInfo constant) {
         super(TAG_STRING);
         mStr = constant.getValue();
@@ -50,7 +50,7 @@ public class ConstantStringInfo extends ConstantInfo {
         mStr = str;
         mStringConstant = ConstantUTFInfo.make(cp, str);
     }
-    
+
     public String getValue() {
         return mStr;
     }
@@ -58,16 +58,16 @@ public class ConstantStringInfo extends ConstantInfo {
     public int hashCode() {
         return mStr.hashCode();
     }
-    
+
     public boolean equals(Object obj) {
         if (obj instanceof ConstantStringInfo) {
             ConstantStringInfo other = (ConstantStringInfo)obj;
             return mStr.equals(other.mStr);
         }
-        
+
         return false;
     }
-    
+
     boolean hasPriority() {
         return true;
     }

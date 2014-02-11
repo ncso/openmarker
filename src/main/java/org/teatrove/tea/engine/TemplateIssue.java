@@ -19,14 +19,14 @@ package org.teatrove.tea.engine;
 import java.util.Date;
 
 /**
- * 
+ *
  * @author Reece Wilton
  */
 public class TemplateIssue implements java.io.Serializable {
 
     public static final int ERROR = 0;
     public static final int WARNING = 1;
-    
+
     private static final long serialVersionUID = 1L;
 
     //
@@ -38,7 +38,7 @@ public class TemplateIssue implements java.io.Serializable {
 
     /** Last modified date of the template file */
     private Date mLastModifiedDate;
-    
+
     private int mState;
 
     /** Short description of the compilation error */
@@ -81,7 +81,7 @@ public class TemplateIssue implements java.io.Serializable {
         mSourcePath = null;
         mLastModifiedDate = null;
         mState = ERROR;
-        
+
         mMessage = "";
         mDetailedMessage = "";
         mSourceInfoMessage = "";
@@ -114,7 +114,7 @@ public class TemplateIssue implements java.io.Serializable {
         mSourcePath = sourcePath;
         mLastModifiedDate = lastModifiedDate;
         mState = state;
-        
+
         mMessage = message;
         mDetailedMessage = detailedMessage;
         mSourceInfoMessage = sourceInfoMessage;
@@ -158,7 +158,7 @@ public class TemplateIssue implements java.io.Serializable {
     public int getState() { return mState; }
     public boolean isError() { return mState == ERROR; }
     public boolean isWarning() { return mState == WARNING; }
-    
+
     public String getSourcePath() {
         return mSourcePath;
     }

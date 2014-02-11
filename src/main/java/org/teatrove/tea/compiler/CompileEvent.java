@@ -20,7 +20,7 @@ package org.teatrove.tea.compiler;
  * A compile event is associated with template compilation and includes
  * information on the template compilation such as whether an error or warning
  * occurred.  Compile events are associated with a {@link CompileListener}.
- * 
+ *
  * @author Brian S O'Neill
  */
 public class CompileEvent extends java.util.EventObject {
@@ -46,7 +46,7 @@ public class CompileEvent extends java.util.EventObject {
     CompileEvent(Object source, CompileEvent.Type type,
                  String msg, Token culprit, CompilationUnit unit) {
         super(source);
-        
+
         mType = type;
         mMessage = msg;
         mCulprit = culprit;
@@ -59,7 +59,7 @@ public class CompileEvent extends java.util.EventObject {
     CompileEvent(Object source, CompileEvent.Type type,
                  String  msg, SourceInfo info, CompilationUnit unit) {
         super(source);
-        
+
         mType = type;
         mMessage = msg;
         mInfo = info;
@@ -68,35 +68,35 @@ public class CompileEvent extends java.util.EventObject {
 
     /**
      * Return whether this event relates to a compile error or not.
-     * 
+     *
      * @return true if this event is a compile error, false otherwise
      */
     public boolean isError() {
         return mType == CompileEvent.Type.ERROR;
     }
-    
+
     /**
      * Return whether this event relates to a compile warning or not.
-     * 
+     *
      * @return true if this event is a compile warning, false otherwise
      */
     public boolean isWarning() {
         return mType == CompileEvent.Type.WARNING;
     }
-    
+
     /**
      * Returns the type of event, such as a compile error or warning.
-     * 
+     *
      * @return The type of event
      */
     public CompileEvent.Type getType() {
         return mType;
     }
-    
+
     /**
      * Get the associated message for this event such as the reason for the
      * compile error or warning.
-     * 
+     *
      * @return The message or reason for the event
      */
     public String getMessage() {
@@ -104,11 +104,11 @@ public class CompileEvent extends java.util.EventObject {
     }
 
     /**
-     * Returns the detailed message by prepending the standard message with 
+     * Returns the detailed message by prepending the standard message with
      * source file information.
-     * 
+     *
      * @return The detailed message with the source file information
-     * 
+     *
      * @see #getMessage()
      */
     public String getDetailedMessage() {
@@ -125,7 +125,7 @@ public class CompileEvent extends java.util.EventObject {
      * Get the source file information associated with this event.  The source
      * file information includes the name of the associated template and
      * potential line number.
-     * 
+     *
      * @return The source file information associated with the event
      */
     public String getSourceInfoMessage() {
@@ -163,7 +163,7 @@ public class CompileEvent extends java.util.EventObject {
     /**
      * Get the offending token within the source tree that caused the event.  If
      * no token was associated with this event, <code>null</code> is returned.
-     *  
+     *
      * @return The offending token in the source tree or <code>null</code>
      */
     public Token getCulpritToken() {
@@ -174,7 +174,7 @@ public class CompileEvent extends java.util.EventObject {
      * Get the associated compilation unit associated with this event.  The
      * compilation event includes the associated template.  If no unit was
      * associated with this event, then <code>null</code> is returned.
-     * 
+     *
      * @return The associated compilation unit or <code>null</code>
      */
     public CompilationUnit getCompilationUnit() {

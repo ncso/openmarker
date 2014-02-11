@@ -129,7 +129,7 @@ public class MultiplexFile {
             temp[7] = (byte)value;
         case 0:
         }
-        
+
         buffer.write(position, temp, 8 - scale, scale);
     }
 
@@ -167,7 +167,7 @@ public class MultiplexFile {
 
     // Used to clear contents of newly allocated blocks.
     private final byte[] mClearArray;
-    
+
     // Maps file ids to InternalFiles. Use the mFileTable lock when accessing
     // this map.
     private final Map mOpenFiles;
@@ -215,7 +215,7 @@ public class MultiplexFile {
         this(fb, true, reserved, blockSize, blockIdScale, lengthScale);
     }
 
-    private MultiplexFile(FileBuffer fb, boolean create, int reserved, 
+    private MultiplexFile(FileBuffer fb, boolean create, int reserved,
                           int blockSize, int blockIdScale, int lengthScale)
         throws IOException
     {
@@ -244,7 +244,7 @@ public class MultiplexFile {
                 // Intermediate mapping blocks need to have at least two
                 // children.
                 throw new IllegalArgumentException
-                    ("Block size must be large enough " + 
+                    ("Block size must be large enough " +
                      "to contain two block ids: " + blockIdScale * 2 + " > " +
                      blockSize);
             }
@@ -311,7 +311,7 @@ public class MultiplexFile {
 
         if (mFileTableEntrySize > mBlockSize) {
             throw new IllegalArgumentException
-                ("Block size must be large enough " + 
+                ("Block size must be large enough " +
                  "to contain one file table entry: " + mFileTableEntrySize +
                  " > " + mBlockSize);
         }
@@ -510,7 +510,7 @@ public class MultiplexFile {
             if (count >= oldCount) {
                 return;
             }
-            
+
             mFileTableLock.acquireWriteLock();
             try {
                 for (long id = oldCount; --id >= count; ) {
@@ -580,7 +580,7 @@ public class MultiplexFile {
         try {
             mFreeBlocksBitlist.lock().acquireWriteLock();
             long blockId = mFirstFreeBlock;
-            
+
             if (blockId <= 0) {
                 // No free blocks, so expand backing file.
                 blockId = mTotalBlocks + 1;
@@ -600,7 +600,7 @@ public class MultiplexFile {
                     setFirstFreeBlock(nextFree);
                 }
             }
-            
+
             if (markInUse) {
                 mFreeBlocksBitlist.clear(blockId);
             }
@@ -691,7 +691,7 @@ public class MultiplexFile {
         }
     }
 
-    final long putLengthEntry(FileBuffer buffer, long position, long length) 
+    final long putLengthEntry(FileBuffer buffer, long position, long length)
         throws IOException
     {
         if (mLengthScale == 0) {
@@ -722,13 +722,13 @@ public class MultiplexFile {
         return length;
     }
 
-    final long getBlockId(FileBuffer buffer, long position) 
+    final long getBlockId(FileBuffer buffer, long position)
         throws IOException
     {
         return getScaledValue(buffer, mBlockIdScale, position);
     }
 
-    final long getBlockId(byte[] tempArray, FileBuffer buffer, long position) 
+    final long getBlockId(byte[] tempArray, FileBuffer buffer, long position)
         throws IOException
     {
         return getScaledValue(tempArray, buffer, mBlockIdScale, position);
@@ -759,14 +759,14 @@ public class MultiplexFile {
             (tempArray, mBackingFile, refBlockId * mBlockSize + index);
     }
 
-    final void putBlockId(FileBuffer buffer, long position, long blockId) 
+    final void putBlockId(FileBuffer buffer, long position, long blockId)
         throws IOException
     {
         putScaledValue(buffer, mBlockIdScale, position, blockId);
     }
 
     final void putBlockId(byte[] tempArray,
-                          FileBuffer buffer, long position, long blockId) 
+                          FileBuffer buffer, long position, long blockId)
         throws IOException
     {
         putScaledValue(tempArray, buffer, mBlockIdScale, position, blockId);
@@ -777,7 +777,7 @@ public class MultiplexFile {
     {
         putBlockId(mBackingFile, refBlockId * mBlockSize + index, blockId);
     }
-    
+
     final void putBlockId(byte[] tempArray,
                           long refBlockId, int index, long blockId)
         throws IOException
@@ -785,7 +785,7 @@ public class MultiplexFile {
         putBlockId(tempArray, mBackingFile,
                    refBlockId * mBlockSize + index, blockId);
     }
-    
+
     private void setTotalBlocks(long totalBlocks) throws IOException {
         mTotalBlocks = totalBlocks;
         putBlockId(mBackingFile, mTotalBlocksPosition, totalBlocks);
@@ -824,7 +824,7 @@ public class MultiplexFile {
                 mLock.releaseLock();
             }
         }
-        
+
         public int write(long position, byte[] src, int offset, int length)
             throws IOException
         {
@@ -841,7 +841,7 @@ public class MultiplexFile {
                 mLock.releaseLock();
             }
         }
-        
+
         public int read(long position) throws IOException {
             if (position < 0) {
                 throw new IllegalArgumentException
@@ -890,7 +890,7 @@ public class MultiplexFile {
                 mLock.releaseLock();
             }
         }
-        
+
         public void truncate(long size) throws IOException {
             if (size < 0) {
                 throw new IllegalArgumentException("size < 0: " + size);
@@ -911,7 +911,7 @@ public class MultiplexFile {
         public ReadWriteLock lock() {
             return this;
         }
-        
+
         public void acquireReadLock() throws InterruptedException {
             checkClosedLock();
             mLock.acquireReadLock();
@@ -923,31 +923,31 @@ public class MultiplexFile {
             checkClosedLock();
             return mLock.acquireReadLock(timeout);
         }
-        
+
         public void acquireUpgradableLock() throws InterruptedException {
             checkClosedLock();
             mLock.acquireUpgradableLock();
         }
-        
+
         public boolean acquireUpgradableLock(long timeout)
             throws InterruptedException
         {
             checkClosedLock();
             return mLock.acquireUpgradableLock(timeout);
         }
-        
+
         public void acquireWriteLock() throws InterruptedException {
             checkClosedLock();
             mLock.acquireWriteLock();
         }
-        
+
         public boolean acquireWriteLock(long timeout)
             throws InterruptedException
         {
             checkClosedLock();
             return mLock.acquireWriteLock(timeout);
         }
-        
+
         public boolean releaseLock() {
             if (mClosed) {
                 // FileBuffer is closed.
@@ -970,7 +970,7 @@ public class MultiplexFile {
         public long getDefaultTimeout() {
             return mLock.getDefaultTimeout();
         }
-        
+
         public boolean force() throws IOException {
             checkClosed();
             try {
@@ -992,7 +992,7 @@ public class MultiplexFile {
         public boolean isOpen() {
             return !mClosed;
         }
-        
+
         public void close() throws IOException {
             mClosed = true;
             // Release all the locks held by this thread.
@@ -1000,23 +1000,23 @@ public class MultiplexFile {
             // that have used this IndirectFile.
             while (mLock.releaseLock());
         }
-        
+
         private void checkArgs(long position,
                                byte[] array, int offset, int length) {
             if (position < 0) {
                 throw new IllegalArgumentException
                     ("position < 0: " + position);
             }
-            
+
             if (offset < 0) {
                 throw new ArrayIndexOutOfBoundsException
                     ("offset < 0: " + offset);
             }
-            
+
             if (length < 0) {
                 throw new IndexOutOfBoundsException("length < 0: " + length);
             }
-            
+
             if (offset + length > array.length) {
                 throw new ArrayIndexOutOfBoundsException
                     ("offset + length > array length: " +
@@ -1309,11 +1309,11 @@ public class MultiplexFile {
                     return;
                 }
             }
-            
+
             // Since the middle of the clear region of the file hasn't
             // been written to yet, no blocks should be allocated in the
             // middle. It can be skipped.
-            
+
             // Compute the second "seam": The first block boundary at or before
             // the end of the to-be-cleared region.
             seam = (position + length) / mBlockSize * mBlockSize;
@@ -1399,7 +1399,7 @@ public class MultiplexFile {
             }
             return mLength;
         }
-        
+
         public void truncate(long size) throws IOException {
             checkDeleted();
 
@@ -1434,7 +1434,7 @@ public class MultiplexFile {
             if (size == 0) {
                 putFileTableEntryBlockId(0);
                 mRootNode = null;
-                    
+
                 if (mLevels == 0) {
                     freeBlock(rootBlockId);
                     mBackingFile.commit();
@@ -1543,7 +1543,7 @@ public class MultiplexFile {
                         node.setChild(index, 0);
                     }
                 }
-                
+
                 endBlockId -= amt;
                 blocksToFree -= amt;
             }

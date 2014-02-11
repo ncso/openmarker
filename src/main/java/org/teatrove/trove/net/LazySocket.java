@@ -256,14 +256,14 @@ class LazySocket implements SocketFace {
         if (mSocket != null) {
             return mSocket;
         }
-        
+
         if (mClosed) {
             throw new SocketException("Socket is closed");
         }
-        
+
         mSocket = mFactory.createSocket(mSession, mTimeout);
         applyOptions();
-        
+
         return mSocket;
     }
 
@@ -277,7 +277,7 @@ class LazySocket implements SocketFace {
         if (mClosed) {
             throw new SocketException("Socket is closed");
         }
-        
+
         long timeout = mTimeout;
         long start;
         if (timeout > 0) {
@@ -286,7 +286,7 @@ class LazySocket implements SocketFace {
         else {
             start = 0;
         }
-        
+
         try {
             mSocket = mFactory.getSocket(mSession, timeout);
             applyOptions();
@@ -302,14 +302,14 @@ class LazySocket implements SocketFace {
                 catch (Exception e2) {
                 }
             }
-            
+
             if (timeout > 0) {
                 timeout = timeout - (System.currentTimeMillis() - start);
                 if (timeout < 0) {
                     timeout = 0;
                 }
             }
-            
+
             mSocket = mFactory.createSocket(mSession, timeout);
             applyOptions();
             try {
@@ -321,7 +321,7 @@ class LazySocket implements SocketFace {
                 throw new SocketException(e2.getMessage());
             }
         }
-        
+
         return mSocket;
     }
 
@@ -336,10 +336,10 @@ class LazySocket implements SocketFace {
         if (mOptions == null || mSocket == null) {
             return;
         }
-        
+
         Object[] options = mOptions;
         Object value;
-        
+
         if ((value = options[0]) != null) {
             mSocket.setTcpNoDelay(((Boolean)value).booleanValue());
         }
@@ -364,37 +364,37 @@ class LazySocket implements SocketFace {
             mSocket.setKeepAlive(((Boolean)value).booleanValue());
         }
     }
-    
+
     private class In extends InputStream {
         private InputStream mStream;
-        
+
         public int read() throws IOException {
             return getStream().read();
         }
-        
+
         public int read(byte[] b) throws IOException {
             return getStream().read(b);
         }
-        
+
         public int read(byte[] b, int off, int len) throws IOException {
             return getStream().read(b, off, len);
         }
-        
+
         public long skip(long n) throws IOException {
             return getStream().skip(n);
         }
-        
+
         public int available() throws IOException {
             return getStream().available();
         }
-            
+
         public void close() throws IOException {
             if (mStream != null) {
                 mStream.close();
             }
             LazySocket.this.close();
         }
-        
+
         public void mark(int readlimit) {
             try {
                 getStream().mark(readlimit);
@@ -402,7 +402,7 @@ class LazySocket implements SocketFace {
             catch (IOException e) {
             }
         }
-        
+
         public void reset() throws IOException {
             if (mStream == null) {
                 throw new IOException("Stream not marked");
@@ -411,7 +411,7 @@ class LazySocket implements SocketFace {
                 mStream.reset();
             }
         }
-        
+
         public boolean markSupported() {
             try {
                 return getStream().markSupported();
@@ -420,7 +420,7 @@ class LazySocket implements SocketFace {
                 return false;
             }
         }
-        
+
         private InputStream getStream() throws IOException {
             if (mStream == null) {
                 mStream = createSocket().getInputStream();
@@ -428,18 +428,18 @@ class LazySocket implements SocketFace {
             return mStream;
         }
     }
-    
+
     private class Out extends OutputStream {
         private OutputStream mStream;
-        
+
         public void write(int b) throws IOException {
             write(new byte[] {(byte)b}, 0, 1);
         }
-        
+
         public void write(byte[] b) throws IOException {
             write(b, 0, b.length);
         }
-        
+
         public void write(byte[] b, int off, int len) throws IOException {
             if (mStream == null) {
                 mStream = getSocket(b, off, len).getOutputStream();
@@ -448,13 +448,13 @@ class LazySocket implements SocketFace {
                 mStream.write(b, off, len);
             }
         }
-        
+
         public void flush() throws IOException {
             if (mStream != null) {
                 mStream.flush();
             }
         }
-        
+
         public void close() throws IOException {
             if (mStream != null) {
                 mStream.close();

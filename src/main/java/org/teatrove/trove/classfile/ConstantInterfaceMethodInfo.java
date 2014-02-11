@@ -19,18 +19,18 @@ package org.teatrove.trove.classfile;
 import java.io.*;
 
 /**
- * This class corresponds to the CONSTANT_InterfaceMethodRef_info structure as 
+ * This class corresponds to the CONSTANT_InterfaceMethodRef_info structure as
  * defined in section 4.4.2 of <i>The Java Virtual Machine Specification</i>.
- * 
+ *
  * @author Brian S O'Neill
  */
 public class ConstantInterfaceMethodInfo extends ConstantInfo {
     private ConstantClassInfo mParentClass;
     private ConstantNameAndTypeInfo mNameAndType;
-    
-    /** 
-     * Will return either a new ConstantInterfaceMethodInfo object or 
-     * one already in the constant pool. 
+
+    /**
+     * Will return either a new ConstantInterfaceMethodInfo object or
+     * one already in the constant pool.
      * If it is a new ConstantInterfaceMethodInfo, it will be inserted
      * into the pool.
      */
@@ -38,16 +38,16 @@ public class ConstantInterfaceMethodInfo extends ConstantInfo {
         (ConstantPool cp,
          ConstantClassInfo parentClass,
          ConstantNameAndTypeInfo nameAndType) {
-        
-        ConstantInfo ci = 
+
+        ConstantInfo ci =
             new ConstantInterfaceMethodInfo(parentClass, nameAndType);
         return (ConstantInterfaceMethodInfo)cp.addConstant(ci);
     }
-    
+
     ConstantInterfaceMethodInfo(ConstantClassInfo parentClass,
                                 ConstantNameAndTypeInfo nameAndType) {
         super(TAG_INTERFACE_METHOD);
-        
+
         mParentClass = parentClass;
         mNameAndType = nameAndType;
     }
@@ -55,26 +55,26 @@ public class ConstantInterfaceMethodInfo extends ConstantInfo {
     public ConstantClassInfo getParentClass() {
         return mParentClass;
     }
-    
+
     public ConstantNameAndTypeInfo getNameAndType() {
         return mNameAndType;
     }
-    
+
     public int hashCode() {
         return mNameAndType.hashCode();
     }
-    
+
     public boolean equals(Object obj) {
         if (obj instanceof ConstantInterfaceMethodInfo) {
-            ConstantInterfaceMethodInfo other = 
+            ConstantInterfaceMethodInfo other =
                 (ConstantInterfaceMethodInfo)obj;
-            return (mParentClass.equals(other.mParentClass) && 
+            return (mParentClass.equals(other.mParentClass) &&
                     mNameAndType.equals(other.mNameAndType));
         }
-        
+
         return false;
     }
-    
+
     public void writeTo(DataOutput dout) throws IOException {
         super.writeTo(dout);
         dout.writeShort(mParentClass.getIndex());
@@ -82,7 +82,7 @@ public class ConstantInterfaceMethodInfo extends ConstantInfo {
     }
 
     public String toString() {
-        StringBuffer buf = 
+        StringBuffer buf =
             new StringBuffer("CONSTANT_InterfaceMethodref_info: ");
         buf.append(getParentClass().getType().getFullName());
 

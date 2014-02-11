@@ -29,11 +29,11 @@ import org.teatrove.tea.runtime.Substitution;
 import org.teatrove.trove.io.SourceReader;
 
 /**
- * Pre-compiled templates implementation.   Allows for the invocation of 
- * pre-compiled templates from other dynamically compiled or pre-compiled 
+ * Pre-compiled templates implementation.   Allows for the invocation of
+ * pre-compiled templates from other dynamically compiled or pre-compiled
  * templates.  Nested calls to other pre-compiled templates must be from within
  * the same merged context interface.
- * 
+ *
  * @author Guy A. Molinari
  */
 public class CompiledTemplate extends CompilationUnit {
@@ -212,7 +212,7 @@ public class CompiledTemplate extends CompilationUnit {
      * into.
      */
     public String getTargetPackage() {
-        return mCaller != null && mCaller.getTargetPackage() != null ? 
+        return mCaller != null && mCaller.getTargetPackage() != null ?
             mCaller.getTargetPackage() : TEMPLATE_PACKAGE;
     }
 

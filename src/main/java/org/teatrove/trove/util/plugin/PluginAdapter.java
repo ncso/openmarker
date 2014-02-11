@@ -27,9 +27,9 @@ public class PluginAdapter implements Plugin {
      * Initializes resources used by the Plugin.
      *
      * @param config the plugins's configuration object
-     */	
+     */
     public void init(PluginConfig config) throws PluginException {}
-    
+
     /**
      * Return the name of the Plugin.
      *
@@ -38,18 +38,18 @@ public class PluginAdapter implements Plugin {
     public String getName() {
         return null;
     }
-    
+
     /**
      * Called by the host container when the plugin is no longer needed.
-     */	
+     */
     public void destroy() {}
 
-    /** 
+    /**
      * This method is invoked whenever a Plugin has added itself to the PluginContext.
      *
      * @param event a PluginEvent event object.
      */
     public void pluginAdded(PluginEvent event) {}
-    
+
 }
 

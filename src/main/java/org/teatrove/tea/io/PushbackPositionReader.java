@@ -19,13 +19,13 @@ package org.teatrove.tea.io;
 import java.io.*;
 
 /**
- * The PushbackPositionReader is a kind of pushback reader that tracks the 
+ * The PushbackPositionReader is a kind of pushback reader that tracks the
  * postion in the stream of the next character to be read.
  * The java.io.PushbackReader allows arbitrary characters
  * to be pushed back. Since this Reader may need to keep track of how many
  * characters were scanned from the underlying Reader to actually produce
  * a character, the unread operation cannot accept any arbitrary character.
- * 
+ *
  * @author Brian S O'Neill
  * @deprecated Moved to org.teatrove.trove.io package.
  * @see java.io.PushbackReader
@@ -82,12 +82,12 @@ public class PushbackPositionReader extends PositionReader {
             mPosition = mPositions[mCursor];
             c = mCharacters[mCursor++];
             if (mCursor >= mMaxPushback) mCursor = 0;
-            
+
             return c;
         }
 
         c = super.read();
-        
+
         mPositions[mCursor] = mPosition;
         mCharacters[mCursor++] = c;
         if (mCursor >= mMaxPushback) mCursor = 0;
@@ -115,10 +115,10 @@ public class PushbackPositionReader extends PositionReader {
             unread();
         }
     }
-    
+
     /**
      * Unread the last character read.
-     * 
+     *
      * <p>Unlike PushbackReader, unread does not allow arbitrary characters to
      * to be unread. Rather, it functions like an undo operation.
      *
@@ -128,7 +128,7 @@ public class PushbackPositionReader extends PositionReader {
         mPushback++;
 
         if (mPushback > mMaxPushback - 2) {
-            throw new IOException(this.getClass().getName() + 
+            throw new IOException(this.getClass().getName() +
                                   ": pushback exceeded " + (mMaxPushback - 2));
         }
 

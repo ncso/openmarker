@@ -22,11 +22,11 @@ import java.util.Map;
 import org.teatrove.tea.compiler.CompileListener;
 
 /**
- * 
+ *
  * @author Jonathan Colwell
  */
 public interface TemplateCompileListener extends CompileListener {
-    
+
     public Map<String, List<TemplateIssue>> getTemplateIssues();
     public Map<String, List<TemplateIssue>> getTemplateErrors();
     public Map<String, List<TemplateIssue>> getTemplateWarnings();

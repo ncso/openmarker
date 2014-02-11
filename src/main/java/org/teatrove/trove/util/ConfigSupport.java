@@ -24,27 +24,27 @@ import org.teatrove.trove.log.Log;
  * @author Scott Jappinen
  */
 public class ConfigSupport implements Config {
-    
+
     private PropertyMap mProperties;
     private Log mLog;
-    
+
     public ConfigSupport(PropertyMap properties, Log log) {
         mProperties = properties;
         mLog = log;
     }
-    
+
     /**
      * Returns initialization parameters in an easier to use map format.
-     */	
+     */
     public PropertyMap getProperties() {
         return mProperties;
     }
-    
+
     /**
      * Returns a log object that the target for this config object
-     * should use for reporting information pertaining to the 
+     * should use for reporting information pertaining to the
      * operation of the target.
-     */	
+     */
     public Log getLog() {
         return mLog;
     }

@@ -31,12 +31,12 @@ public abstract class ParameterAnnotationsAttr extends Attribute {
 
     /** Contains Vectors of annotations */
     private Vector<Vector<Annotation>> mParameterAnnotations;
-    
+
     public ParameterAnnotationsAttr(ConstantPool cp, String name) {
         super(cp, name);
         mParameterAnnotations = new Vector<Vector<Annotation>>(2);
     }
-    
+
     public ParameterAnnotationsAttr(ConstantPool cp, String name, int length, DataInput din)
         throws IOException
     {
@@ -103,7 +103,7 @@ public abstract class ParameterAnnotationsAttr extends Attribute {
         }
         annotations.add(annotation);
     }
-    
+
     public int getLength() {
         int length = 1;
         for (int i=mParameterAnnotations.size(); --i>=0; ) {
@@ -114,7 +114,7 @@ public abstract class ParameterAnnotationsAttr extends Attribute {
         }
         return length;
     }
-    
+
     public void writeDataTo(DataOutput dout) throws IOException {
         int size = mParameterAnnotations.size();
         dout.writeByte(size);

@@ -143,8 +143,8 @@ public class JavaClassGenerator extends CodeGenerator {
     private static TypeDesc makeDesc(Class<?> clazz) {
         return TypeDesc.forClass(clazz);
     }
-    
-    private static TypeDesc makeDesc(Class<?> clazz, 
+
+    private static TypeDesc makeDesc(Class<?> clazz,
                                      java.lang.reflect.Type genericType) {
         return TypeDesc.forClass(clazz, genericType);
     }
@@ -175,7 +175,7 @@ public class JavaClassGenerator extends CodeGenerator {
 
     private LocalVariable mGlobalTime;
     private LocalVariable mSubTime;
-    
+
     private int mTemporary;
 
     /**
@@ -296,7 +296,7 @@ public class JavaClassGenerator extends CodeGenerator {
         dispatchCompileError(new CompileEvent(this, CompileEvent.Type.ERROR,
                                               str, info, mUnit));
     }
-    
+
     @SuppressWarnings("unused")
     private void error(String str, String arg, SourceInfo info) {
         str = mFormatter.format(str, arg);
@@ -342,7 +342,7 @@ public class JavaClassGenerator extends CodeGenerator {
         dispatchCompileWarning(new CompileEvent(this, CompileEvent.Type.WARNING,
                                                 str, info, mUnit));
     }
-    
+
     @SuppressWarnings("unused")
     private void warn(String str, String arg, SourceInfo info) {
         str = mFormatter.format(str, arg);
@@ -354,7 +354,7 @@ public class JavaClassGenerator extends CodeGenerator {
         str = mFormatter.format(str, arg1, arg2);
         warn(str, info);
     }
-    
+
     public void writeTo(OutputStream out) throws IOException {
         String className = mUnit.getName();
         String targetPackage = mUnit.getTargetPackage();
@@ -1608,28 +1608,28 @@ public class JavaClassGenerator extends CodeGenerator {
             // generate expression
             final Expression expr = node.getExpression();
             generate(expr);
-            
+
             // generate line number
             setLineNumber(node.getSourceInfo());
-            
+
             // handle class references
             if (expr instanceof TypeExpression &&
                 "class".equals(node.getLookupName().getName())) {
-                
+
                 mBuilder.loadClass(makeDesc(expr.getType()));
                 return null;
             }
-            
+
             // generate static field lookup if provided
             Field field = node.getReadProperty();
             if (field != null) {
-            	mBuilder.loadStaticField(field.getDeclaringClass().getName(), 
-            			                 field.getName(), 
+            	mBuilder.loadStaticField(field.getDeclaringClass().getName(),
+            			                 field.getName(),
             			                 makeDesc(node.getType()));
-            	
+
             	return null;
             }
-            
+
             // generate null-safe check if necessary
             generateNullSafe(node, expr, new NullSafeCallback() {
                 public Type execute() {
@@ -1663,24 +1663,24 @@ public class JavaClassGenerator extends CodeGenerator {
             // generate expression
             final Expression expr = node.getExpression();
             generate(expr);
-            
+
             // generate null-safe check if necessary
             generateNullSafe(node, expr, new NullSafeCallback() {
                 public Type execute() {
                     Method readMethod = node.getReadMethod();
                     Expression lookup = node.getLookupIndex();
-    
+
                     Type type = expr.getType();
                     Class<?> lookupClass = type.getObjectClass();
                     boolean doArrayLookup = lookupClass.isArray();
 
                     if (!doArrayLookup &&
                         Modifier.isStatic(readMethod.getModifiers())) {
-    
+
                         // Discard the object to call method on.
                         mBuilder.pop();
                     }
-    
+
                     // generate lookup portion
                     generate(lookup);
                     setLineNumber(node.getLookupToken().getSourceInfo());
@@ -1693,7 +1693,7 @@ public class JavaClassGenerator extends CodeGenerator {
                     }
                     else {
                         try {
-                            Type elementType = 
+                            Type elementType =
                                 expr.getInitialType().getArrayElementType();
                             mBuilder.loadFromArray(makeDesc(elementType));
                             return elementType;
@@ -1779,7 +1779,7 @@ public class JavaClassGenerator extends CodeGenerator {
             Type rtype = right.getType();
             if (ltype == null || rtype == null) {
                 throw new RuntimeException(
-                    "ArithmeticExpression types invalid: " + 
+                    "ArithmeticExpression types invalid: " +
                     ltype + ", " + rtype
                 );
             }
@@ -1875,13 +1875,13 @@ public class JavaClassGenerator extends CodeGenerator {
                         break;
                     }
                 }
-    
+
                 generate(node.getLeftExpression());
                 generate(node.getRightExpression());
-                
+
                 mBuilder.math(opcode);
             }
-            
+
             // otherwise, we must be using some unknown numerical value, so
             // attempt a runtime calculation (Number, etc)
             else {
@@ -1903,7 +1903,7 @@ public class JavaClassGenerator extends CodeGenerator {
                     opcode = WrapperTypeConversionUtil.OP_MOD;
                     break;
                 }
-                
+
                 Class<?> lclass = Number.class, rclass = Number.class;
                 if (ltype.isPrimitive()) {
                     lclass = ltype.getNaturalClass();
@@ -1911,16 +1911,16 @@ public class JavaClassGenerator extends CodeGenerator {
                 else if (rtype.isPrimitive()) {
                     rclass = rtype.getNaturalClass();
                 }
-                
+
                 Method method = getMethod(
-                    WrapperTypeConversionUtil.class, "math", int.class, 
+                    WrapperTypeConversionUtil.class, "math", int.class,
                     lclass, rclass
                 );
-                
+
                 mBuilder.loadConstant(opcode);
                 generate(node.getLeftExpression());
                 generate(node.getRightExpression());
-                
+
                 mBuilder.invoke(method);
             }
 
@@ -1961,7 +1961,7 @@ public class JavaClassGenerator extends CodeGenerator {
                 // create temporary assignment and reference both
                 condition = thenPart = createAssignment(condition).getLValue();
             }
-            
+
             if (thenPart == null) {
                 generateBranch(condition, endLabel, true);
             }
@@ -1992,17 +1992,17 @@ public class JavaClassGenerator extends CodeGenerator {
             // get expressions
             Expression left = node.getLeftExpression();
             Expression right = node.getRightExpression();
-            
+
             // get associated types
             Type ltype = left.getType();
             Type rtype = right.getType();
 
             // create local variables
             generate(left);
-            LocalVariable lvar = 
+            LocalVariable lvar =
                 mBuilder.createLocalVariable(null, makeDesc(ltype));
             mBuilder.storeLocal(lvar);
-        
+
             generate(right);
             LocalVariable rvar =
                 mBuilder.createLocalVariable(null, makeDesc(rtype));
@@ -2017,18 +2017,18 @@ public class JavaClassGenerator extends CodeGenerator {
                         ltype + ", " + rtype
                     );
                 }
-                
+
                 generateComparison(lvar, rvar, ltype);
             }
-            
+
             // otherwise, compare as nulls and then handle comparison
             else {
                 Class<?> lclass = ltype.getNaturalClass();
                 Class<?> rclass = rtype.getNaturalClass();
-                
+
                 Label location1 = mBuilder.createLabel();
                 Label endLocation = mBuilder.createLabel();
-                
+
                 if (ltype.isNonNull()) {
                     if (rtype.isNullable()) {
                         // left is non-null, but right is nullable, so do a
@@ -2043,13 +2043,13 @@ public class JavaClassGenerator extends CodeGenerator {
                 }
                 else {
                     Label location2 = mBuilder.createLabel();
-                    
+
                     // left is nullable, so do a null check on left.  If null
                     // we check right if necessary; otherwise if non-null, we
                     // check right for nullability or do the comparison
                     mBuilder.loadLocal(lvar);
                     mBuilder.ifNullBranch(location2, false);
-                    
+
                     if (rtype.isNonNull()) {
                         // right is non-null and at this point we have found
                         // left to be null, so just return [-1]. We also must
@@ -2061,7 +2061,7 @@ public class JavaClassGenerator extends CodeGenerator {
                     }
                     else {
                         Label location3 = mBuilder.createLabel();
-                        
+
                         // right is nullable so we must check if right is null
                         // or not.  If right is null, then left is already null,
                         // so we purely return [0]. Otherwise
@@ -2069,13 +2069,13 @@ public class JavaClassGenerator extends CodeGenerator {
                         mBuilder.ifNullBranch(location3, false);
                         mBuilder.loadConstant(0);
                         mBuilder.branch(endLocation);
-                        
+
                         // left is already null and per the above we have now
                         // found right to be non-null, so return [-1].
                         location3.setLocation();
                         mBuilder.loadConstant(-1);
                         mBuilder.branch(endLocation);
-                        
+
                         // branch point from the initial nullable check on left
                         // so at this point left is not null so we must now
                         // check if right is null or not.  if not null, we jump
@@ -2088,7 +2088,7 @@ public class JavaClassGenerator extends CodeGenerator {
                         mBuilder.branch(endLocation);
                     }
                 }
-                
+
                 // comparison branch point at which point both left and right
                 // are non-null
                 location1.setLocation();
@@ -2097,119 +2097,119 @@ public class JavaClassGenerator extends CodeGenerator {
                 if (ltype.isPrimitive() && rtype.hasPrimitivePeer()) {
                     Type type = ltype.getCompatibleType(rtype.toPrimitive());
                     TypeDesc desc = makeDesc(type);
-                    
-                    LocalVariable lvar2 = lvar; 
+
+                    LocalVariable lvar2 = lvar;
                     if (!type.equals(ltype)) {
                         lvar2 = mBuilder.createLocalVariable(null, desc);
-                    
+
                         mBuilder.loadLocal(lvar);
                         typeConvertEnd(ltype, type, false);
                         mBuilder.storeLocal(lvar2);
                     }
-                    
-                    LocalVariable rvar2 = 
+
+                    LocalVariable rvar2 =
                         mBuilder.createLocalVariable(null, desc);
                     mBuilder.loadLocal(rvar);
                     typeConvertEnd(rtype, type, false);
                     mBuilder.storeLocal(rvar2);
-                    
+
                     // primitive comparison
                     generateComparison(lvar2, rvar2, type);
                 }
-                
+
                 // if right is primitive and left has primitive peer
                 else if (ltype.hasPrimitivePeer() && rtype.isPrimitive()) {
                     Type type = rtype.getCompatibleType(ltype.toPrimitive());
                     TypeDesc desc = makeDesc(type);
-                    
-                    LocalVariable lvar2 = 
+
+                    LocalVariable lvar2 =
                         mBuilder.createLocalVariable(null, desc);
                     mBuilder.loadLocal(lvar);
                     typeConvertEnd(ltype, type, false);
                     mBuilder.storeLocal(lvar2);
-                    
-                    LocalVariable rvar2 = rvar; 
+
+                    LocalVariable rvar2 = rvar;
                     if (!type.equals(rtype)) {
                         rvar2 = mBuilder.createLocalVariable(null, desc);
-                        
+
                         mBuilder.loadLocal(rvar);
                         typeConvertEnd(rtype, type, false);
                         mBuilder.storeLocal(rvar2);
                     }
-                    
+
                     // primitive comparison
                     generateComparison(lvar2, rvar2, type);
                 }
-                
+
                 // if left parent class of right and comparable
                 else if (lclass.isAssignableFrom(rclass) &&
                          Comparable.class.isAssignableFrom(lclass)) {
-                    
+
                     Method method =
                         getMethod(Comparable.class, "compareTo", Object.class);
-                    
+
                     mBuilder.loadLocal(lvar);
                     mBuilder.loadLocal(rvar);
                     mBuilder.invoke(method);
                 }
-                
+
                 // if right parent class of left and comparable
                 else if (rclass.isAssignableFrom(lclass) &&
                          Comparable.class.isAssignableFrom(rclass)) {
-                   
+
                    Method method =
                        getMethod(Comparable.class, "compareTo", Object.class);
-                   
+
                    mBuilder.loadLocal(rvar);
                    mBuilder.loadLocal(lvar);
                    mBuilder.invoke(method);
                    mBuilder.math(Opcode.INEG);
                }
-                
+
                 // if Number parent class of either object types, then we must
                 // perform runtime analysis of the numbers to compare to each
                 // other
                 else if ((ltype.isPrimitive() || Number.class.isAssignableFrom(lclass)) &&
                          (rtype.isPrimitive() || Number.class.isAssignableFrom(rclass))) {
-                
+
                     if (!ltype.isPrimitive()) {
                         lclass = Number.class;
                     }
-                    
+
                     if (!rtype.isPrimitive()) {
                         rclass = Number.class;
                     }
-                    
+
                     mBuilder.loadLocal(lvar);
                     mBuilder.loadLocal(rvar);
-                    
+
                     Method method = getMethod(
-                        WrapperTypeConversionUtil.class, "compare", 
+                        WrapperTypeConversionUtil.class, "compare",
                         lclass, rclass
                     );
-                    
+
                     mBuilder.invoke(method);
                 }
-                
+
                 // otherwise, compare at runtime as strings
                 else {
                     warn("compare.not.convertible",
                           ltype.getClassName(), rtype.getClassName(), node);
-                    
+
                     mBuilder.loadLocal(lvar);
                     if (ltype.isPrimitive()) {
                         typeConvertEnd(ltype, ltype.toNonPrimitive(), false);
                     }
-                    
+
                     mBuilder.invoke(getMethod(Object.class, "toString"));
-                    
+
                     mBuilder.loadLocal(rvar);
                     if (rtype.isPrimitive()) {
                         typeConvertEnd(rtype, rtype.toNonPrimitive(), false);
                     }
-                    
+
                     mBuilder.invoke(getMethod(Object.class, "toString"));
-                    
+
                     Method method =
                         getMethod(Comparable.class, "compareTo", Object.class);
                     mBuilder.invoke(method);
@@ -2220,8 +2220,8 @@ public class JavaClassGenerator extends CodeGenerator {
 
             return null;
         }
-        
-        private void generateComparison(LocalVariable lvar, LocalVariable rvar, 
+
+        private void generateComparison(LocalVariable lvar, LocalVariable rvar,
                                         Type type) {
             Label endLocation = mBuilder.createLabel();
             Label ltLocation = mBuilder.createLabel();
@@ -2239,19 +2239,19 @@ public class JavaClassGenerator extends CodeGenerator {
             generateComparison(gtLocation, "<", type);
             mBuilder.loadConstant(1);
             mBuilder.branch(endLocation);
-            
+
             gtLocation.setLocation();
             mBuilder.loadConstant(-1);
-            
+
             endLocation.setLocation();
         }
-        
-        private void generateComparison(Label label, String choice, 
+
+        private void generateComparison(Label label, String choice,
                                         Type type) {
             generateComparison(label, choice, type.getNaturalClass());
         }
-        
-        private void generateComparison(Label label, String choice, 
+
+        private void generateComparison(Label label, String choice,
                                         Class<?> clazz) {
             if (clazz == long.class) {
                 mBuilder.math(Opcode.LCMP);
@@ -2266,16 +2266,16 @@ public class JavaClassGenerator extends CodeGenerator {
                 mBuilder.ifZeroComparisonBranch(label, choice);
             }
             else {
-                mBuilder.ifComparisonBranch(label, choice);                
+                mBuilder.ifComparisonBranch(label, choice);
             }
         }
-        
-        private void generateZeroComparison(Label label, String choice, 
+
+        private void generateZeroComparison(Label label, String choice,
                                             Type type) {
             generateZeroComparison(label, choice, type.getNaturalClass());
         }
-        
-        private void generateZeroComparison(Label label, String choice, 
+
+        private void generateZeroComparison(Label label, String choice,
                                             Class<?> clazz) {
             if (clazz == long.class) {
                 mBuilder.loadConstant(0L);
@@ -2293,42 +2293,42 @@ public class JavaClassGenerator extends CodeGenerator {
                 mBuilder.ifZeroComparisonBranch(label, choice);
             }
             else {
-                mBuilder.ifZeroComparisonBranch(label, choice);                
+                mBuilder.ifZeroComparisonBranch(label, choice);
             }
         }
-        
+
         public Object visit(NoOpExpression node) {
             return null;
         }
-        
+
         public Object visit(TypeExpression node) {
         	// nothing to do....lookup and function call expressions
         	// will handle by performing static invocations
         	return null;
         }
-        
+
         public Object visit(SpreadExpression node) {
             // generate expression
             Expression expr = node.getExpression();
             generate(expr);
-            
+
             // store local variable
-            LocalVariable collection = 
+            LocalVariable collection =
                 mBuilder.createLocalVariable(null, makeDesc(expr.getType()));
             mBuilder.storeLocal(collection);
-            
+
             // get associated type
             Class<?> exprClass = expr.getType().getNaturalClass();
-            
+
             // get associated element type
             Type elementType = null;
             try { elementType = expr.getType().getIterationElementType(); }
             catch (IntrospectionException exception) {
                 throw new IllegalStateException(exception);
             }
-            
+
             Class<?> elementClass = elementType.getNaturalClass();
-            
+
             // handle null values and return null
             mBuilder.loadLocal(collection);
             Label endLabel = mBuilder.createLabel();
@@ -2337,33 +2337,33 @@ public class JavaClassGenerator extends CodeGenerator {
 
             // handle collections
             if (Collection.class.isAssignableFrom(exprClass)) {
-                
+
                 // create new collection
                 TypeDesc arrayList = makeDesc(node.getType());
                 mBuilder.newObject(arrayList);
                 mBuilder.dup();
-                
+
                 // get length of collection
                 mBuilder.loadLocal(collection);
                 mBuilder.invoke(getMethod(Collection.class, "size"));
 
                 // instantiate based on length of collection
-                mBuilder.invokeConstructor(node.getType().getClassName(), 
+                mBuilder.invokeConstructor(node.getType().getClassName(),
                                            makeDesc(int.class));
-                
+
                 // store instance
                 LocalVariable list =
                     mBuilder.createLocalVariable(null, arrayList);
                 mBuilder.storeLocal(list);
-                
+
                 // generate collection iterator
                 mBuilder.loadLocal(collection);
-                LocalVariable iterator = 
+                LocalVariable iterator =
                     mBuilder.createLocalVariable(null, makeDesc(Iterator.class));
-                
+
                 mBuilder.invoke(getMethod(Collection.class, "iterator"));
                 mBuilder.storeLocal(iterator);
-                
+
                 // generate labels for checking foreach condition
                 Label endLoopLabel = mBuilder.createLabel();
                 Label checkLabel = mBuilder.createLabel();
@@ -2375,10 +2375,10 @@ public class JavaClassGenerator extends CodeGenerator {
 
                 // load list for invoking add on
                 mBuilder.loadLocal(list);
-                
+
                 // get the loop variable
                 mBuilder.loadLocal(iterator);
-                mBuilder.invokeInterface("java.util.Iterator", "next", 
+                mBuilder.invokeInterface("java.util.Iterator", "next",
                                          TypeDesc.OBJECT);
 
                 // avoid null types
@@ -2402,34 +2402,34 @@ public class JavaClassGenerator extends CodeGenerator {
                 // set entry point for continue
                 continueLabel.setLocation();
                 checkLabel.setLocation();
-                
+
                 // determine if has next
                 mBuilder.loadLocal(iterator);
-                mBuilder.invokeInterface("java.util.Iterator", "hasNext", 
+                mBuilder.invokeInterface("java.util.Iterator", "hasNext",
                                          TypeDesc.BOOLEAN);
 
                 mBuilder.ifZeroComparisonBranch(startLabel, "!=");
 
                 endLoopLabel.setLocation();
-                
+
                 // load list as the result
                 mBuilder.loadLocal(list);
             }
-            
+
             // handle arrays
             else if (exprClass.isArray()) {
-                
+
                 // create new array
                 Type operationType = node.getOperation().getType();
                 TypeDesc arrayType = makeDesc(node.getType());
-                
+
                 // calculate length of array
                 LocalVariable length =
                     mBuilder.createLocalVariable(null, TypeDesc.INT);
                 mBuilder.loadLocal(collection);
                 mBuilder.arrayLength();
                 mBuilder.storeLocal(length);
-                
+
                 // get length of array
                 mBuilder.loadLocal(length);
                 mBuilder.newObject(arrayType);
@@ -2438,7 +2438,7 @@ public class JavaClassGenerator extends CodeGenerator {
                 LocalVariable array =
                     mBuilder.createLocalVariable(null, arrayType);
                 mBuilder.storeLocal(array);
-                
+
                 // create end label
                 Label endLoopLabel = mBuilder.createLabel();
 
@@ -2459,7 +2459,7 @@ public class JavaClassGenerator extends CodeGenerator {
                 // load array for adding
                 mBuilder.loadLocal(array);
                 mBuilder.loadLocal(indexLocal);
-                
+
                 // load array value
                 mBuilder.loadLocal(collection);
                 mBuilder.loadLocal(indexLocal);
@@ -2470,7 +2470,7 @@ public class JavaClassGenerator extends CodeGenerator {
                 Label addLabel = mBuilder.createLabel();
                 Label null2Label = mBuilder.createLabel();
                 mBuilder.ifNullBranch(null2Label, true);
-                
+
                 // generate underlying expression
                 generate(node.getOperation());
                 mBuilder.branch(addLabel);
@@ -2498,7 +2498,7 @@ public class JavaClassGenerator extends CodeGenerator {
                     else { mBuilder.loadConstant(0); }
                 }
                 else { mBuilder.loadNull(); }
-                
+
                 // store to array
                 addLabel.setLocation();
                 mBuilder.storeToArray(makeDesc(operationType));
@@ -2515,14 +2515,14 @@ public class JavaClassGenerator extends CodeGenerator {
                 mBuilder.ifComparisonBranch(startLabel, "<");
 
                 endLoopLabel.setLocation();
-                
+
                 // load array as the result
                 mBuilder.loadLocal(array);
             }
 
             // skip past null check to end
             mBuilder.branch(endLabel);
-            
+
             // null handle checking
             nullLabel.setLocation();
             mBuilder.loadNull();
@@ -2532,7 +2532,7 @@ public class JavaClassGenerator extends CodeGenerator {
 
             return null;
         }
-        
+
         public Object visit(NullLiteral node) {
             mBuilder.loadNull();
             return null;
@@ -2629,17 +2629,17 @@ public class JavaClassGenerator extends CodeGenerator {
                                     boolean whenTrue) {
             generateBranch(expr, label, whenTrue, false);
         }
-        
+
         private void generateBranch(Expression expr, Label label,
                                     boolean whenTrue, boolean invert) {
-            
+
             // get the simple state for handling whenTrue
             // if this is an inversion (ie: not operation), then we use the
             // opposite.  Note that this does not apply for compound statements
             // such as truthful expressions which requires the aggregate to be
             // the opposite rather than its individual parts
             boolean _whenTrue = (invert ? !whenTrue : whenTrue);
-            
+
             if (expr instanceof Logical) {
                 // What follows is something that the visitor design pattern
                 // solves, but I would need to make a special visitor
@@ -2681,7 +2681,7 @@ public class JavaClassGenerator extends CodeGenerator {
                         }
                     }
                     else if (value instanceof Number) {
-                        boolean valid = 
+                        boolean valid =
                             WrapperTypeConversionUtil.isValid((Number) value);
                         if ((!valid && !_whenTrue) || (valid && _whenTrue)) {
                             mBuilder.branch(label);
@@ -2754,9 +2754,9 @@ public class JavaClassGenerator extends CodeGenerator {
                     // local variables
                     Variable var = null;
                     if (expr instanceof VariableRef) {
-                        var = ((VariableRef) expr).getVariable(); 
+                        var = ((VariableRef) expr).getVariable();
                     }
-                    
+
                     // create a temp local variable for non-variable refs
                     // as long as we are nullable such that we must make two
                     // checks (null and truth)
@@ -2765,7 +2765,7 @@ public class JavaClassGenerator extends CodeGenerator {
                         TypeDesc desc = makeDesc(type);
                         if (desc.isDoubleWord()) { mBuilder.dup2(); }
                         else { mBuilder.dup(); }
-                        
+
                         local = mBuilder.createLocalVariable(null, desc);
                         mBuilder.storeLocal(local);
                     }
@@ -2777,61 +2777,61 @@ public class JavaClassGenerator extends CodeGenerator {
                     if (_whenTrue && type.isNullable()) {
                         branch = mBuilder.createLabel();
                     }
-                    
+
                     // test for null (false value)
                     if (type.isNullable()) {
                         mBuilder.ifNullBranch(_whenTrue ? branch : label, true);
 
                         // load the data again to do further testing after the
-                        // null check...if we have a local variable from 
-                        // earlier, load it otherwise, if we have a reference 
+                        // null check...if we have a local variable from
+                        // earlier, load it otherwise, if we have a reference
                         // load that instead
                         if (local != null) { mBuilder.loadLocal(local); }
                         else if (var != null) { loadFromVariable(var); }
                     }
-                    
+
                     // get the associated class for comparison
                     Class<?> clazz = type.getNaturalClass();
 
                     // handle truthful values
                     if (Truthful.class.isAssignableFrom(clazz)) {
                         mBuilder.invoke(getMethod(Truthful.class, "isTrue"));
-                        mBuilder.ifZeroComparisonBranch(label, 
+                        mBuilder.ifZeroComparisonBranch(label,
                             _whenTrue ? "!=" : "==");
                     }
 
                     // handle boolean values
                     else if (Boolean.class.isAssignableFrom(clazz)) {
                         mBuilder.invoke(getMethod(Boolean.class, "booleanValue"));
-                        mBuilder.ifZeroComparisonBranch(label, 
+                        mBuilder.ifZeroComparisonBranch(label,
                             _whenTrue ? "!=" : "==");
                     }
 
                     // handle numeric values
                     else if (Number.class.isAssignableFrom(clazz)) {
-                        Type ctype = 
+                        Type ctype =
                             type.getCompatibleType(Type.INT_TYPE).toPrimitive();
-                        
+
                         // handle types that are primitive and known
                         if (ctype.isPrimitive()) {
                             if (!type.equals(ctype)) {
                                 typeConvertEnd(type, ctype, false);
                             }
-                            
-                            generateZeroComparison(label, 
+
+                            generateZeroComparison(label,
                                 _whenTrue ? "!=" : "==", ctype);
                         }
-                        
+
                         // otherwise, test at runtime to evaluate
                         else {
                             Method method = getMethod
                             (
-                                WrapperTypeConversionUtil.class, 
+                                WrapperTypeConversionUtil.class,
                                 "isValid", Number.class
                             );
-                            
+
                             mBuilder.invoke(method);
-                            mBuilder.ifZeroComparisonBranch(label, 
+                            mBuilder.ifZeroComparisonBranch(label,
                                 _whenTrue ? "!=" : "==");
                         }
                     }
@@ -2839,28 +2839,28 @@ public class JavaClassGenerator extends CodeGenerator {
                     // handle string values
                     else if (String.class.isAssignableFrom(clazz)) {
                         mBuilder.invoke(getMethod(String.class, "length"));
-                        mBuilder.ifZeroComparisonBranch(label, 
+                        mBuilder.ifZeroComparisonBranch(label,
                             _whenTrue ? "!=" : "==");
                     }
 
                     // handle array values
                     else if (clazz.isArray()) {
                         mBuilder.arrayLength();
-                        mBuilder.ifZeroComparisonBranch(label, 
+                        mBuilder.ifZeroComparisonBranch(label,
                             _whenTrue ? "!=" : "==");
                     }
 
                     // handle collection values
                     else if (Collection.class.isAssignableFrom(clazz)) {
                         mBuilder.invoke(getMethod(Collection.class, "size"));
-                        mBuilder.ifZeroComparisonBranch(label, 
+                        mBuilder.ifZeroComparisonBranch(label,
                             _whenTrue ? "!=" : "==");
                     }
-                    
+
                     // handle map values
                     else if (Map.class.isAssignableFrom(clazz)) {
                         mBuilder.invoke(getMethod(Map.class, "size"));
-                        mBuilder.ifZeroComparisonBranch(label, 
+                        mBuilder.ifZeroComparisonBranch(label,
                             _whenTrue ? "!=" : "==");
                     }
 
@@ -2868,10 +2868,10 @@ public class JavaClassGenerator extends CodeGenerator {
                     // if expected true, then branch
                     else {
                         // warn("truthful.object.expression", expr);
-                        
+
                         mBuilder.pop();
-                        if (_whenTrue) { 
-                            mBuilder.branch(label); 
+                        if (_whenTrue) {
+                            mBuilder.branch(label);
                         }
                     }
 
@@ -2920,11 +2920,11 @@ public class JavaClassGenerator extends CodeGenerator {
 
             Type leftType = left.getType();
             Class<?> leftClass = leftType.getNaturalClass();
-            
+
             Type rightType = right.getType();
             Class<?> rightClass = rightType.getNaturalClass();
 
-            Class<?> clazz = 
+            Class<?> clazz =
                 leftType.getCompatibleType(rightType).getNaturalClass();
 
             if (clazz == null) {
@@ -2932,17 +2932,17 @@ public class JavaClassGenerator extends CodeGenerator {
                                            leftType + ", " + rightType);
             }
 
-            boolean isPrimitive = 
+            boolean isPrimitive =
                 leftType.isPrimitive() && rightType.isPrimitive();
-            
+
             // handle object comparisons where at least one value is an object
             // rather than both being primitives
-            
+
             if (!isPrimitive) {
-                
+
                 // if both are a number value including both being numbers or
                 // one being primitive and the other a number, then we are
-                // assuming we have an unknown or general purpose number we 
+                // assuming we have an unknown or general purpose number we
                 // have to deal with at runtime so compare together using the
                 // runtime types for type safety
 
@@ -2953,23 +2953,23 @@ public class JavaClassGenerator extends CodeGenerator {
                         if (choice == "==" || choice == "!=") {
                             generateEquals(left, right, label, choice, operator);
                         }
-                        
+
                         // convert both to Numbers and runtime compare for
                         // relational checking
                         else {
                             generate(left);
                             generate(right);
-                            
+
                             Method method = getMethod(
-                                WrapperTypeConversionUtil.class, "compare", 
+                                WrapperTypeConversionUtil.class, "compare",
                                 Number.class, Number.class
                             );
-                            
+
                             mBuilder.invoke(method);
                             mBuilder.ifZeroComparisonBranch(label, choice);
                         }
                     }
-                    
+
                     // handle cases where one value is primitive and the other
                     // is some unknown numeric object and compare at runtime
                     else {
@@ -2977,14 +2977,14 @@ public class JavaClassGenerator extends CodeGenerator {
                         if (leftType.isPrimitive()) {
                             leftClass = leftType.getNaturalClass();
                         }
-                        
+
                         rightClass = Number.class;
                         if (rightType.isPrimitive()) {
                             rightClass = rightType.getNaturalClass();
                         }
-                    
+
                         Method method = getMethod(
-                            WrapperTypeConversionUtil.class, "compare", 
+                            WrapperTypeConversionUtil.class, "compare",
                             leftClass, rightClass
                         );
 
@@ -2994,12 +2994,12 @@ public class JavaClassGenerator extends CodeGenerator {
                         mBuilder.ifZeroComparisonBranch(label, choice);
                     }
                 }
-                
+
                 // non-numbers, so assume both are objects and do equality check
                 else if (choice == "==" || choice == "!=") {
                     generateEquals(left, right, label, choice, operator);
                 }
-                
+
                 // use comparable comparisons for relational checks
                 else if (Comparable.class.isAssignableFrom(clazz) &&
                          (leftClass.isAssignableFrom(rightClass) ||
@@ -3008,10 +3008,10 @@ public class JavaClassGenerator extends CodeGenerator {
                     // check whether we need to compare left to right when
                     // left is the parent or right to left when right is the
                     // parent...in the latter case we also negate it
-                    
-                    boolean leftToRight = 
+
+                    boolean leftToRight =
                         leftClass.isAssignableFrom(rightClass);
-                    
+
                     if (leftToRight) {
                         generate(left);
                         generate(right);
@@ -3020,17 +3020,17 @@ public class JavaClassGenerator extends CodeGenerator {
                         generate(right);
                         generate(left);
                     }
-                    
+
                     setLineNumber(operator.getSourceInfo());
 
-                    Method method = 
+                    Method method =
                         getMethod(Comparable.class, "compareTo", Object.class);
                     mBuilder.invoke(method);
-                    
+
                     if (!leftToRight) {
                         mBuilder.math(Opcode.INEG);
                     }
-                    
+
                     mBuilder.ifZeroComparisonBranch(label, choice);
                 }
                 else if (Number.class.isAssignableFrom(clazz)) {
@@ -3038,16 +3038,16 @@ public class JavaClassGenerator extends CodeGenerator {
                     // compared...this is potentially dangerous as we are
                     // converting types
                     warn("compare.as.double", expr);
-                    
-                    Method doubleMethod = 
+
+                    Method doubleMethod =
                         getMethod(Number.class, "doubleValue");
-                    
+
                     generate(left);
                     mBuilder.invoke(doubleMethod);
                     generate(right);
                     mBuilder.invoke(doubleMethod);
                     setLineNumber(operator.getSourceInfo());
-                    
+
                     byte op;
                     int ID = operator.getID();
                     if (ID == Token.LT || ID == Token.LE ||
@@ -3057,7 +3057,7 @@ public class JavaClassGenerator extends CodeGenerator {
                     else {
                         op = Opcode.DCMPL;
                     }
-                    
+
                     mBuilder.math(op);
                     mBuilder.ifZeroComparisonBranch(label, choice);
                 }
@@ -3066,7 +3066,7 @@ public class JavaClassGenerator extends CodeGenerator {
                                                " for type " + leftType);
                 }
             }
-            
+
             // otherwise, handle purely primitive comparisons
             else {
                 if (clazz == int.class) {
@@ -3140,11 +3140,11 @@ public class JavaClassGenerator extends CodeGenerator {
                 }
             }
         }
-        
+
         private void generateEquals(Expression left, Expression right,
-                                    Label label, String choice, 
+                                    Label label, String choice,
                                     Token operator) {
-            
+
             if (right.isValueKnown() && right.getValue() == null) {
                 generate(left);
                 mBuilder.ifNullBranch(label, choice == "==");
@@ -3154,12 +3154,12 @@ public class JavaClassGenerator extends CodeGenerator {
                 mBuilder.ifNullBranch(label, choice == "==");
             }
             else {
-                Method method =  
+                Method method =
                     getMethod(Object.class ,"equals", Object.class);
 
                 Type leftType = left.getType();
                 Type rightType = right.getType();
-                
+
                 if (leftType.isNonNull() || right.isValueKnown()) {
                     if (leftType.isNonNull()) {
                         generate(left);
@@ -3673,11 +3673,11 @@ public class JavaClassGenerator extends CodeGenerator {
                             return;
                         }
 
-                        mBuilder.loadStaticField(toNat.getName(), "TYPE", 
+                        mBuilder.loadStaticField(toNat.getName(), "TYPE",
                                                  makeDesc(Class.class));
 
                         Method method = getMethod(
-                            WrapperTypeConversionUtil.class, "convert", 
+                            WrapperTypeConversionUtil.class, "convert",
                             Number.class, Class.class
                         );
 
@@ -4041,7 +4041,7 @@ public class JavaClassGenerator extends CodeGenerator {
             notNullLabel.setLocation();
 
             // TODO: if array, this fails to iterate
-            
+
             TypeDesc td;
             if (!node.isReverse()) {
                 td = makeDesc(Iterator.class);
@@ -4238,7 +4238,7 @@ public class JavaClassGenerator extends CodeGenerator {
             if (expr != null) {
                 generate(expr);
             }
-            
+
             // build null-safe expression if applicable
             NullSafeCallback callback = new NullSafeCallback() {
                 public Type execute() {
@@ -4254,12 +4254,12 @@ public class JavaClassGenerator extends CodeGenerator {
                         mBuilder.storeField(mBlockId.getName(), TypeDesc.INT);
                         mCaseNodes.add(subParam);
                         if (node instanceof FunctionCallExpression) {
-                            Method call = 
+                            Method call =
                                 ((FunctionCallExpression) node).getCalledMethod();
                             mCallerToSubNoList.add("__block_"+ call.getName());
                         }
                         if (node instanceof TemplateCallExpression) {
-                            CompilationUnit unit = 
+                            CompilationUnit unit =
                                 ((TemplateCallExpression) node).getCalledTemplate();
                             mCallerToSubNoList.add("__block__"+ unit.getName());
                         }
@@ -4267,7 +4267,7 @@ public class JavaClassGenerator extends CodeGenerator {
                     else {
                         blockNum = 0;
                     }
-        
+
                     // Inject pre-call profiling bytecode.
                     TypeDesc methodObserverType =
                         TypeDesc.forClass(MergedClass.InvocationEventObserver.class);
@@ -4275,7 +4275,7 @@ public class JavaClassGenerator extends CodeGenerator {
                     String calleeName = null;
                     Type returnType = null;
                     TypeDesc returnTypeDesc = null;
-        
+
                     boolean profilingEnabled = isProfilingEnabled();
                     if (profilingEnabled) {
                         if (mStartTime == null)
@@ -4287,29 +4287,29 @@ public class JavaClassGenerator extends CodeGenerator {
                            TypeDesc.forClass(long.class));
                         mBuilder.storeLocal(mStartTime);
                     }
-        
+
                     if (node instanceof FunctionCallExpression) {
-                        FunctionCallExpression function = 
+                        FunctionCallExpression function =
                             (FunctionCallExpression) node;
                         Method call = function.getCalledMethod();
-        
-                        if (expr == null && 
+
+                        if (expr == null &&
                             !Modifier.isStatic(call.getModifiers())) {
-                            
+
                             // Push instance of Context onto stack.
                             generateContext();
                         }
-        
+
                         // check if var-arg to inject params as array
                         Class<?>[] params = call.getParameterTypes();
                         for (int i = 0; i < exprs.length; i++) {
                             if (call.isVarArgs() && i == params.length - 1) {
-                                Class<?> type = 
+                                Class<?> type =
                                     exprs[i].getType().getNaturalClass();
                                 if (!params[i].isAssignableFrom(type)) {
                                     // new array, generate exprs, store to array, load array
                                     mBuilder.loadConstant(exprs.length);
-                                    
+
                                     TypeDesc desc = makeDesc(params[i]);
                                     mBuilder.newObject(desc, 1);
                                     for (int idx = 0, j = i; j < exprs.length; j++, idx++) {
@@ -4318,63 +4318,63 @@ public class JavaClassGenerator extends CodeGenerator {
                                         generate(exprs[j]);
                                         mBuilder.storeToArray(desc.getComponentType());
                                     }
-                                    
+
                                     break;
                                 }
                             }
-                            
+
                             generate(exprs[i]);
                         }
-                        
+
                         if (call.isVarArgs() && exprs.length < params.length) {
                             // generate empty array for var arg
                             mBuilder.loadConstant(0);
                             mBuilder.newObject(makeDesc(params[params.length - 1]), 1);
                         }
-        
+
                         if (subParam != null) {
                             // Put this onto the stack as a substitution parameter.
                             mBuilder.loadThis();
                         }
-        
+
                         // Generate init right before the call.
                         if (init != null) {
                             generate(init);
                         }
-        
+
                         if (call.getReturnType() != null) {
                             returnType = new Type
                             (
-                                call.getReturnType(), 
+                                call.getReturnType(),
                                 call.getGenericReturnType()
                             );
-                            
+
                             returnTypeDesc = makeDesc(returnType);
                             retVal = mBuilder.createLocalVariable("retVal", returnTypeDesc);
                         }
-        
+
                         mBuilder.invoke(call);
-        
+
                         calleeName = call.getName();
                     }
                     else if (node instanceof TemplateCallExpression) {
                         CompilationUnit unit =
                             ((TemplateCallExpression) node).getCalledTemplate();
-        
+
                         // Push instance of Context onto stack as first parameter.
                         if (expr == null) {
                             generateContext();
                         }
-        
+
                         for (int i=0; i<exprs.length; i++) {
                             generate(exprs[i]);
                         }
-        
+
                         // Generate init right before the call.
                         if (init != null) {
                             generate(init);
                         }
-        
+
                         String className = unit.getTargetPackage();
                         if (className == null) {
                             className = unit.getName();
@@ -4382,12 +4382,12 @@ public class JavaClassGenerator extends CodeGenerator {
                         else {
                             className = className + '.' + unit.getName();
                         }
-        
+
                         Template tree = unit.getParseTree();
-        
+
                         Variable[] formals = tree.getParams();
                         int length = formals.length;
-        
+
                         TypeDesc[] params;
                         if (subParam == null) {
                             params = new TypeDesc[length + 1];
@@ -4398,27 +4398,27 @@ public class JavaClassGenerator extends CodeGenerator {
                             // Put this onto the stack as a substitution parameter.
                             mBuilder.loadThis();
                         }
-        
+
                         params[0] = makeDesc(unit.getRuntimeContext());
-        
+
                         for (int i=0; i<length; i++) {
                             params[i + 1] = makeDesc(formals[i]);
                         }
-        
+
                         if (tree.getReturnType() != null) {
                             returnType = tree.getReturnType();
                             returnTypeDesc = makeDesc(tree.getReturnType());
                             retVal = mBuilder.createLocalVariable("retVal", returnTypeDesc);
                         }
-        
+
                         calleeName = "_" + unit.getName();
-        
+
                         mBuilder.invokeStatic(className, EXECUTE_METHOD_NAME, returnTypeDesc, params);
                     }
 
                     if (returnTypeDesc != null && ! TypeDesc.VOID.equals(returnTypeDesc))
                         mBuilder.storeLocal(retVal);
-        
+
                     // Inject post-call profiling bytecode.
                     if (profilingEnabled) {
                         mBuilder.invokeStatic(mContextParam.getVariable().getType().getObjectClass().getName(),
@@ -4435,7 +4435,7 @@ public class JavaClassGenerator extends CodeGenerator {
                             new TypeDesc[] { TypeDesc.forClass(String.class), TypeDesc.forClass(String.class),
                                 TypeDesc.forClass(long.class) });
                     }
-        
+
                     if (returnTypeDesc != null && ! TypeDesc.VOID.equals(returnTypeDesc)) {
                         mBuilder.loadLocal(retVal);
                     }
@@ -4445,16 +4445,16 @@ public class JavaClassGenerator extends CodeGenerator {
                         mBuilder.loadConstant(blockNum);
                         mBuilder.storeField(mBlockId.getName(), TypeDesc.INT);
                     }
-                    
+
                     return returnType;
                 }
             };
-            
+
             // generate null-safe if provided
             if (expr != null) {
                 generateNullSafe(node, expr, callback);
             }
-            
+
             // otherwise, invoke callback by itself
             else {
                 callback.execute();
@@ -4515,19 +4515,19 @@ public class JavaClassGenerator extends CodeGenerator {
             // define branch labels
             Label endLocation = null;
             Label elseLocation = null;
-            
+
             // generate branch checks
             if (node instanceof NullSafe) {
                 NullSafe nullSafe = (NullSafe) node;
                 if (nullSafe.isNullSafe() && expr.getType().isNullable()) {
                     endLocation = mBuilder.createLabel();
                     elseLocation = mBuilder.createLabel();
-                    
+
                     mBuilder.dup();
                     mBuilder.ifNullBranch(elseLocation, true);
                 }
             }
-            
+
             // generate callback
             Type rtype = callback.execute();
 
@@ -4539,19 +4539,19 @@ public class JavaClassGenerator extends CodeGenerator {
                     //if (type != null && type.isPrimitive()) {
                     //    typeConvertEnd(type, type.toNonPrimitive(), true);
                     //}
-    
+
                     mBuilder.branch(endLocation);
                     elseLocation.setLocation();
-                    
+
                     Type ntype = rtype == null ? node.getType() : rtype;
                     if (ntype != null && ntype.isPrimitive()) {
                         mBuilder.pop();
-                        
+
                         Class<?> primitive = ntype.getNaturalClass();
-                        if (primitive == boolean.class) { 
+                        if (primitive == boolean.class) {
                             mBuilder.loadConstant(false);
                         }
-                        else if (primitive == long.class) { 
+                        else if (primitive == long.class) {
                             mBuilder.loadConstant(0L);
                         }
                         else if (primitive == float.class) {
@@ -4567,37 +4567,37 @@ public class JavaClassGenerator extends CodeGenerator {
                     else {
                         mBuilder.checkCast(makeDesc(ntype));
                     }
-                    
+
                     endLocation.setLocation();
                 }
             }
         }
-        
+
         private AssignmentStatement createAssignment(Expression expr) {
             return createAssignment("tmp" + mTemporary++, expr);
         }
-        
+
         private AssignmentStatement createAssignment(String name, Expression expr) {
             // get info
             Type type = expr.getType();
             SourceInfo info = expr.getSourceInfo();
-            
+
             // create variable
             Variable var = new Variable(info, name, type);
             generate(var);
-            
+
             // create reference
             VariableRef ref = new VariableRef(info, name);
             ref.setVariable(var);
-            
+
             // create assignment
             AssignmentStatement stmt = new AssignmentStatement(info, ref, expr);
             generate(stmt);
-            
+
             // return assignment
             return stmt;
         }
-        
+
         private void declareVariable(Variable node) {
             declareVariable(node, null);
         }
@@ -4827,7 +4827,7 @@ public class JavaClassGenerator extends CodeGenerator {
         public void setContinueLabel(Label continueLabel) { mContinueLabel = continueLabel; }
         public Label getContinueLabel() { return mContinueLabel; }
     }
-    
+
     private static interface NullSafeCallback {
         Type execute();
     }

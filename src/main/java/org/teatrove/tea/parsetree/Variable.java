@@ -192,7 +192,7 @@ public class Variable extends Node {
         // this mimics the functionality in TypeChecker check(TypeName)
         if (type != null &&
             type.getGenericClass() instanceof ParameterizedType) {
-            
+
             ParameterizedType ptype =
                 (ParameterizedType) type.getGenericClass();
             genericTypes = new TypeName[ptype.getActualTypeArguments().length];
@@ -204,7 +204,7 @@ public class Variable extends Node {
 
         return new TypeName(info, genericTypes, type);
     }
-    
+
     public String toString() {
         String className = Object.class.getName();
         Type type = getType();
@@ -224,7 +224,7 @@ public class Variable extends Node {
                 }
             }
         }
-        
+
         return "Variable(" + className + " " + getName() + ")";
     }
 }

@@ -22,18 +22,18 @@ public class TypeExpression extends Expression {
     private static final long serialVersionUID = 1L;
 
     private TypeName mTypeName;
-    
+
     public TypeExpression(SourceInfo info, TypeName typeName) {
         super(info);
         mTypeName = typeName;
     }
-    
-    public TypeName getTypeName() { 
-    	return mTypeName; 
+
+    public TypeName getTypeName() {
+    	return mTypeName;
     }
-    
-    public void setTypeName(TypeName typeName) { 
-    	mTypeName = typeName; 
+
+    public void setTypeName(TypeName typeName) {
+    	mTypeName = typeName;
     }
 
     public Object accept(NodeVisitor visitor) {

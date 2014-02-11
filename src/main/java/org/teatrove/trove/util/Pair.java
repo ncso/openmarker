@@ -39,7 +39,7 @@ public class Pair implements Comparable, java.io.Serializable {
     public Object getSecond() {
         return mObj2;
     }
-    
+
     public int compareTo(Object obj) {
         if (this == obj) {
             return 0;
@@ -65,7 +65,7 @@ public class Pair implements Comparable, java.io.Serializable {
             }
 
             int result = ((Comparable)a).compareTo(b);
-            
+
             if (result != 0) {
                 return result;
             }
@@ -73,7 +73,7 @@ public class Pair implements Comparable, java.io.Serializable {
 
         a = mObj2;
         b = other.mObj2;
-        
+
         if (a == null) {
             if (b != null) {
                 return 1;
@@ -86,7 +86,7 @@ public class Pair implements Comparable, java.io.Serializable {
                 return -1;
             }
         }
-        
+
         return ((Comparable)a).compareTo(b);
     }
 
@@ -98,22 +98,22 @@ public class Pair implements Comparable, java.io.Serializable {
         if (!(obj instanceof Pair)) {
             return false;
         }
-        
+
         Pair key = (Pair)obj;
-        
-        return 
+
+        return
             (mObj1 == null ?
              key.mObj1 == null : mObj1.equals(key.mObj1)) &&
             (mObj2 == null ?
              key.mObj2 == null : mObj2.equals(key.mObj2));
     }
-    
+
     public int hashCode() {
-        return 
+        return
             (mObj1 == null ? 0 : mObj1.hashCode()) +
             (mObj2 == null ? 0 : mObj2.hashCode());
     }
-    
+
     public String toString() {
         return "[" + mObj1 + ':' + mObj2 + ']';
     }

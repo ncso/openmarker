@@ -23,7 +23,7 @@ import org.teatrove.tea.compiler.Type;
  * NotExpression is a simple unary expression that calculates the logical
  * "not" value of an expression. The expression it operates on must return a
  * Boolean type.
- * 
+ *
  * @author Brian S O'Neill
  */
 public class NotExpression extends Expression implements Logical {

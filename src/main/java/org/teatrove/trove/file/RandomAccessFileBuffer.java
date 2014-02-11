@@ -38,7 +38,7 @@ public class RandomAccessFileBuffer implements FileBuffer {
     private volatile int mFlags;
 
     private final SecureReadWriteLock mLock;
-    
+
     public RandomAccessFileBuffer(File file, boolean readOnly)
         throws IOException
     {

@@ -42,7 +42,7 @@ public class Lookup extends Expression implements NullSafe {
     private Method mMethod;
     private Field mProperty;
     private boolean mNullSafe;
-    
+
     public Lookup(SourceInfo info, Expression expr, Token dot,
                   Name lookupName) {
         super(info);
@@ -71,7 +71,7 @@ public class Lookup extends Expression implements NullSafe {
             if (mExpr.isExceptionPossible()) {
                 return true;
             }
-            
+
             if (!mNullSafe) {
                 Type type = mExpr.getType();
                 if (type != null && type.isNullable()) {
@@ -121,15 +121,15 @@ public class Lookup extends Expression implements NullSafe {
     public Field getReadProperty() {
     	return mProperty;
     }
-    
+
     public void setReadProperty(Field f) {
     	mProperty = f;
     }
-    
+
     public boolean isNullSafe() {
         return mNullSafe;
     }
-    
+
     public void setNullSafe(boolean nullSafe) {
         mNullSafe = nullSafe;
     }

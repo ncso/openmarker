@@ -19,7 +19,7 @@ package org.teatrove.trove.classfile.generics;
 import java.lang.reflect.GenericArrayType;
 
 /**
- * 
+ *
  *
  * @author Nick Hagan
  */

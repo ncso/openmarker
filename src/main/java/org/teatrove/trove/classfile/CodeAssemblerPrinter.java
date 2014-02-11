@@ -70,18 +70,18 @@ public class CodeAssemblerPrinter implements CodeAssembler {
         int varNum = (mIsStatic) ? 0 : 1;
         for (int i = 0; i<mParamTypes.length; i++) {
             String varName = "var_" + (++mLocalCounter);
-            println("LocalVariable " + varName + 
+            println("LocalVariable " + varName +
                     " = getParameters()[" + i + ']');
             LocalVariable localVar =
                 new NamedLocal(varName, mParamTypes[i], varNum);
             varNum += (localVar.isDoubleWord() ? 2 : 1);
             vars[i] = localVar;
         }
-        
+
         return vars;
     }
 
-    public LocalVariable createLocalVariable(String name, 
+    public LocalVariable createLocalVariable(String name,
                                              TypeDesc type) {
         String varName = "var_" + (++mLocalCounter);
         if (name != null) {
@@ -107,7 +107,7 @@ public class CodeAssemblerPrinter implements CodeAssembler {
                 getLabelName(endLocation) + ", " +
                 catchClassName + ')');
     }
-    
+
     public void mapLineNumber(int lineNumber) {
         println("mapLineNumber(" + lineNumber + ')');
     }
@@ -386,7 +386,7 @@ public class CodeAssemblerPrinter implements CodeAssembler {
                 getLabelName(location) + ", \"" + choice + "\")");
     }
 
-    public void switchBranch(int[] cases, 
+    public void switchBranch(int[] cases,
                              Location[] locations, Location defaultLocation) {
 
         StringBuffer buf = new StringBuffer(cases.length * 15);
@@ -644,27 +644,27 @@ public class CodeAssemblerPrinter implements CodeAssembler {
         public String getName() {
             return mName;
         }
-        
+
         public void setName(String name) {
             println(mName + ".setName(" + name + ')');
         }
-        
+
         public TypeDesc getType() {
             return mType;
         }
-        
+
         public boolean isDoubleWord() {
             return mType.isDoubleWord();
         }
-        
+
         public int getNumber() {
             return mNumber;
         }
-        
+
         public Location getStartLocation() {
             return null;
         }
-        
+
         public Location getEndLocation() {
             return null;
         }
@@ -685,7 +685,7 @@ public class CodeAssemblerPrinter implements CodeAssembler {
             println(mName + ".setLocation()");
             return this;
         }
-        
+
         public int getLocation() {
             return -1;
         }

@@ -23,14 +23,14 @@ public class PropertyMapFactoryProvider {
     private PropertyMapFactoryProvider() {
         super();
     }
-    
-    public static 
+
+    public static
     PropertyMapFactory createPropertyMapFactory(String path, Reader reader) {
         return createPropertyMapFactory(path, reader,
                                         SubstitutionFactory.getDefaults());
     }
 
-    public static 
+    public static
     PropertyMapFactory createPropertyMapFactory(String path, Reader reader,
                                                 PropertyMap substitutions) {
         // get associated factory
@@ -44,10 +44,10 @@ public class PropertyMapFactoryProvider {
         else {
             factory = new SimplePropertyMapFactory(reader);
         }
-        
+
         // load substitutions
         if (substitutions != null && substitutions.size() > 0) {
-            factory = 
+            factory =
                 new SubstitutionPropertyMapFactory(factory, substitutions);
         }
 

@@ -58,11 +58,11 @@ public class IdentityMap extends AbstractMap implements Map, Cloneable {
         public boolean hasNext() {
             return false;
         }
-        
+
         public Object next() {
             throw new NoSuchElementException();
         }
-        
+
         public void remove() {
             throw new IllegalStateException();
         }
@@ -157,14 +157,14 @@ public class IdentityMap extends AbstractMap implements Map, Cloneable {
     private transient int mModCount = 0;
 
     // Views
-    
+
     private transient Set mKeySet = null;
     private transient Set mEntrySet = null;
     private transient Collection mValues = null;
 
     /**
-     * Constructs a new, empty map with the specified initial 
-     * capacity and the specified load factor. 
+     * Constructs a new, empty map with the specified initial
+     * capacity and the specified load factor.
      *
      * @param      initialCapacity   the initial capacity of the HashMap.
      * @param      loadFactor        the load factor of the HashMap
@@ -190,7 +190,7 @@ public class IdentityMap extends AbstractMap implements Map, Cloneable {
         mTable = new Entry[initialCapacity];
         mThreshold = (int)(initialCapacity * loadFactor);
     }
-    
+
     /**
      * Constructs a new, empty map with the specified initial capacity
      * and default load factor, which is <tt>0.75</tt>.
@@ -251,7 +251,7 @@ public class IdentityMap extends AbstractMap implements Map, Cloneable {
      */
     public boolean containsValue(Object value) {
         Entry tab[] = mTable;
-        
+
         if (value == null) {
             for (int i = tab.length ; i-- > 0 ;) {
                 for (Entry e = tab[i], prev = null; e != null; e = e.mNext) {
@@ -305,7 +305,7 @@ public class IdentityMap extends AbstractMap implements Map, Cloneable {
     /**
      * Returns <tt>true</tt> if this map contains a mapping for the specified
      * key.
-     * 
+     *
      * @return <tt>true</tt> if this map contains a mapping for the specified
      * key.
      * @param key key whose presence in this Map is to be tested.
@@ -395,7 +395,7 @@ public class IdentityMap extends AbstractMap implements Map, Cloneable {
      */
     private void cleanup() {
         Entry tab[] = mTable;
-        
+
         for (int i = tab.length ; i-- > 0 ;) {
             for (Entry e = tab[i], prev = null; e != null; e = e.mNext) {
                 if (e.getKey() == null) {
@@ -424,14 +424,14 @@ public class IdentityMap extends AbstractMap implements Map, Cloneable {
     private void rehash() {
         int oldCapacity = mTable.length;
         Entry oldMap[] = mTable;
-        
+
         int newCapacity = oldCapacity * 2 + 1;
         Entry newMap[] = new Entry[newCapacity];
-        
+
         mModCount++;
         mThreshold = (int)(newCapacity * mLoadFactor);
         mTable = newMap;
-        
+
         for (int i = oldCapacity ; i-- > 0 ;) {
             for (Entry old = oldMap[i] ; old != null ; ) {
                 Entry e = old;
@@ -449,7 +449,7 @@ public class IdentityMap extends AbstractMap implements Map, Cloneable {
             }
         }
     }
-    
+
     /**
      * Associates the specified value with the specified key in this map.
      * If the map previously contained a mapping for this key, the old
@@ -509,14 +509,14 @@ public class IdentityMap extends AbstractMap implements Map, Cloneable {
             tab = mTable;
             index = (hash & 0x7FFFFFFF) % tab.length;
         }
-        
+
         // Creates the new entry.
         Entry e = new Entry(hash, key, value, tab[index]);
         tab[index] = e;
         mCount++;
         return null;
     }
-    
+
     /**
      * Removes the mapping for this key from this map if present.
      *
@@ -530,7 +530,7 @@ public class IdentityMap extends AbstractMap implements Map, Cloneable {
         Entry tab[] = mTable;
         int hash = System.identityHashCode(key);
         int index = (hash & 0x7FFFFFFF) % tab.length;
-            
+
         for (Entry e = tab[index], prev = null; e != null; e = e.mNext) {
             Object entryKey = e.getKey();
 
@@ -566,10 +566,10 @@ public class IdentityMap extends AbstractMap implements Map, Cloneable {
 
         return null;
     }
-    
+
     /**
      * Copies all of the mappings from the specified map to this one.
-     * 
+     *
      * These mappings replace any mappings that this map had for any of the
      * keys currently in the specified Map.
      *
@@ -602,11 +602,11 @@ public class IdentityMap extends AbstractMap implements Map, Cloneable {
      * @return a shallow copy of this map.
      */
     public Object clone() {
-        try { 
+        try {
             IdentityMap t = (IdentityMap)super.clone();
             t.mTable = new Entry[mTable.length];
             for (int i = mTable.length ; i-- > 0 ; ) {
-                t.mTable[i] = (mTable[i] != null) 
+                t.mTable[i] = (mTable[i] != null)
                     ? (Entry)mTable[i].clone() : null;
             }
             t.mKeySet = null;
@@ -615,12 +615,12 @@ public class IdentityMap extends AbstractMap implements Map, Cloneable {
             t.mModCount = 0;
             return t;
         }
-        catch (CloneNotSupportedException e) { 
+        catch (CloneNotSupportedException e) {
             // this shouldn't happen, since we are Cloneable
             throw new InternalError();
         }
     }
-    
+
     /**
      * Returns a set view of the keys contained in this map.  The set is
      * backed by the map, so changes to the map are reflected in the set, and
@@ -657,7 +657,7 @@ public class IdentityMap extends AbstractMap implements Map, Cloneable {
         }
         return mKeySet;
     }
-    
+
     /**
      * Returns a collection view of the values contained in this map.  The
      * collection is backed by the map, so changes to the map are reflected in
@@ -711,7 +711,7 @@ public class IdentityMap extends AbstractMap implements Map, Cloneable {
                 public Iterator iterator() {
                     return getHashIterator(ENTRIES);
                 }
-                
+
                 public boolean contains(Object o) {
                     if (!(o instanceof Map.Entry)) {
                         return false;
@@ -725,7 +725,7 @@ public class IdentityMap extends AbstractMap implements Map, Cloneable {
 
                     for (Entry e = tab[index], prev = null; e != null; e = e.mNext) {
                         Object entryKey = e.getKey();
-                        
+
                         if (entryKey == null) {
                             // Clean up after a cleared Reference.
                             mModCount++;
@@ -760,7 +760,7 @@ public class IdentityMap extends AbstractMap implements Map, Cloneable {
 
                     for (Entry e = tab[index], prev = null; e != null; e = e.mNext) {
                         Object entryKey = e.getKey();
-                        
+
                         if (entryKey == null) {
                             // Clean up after a cleared Reference.
                             mModCount++;
@@ -795,7 +795,7 @@ public class IdentityMap extends AbstractMap implements Map, Cloneable {
                 public int size() {
                     return mCount;
                 }
-                
+
                 public void clear() {
                     IdentityMap.this.clear();
                 }
@@ -805,14 +805,14 @@ public class IdentityMap extends AbstractMap implements Map, Cloneable {
                 }
             };
         }
-        
+
         return mEntrySet;
     }
-    
+
     public String toString() {
         StringBuffer buf = new StringBuffer();
         Iterator it = entrySet().iterator();
-        
+
         buf.append("{");
         for (int i = 0; it.hasNext(); i++) {
             if (i > 0) {
@@ -841,35 +841,35 @@ public class IdentityMap extends AbstractMap implements Map, Cloneable {
         int mHash;
         Object mValue;
         Entry mNext;
-        
+
         Entry(int hash, Object key, Object value, Entry next) {
             super(key);
             mHash = hash;
             mValue = value;
             mNext = next;
         }
-        
+
         protected Object clone() {
             return new Entry(mHash, getKey(), mValue,
                              (mNext == null ? null : (Entry)mNext.clone()));
         }
-        
-        // Map.Entry Ops 
-        
+
+        // Map.Entry Ops
+
         public Object getKey() {
             return Entry.this.get();
         }
-        
+
         public Object getValue() {
             return mValue;
         }
-        
+
         public Object setValue(Object value) {
             Object oldValue = mValue;
             mValue = value;
             return oldValue;
         }
-        
+
         public boolean equals(Object o) {
             if (!(o instanceof Map.Entry)) {
                 return false;
@@ -877,7 +877,7 @@ public class IdentityMap extends AbstractMap implements Map, Cloneable {
             Map.Entry e = (Map.Entry)o;
 
             Object key = getKey();
-            
+
             return (key==null ? e.getKey()==null : key.equals(e.getKey())) &&
                 (mValue==null ? e.getValue()==null : mValue.equals(e.getValue()));
         }
@@ -886,11 +886,11 @@ public class IdentityMap extends AbstractMap implements Map, Cloneable {
             return (getKey() == e.getKey()) &&
                 (mValue==null ? e.getValue()==null : mValue.equals(e.getValue()));
         }
-        
+
         public int hashCode() {
             return mHash ^ (mValue==null ? 0 : mValue.hashCode());
         }
-        
+
         public String toString() {
             return getKey() + "=" + mValue;
         }
@@ -906,18 +906,18 @@ public class IdentityMap extends AbstractMap implements Map, Cloneable {
         private Object mEntryKey;
         private Entry mLastReturned;
         private int mType;
-        
+
         /**
          * The modCount value that the iterator believes that the backing
          * List should have. If this expectation is violated, the iterator
          * has detected concurrent modification.
          */
         private int expectedModCount = mModCount;
-        
+
         HashIterator(int type) {
             mType = type;
         }
-        
+
         public boolean hasNext() {
             while (mEntry == null ||
                    (mEntryKey = mEntry.getKey()) == null) {
@@ -938,12 +938,12 @@ public class IdentityMap extends AbstractMap implements Map, Cloneable {
 
             return true;
         }
-        
+
         public Object next() {
             if (mModCount != expectedModCount) {
                 throw new ConcurrentModificationException();
             }
-            
+
             if (!hasNext()) {
                 throw new NoSuchElementException();
             }
@@ -954,7 +954,7 @@ public class IdentityMap extends AbstractMap implements Map, Cloneable {
             return mType == KEYS ? mLastReturned.getKey() :
                 (mType == VALUES ? mLastReturned.getValue() : mLastReturned);
         }
-        
+
         public void remove() {
             if (mLastReturned == null) {
                 throw new IllegalStateException();
@@ -969,7 +969,7 @@ public class IdentityMap extends AbstractMap implements Map, Cloneable {
         private void remove(Entry toRemove) {
             Entry[] tab = mTable;
             int index = (toRemove.mHash & 0x7FFFFFFF) % tab.length;
-            
+
             for (Entry e = tab[index], prev = null; e != null; e = e.mNext) {
                 if (e == toRemove) {
                     mModCount++;

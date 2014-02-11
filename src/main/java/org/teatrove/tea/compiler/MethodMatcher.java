@@ -27,7 +27,7 @@ import java.lang.reflect.Method;
  */
 public class MethodMatcher {
     public static final int AMBIGUOUS = -1;
-    
+
     /**
      * The best result candidates are stored in the Method array passed in.
      * The int returned indicates the number of candidates in the array. Zero
@@ -52,14 +52,14 @@ public class MethodMatcher {
         for (int i=0; i < length; i++) {
             m = methods[i];
             if (m.isBridge()) { continue; }
-            
+
             if (name == null || m.getName().equals(name)) {
                 Class<?>[] methodParams = m.getParameterTypes();
-                
+
                 int cnt = methodParams.length;
-                if ((cnt == paramCount) || 
+                if ((cnt == paramCount) ||
                     (m.isVarArgs() && paramCount >= cnt - 1)) {
-                    
+
                     int j = 0;
                     int total = 0;
                     for (; j < paramCount; j++) {
@@ -67,7 +67,7 @@ public class MethodMatcher {
                         Type methodParam = result.type;
                         int cost = methodParam.convertableFrom(params[j], result.vararg);
                         if (cost < 0) { break; }
-                        
+
                         // update total cost
                         total += cost;
                     }
@@ -77,7 +77,7 @@ public class MethodMatcher {
                         if (m.isVarArgs() && j < methodParams.length) {
                             total++;
                         }
-                        
+
                         costs[matchCount] = total;
                         methods[matchCount++] = m;
                         if (total < lowestTotalCost) {
@@ -122,15 +122,15 @@ public class MethodMatcher {
                 }
             }
         }
-        
+
         if (last != null) {
             // ensure first result is set to match
             methods[0] = last;
-            
+
             // return single result
             return 1;
         }
-        
+
         // Filter further by matching parameters with the shortest distance
         // in the hierarchy. This matches each parameter to each matching method
         // to either find the best possible match where the method parameter is
@@ -141,7 +141,7 @@ public class MethodMatcher {
         // example, the methods:
         //     void doX(String a, Object b)
         //     void doX(Object a, String b)
-        // with the method: 
+        // with the method:
         //     doX("string1", "string2")
         // will best match the first method as String is closer than object but
         // will best match the second method as again String is closer. Thus,
@@ -149,39 +149,39 @@ public class MethodMatcher {
 
         // maintain the best matching method per parameter
         Method[] paramResults = new Method[paramCount];
-        
+
         // search each parameter separately to find best matching method
         for (int j=0; j<paramCount; j++) {
             Class<?> lastMatch = null;
             Method bestFit = null;
-            
+
             length = matchCount;
             int bestFits = 0;
-            
+
             // search each matching method for the best match. If we have not
             // yet marked a best fit, then we mark the first method. Otherwise,
             // if the next method is closer (ie: the last match is assignable)
             // then we update the best fit. If the last match ever matches
             // the current match, then it is considered ambiguous and the best
             // fit is reset.
-            
+
             for (int i = 0; i < length; i++) {
                 m = methods[i];
                 if (m.isBridge()) { continue; }
-                
+
                 MethodParam result = getMethodParameter(m, j, params[j]);
                 Type methodType = result.type;
                 Class<?> methodParam = methodType.getNaturalClass();
-                
+
                 // TODO: match against generics?
                 //java.lang.reflect.Type methodType = methodType.getGeneric();
 
                 Class<?> param = params[j].getNaturalClass();
                 if (methodParam.isAssignableFrom(param)) {
-                	
+
                 	// check for ambiguity by determining if multiple methods
                 	// have same type
-                	
+
                     if (lastMatch != null) {
                         if (lastMatch.equals(methodParam)) {
                             bestFits++;
@@ -191,10 +191,10 @@ public class MethodMatcher {
 
                     // if first time through or last match is assignable (ie:
                     // farther away), then update best fit
-                    
+
                     if (lastMatch == null ||
                         lastMatch.isAssignableFrom(methodParam)) {
-                        
+
                         bestFit = m;
                         lastMatch = methodParam;
                     }
@@ -203,36 +203,36 @@ public class MethodMatcher {
 
             // set best fitting method if single match...otherwise, leave null
             // to denote ambiguous result
-            
+
             if (bestFits == 0) {
             	paramResults[j] = bestFit;
             }
         }
-        
+
         // check if multiple matching methods (ambiguous) or if all params are
         // ambiguous
-        
+
         for (int i = 0; i < paramCount; i++) {
         	// update last match if not yet determined
         	if (last == null) {
         		last = paramResults[i];
         	}
-        	
+
     		// check if non-match (ie: multiple matching methods), and return
         	// ambiguous (-1)
         	else if (!last.equals(paramResults[i])) {
         		return AMBIGUOUS;
         	}
         }
-        
+
         // check if all ambiguous..no matches
         if (last == null) {
         	return AMBIGUOUS;
         }
-        
+
         // ensure first result is set to match
         methods[0] = last;
-        
+
         // return single result
         return 1;
     }
@@ -241,13 +241,13 @@ public class MethodMatcher {
         MethodParam param = getMethodParameter(method, index, type);
         return (param == null ? null : param.type);
     }
-    
+
     private static MethodParam getMethodParameter(Method method, int index, Type type) {
         Type result = null;
         boolean vararg = false;
         Class<?>[] methodParams = method.getParameterTypes();
         java.lang.reflect.Type[] methodTypes = method.getGenericParameterTypes();
-        
+
         if (method.isVarArgs() && index >= methodParams.length - 1) {
             int idx = methodParams.length - 1;
             Type varArg = new Type(methodParams[idx], methodTypes[idx]);
@@ -256,10 +256,10 @@ public class MethodMatcher {
                     result = varArg;
                 }
             }
-            
+
             if (result == null) {
-                try { 
-                    result = varArg.getArrayElementType(); 
+                try {
+                    result = varArg.getArrayElementType();
                     vararg = true;
                 }
                 catch (IntrospectionException ie) {
@@ -270,14 +270,14 @@ public class MethodMatcher {
         else if (index < methodParams.length) {
             result = new Type(methodParams[index], methodTypes[index]);
         }
-        
+
         return new MethodParam(result, vararg);
     }
-    
+
     private static class MethodParam {
         private Type type;
         private boolean vararg;
-        
+
         private MethodParam(Type type, boolean vararg) {
             this.type = type;
             this.vararg = vararg;

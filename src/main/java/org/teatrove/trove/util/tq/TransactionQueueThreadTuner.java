@@ -23,7 +23,7 @@ package org.teatrove.trove.util.tq;
  * <p>
  * NOTE: The current implementation of TransactionQueueThreadTuner is
  * experimental and should not be used in production systems.
- * 
+ *
  * @author Brian S O'Neill
  */
 public class TransactionQueueThreadTuner extends TransactionQueueAdapter {

@@ -26,7 +26,7 @@ import org.teatrove.tea.compiler.Type;
  * should be overridden. The key difference is that visit methods must
  * return a node of the same type as the one passed in. By returning a node
  * which isn't the same as the one passed in, a node can be replaced.
- * 
+ *
  * @author Brian S O'Neill
  */
 public abstract class TreeMutator implements NodeVisitor {
@@ -44,14 +44,14 @@ public abstract class TreeMutator implements NodeVisitor {
         if (stmt != null) {
             node.setStatement((Statement)stmt.accept(this));
         }
-        
+
         return node;
     }
-        
+
     public Object visit(Name node) {
         return node;
     }
-        
+
     public Object visit(TypeName node) {
         return node;
     }
@@ -60,24 +60,24 @@ public abstract class TreeMutator implements NodeVisitor {
         node.getTypeName().accept(this);
         return node;
     }
-        
+
     public Object visit(ExpressionList node) {
         Expression[] exprs = node.getExpressions();
         for (int i=0; i<exprs.length; i++) {
             exprs[i] = visitExpression(exprs[i]);
         }
-        
+
         return node;
     }
-        
+
     public Object visit(Statement node) {
         return node;
     }
-        
+
     public Object visit(ImportDirective node) {
         return node;
     }
-        
+
     public Object visit(StatementList node) {
         Statement[] stmts = node.getStatements();
         if (stmts != null) {
@@ -85,10 +85,10 @@ public abstract class TreeMutator implements NodeVisitor {
                 stmts[i] = (Statement)stmts[i].accept(this);
             }
         }
-        
+
         return node;
     }
-        
+
     public Object visit(Block node) {
         Statement init = node.getInitializer();
         if (init != null) {
@@ -104,14 +104,14 @@ public abstract class TreeMutator implements NodeVisitor {
 
         return node;
     }
-        
+
     public Object visit(AssignmentStatement node) {
         node.getLValue().accept(this);
         node.setRValue(visitExpression(node.getRValue()));
-        
+
         return node;
     }
-        
+
     public Object visit(BreakStatement node) {
         return node;
     }
@@ -137,10 +137,10 @@ public abstract class TreeMutator implements NodeVisitor {
         if (body != null) {
             node.setBody(visitBlock(body));
         }
-        
+
         return node;
     }
-        
+
     public Object visit(IfStatement node) {
         node.setCondition(visitExpression(node.getCondition()));
 
@@ -148,12 +148,12 @@ public abstract class TreeMutator implements NodeVisitor {
         if (block != null) {
             node.setThenPart(visitBlock(block));
         }
-        
+
         block = node.getElsePart();
         if (block != null) {
             node.setElsePart(visitBlock(block));
         }
-        
+
         return node;
     }
 
@@ -211,9 +211,9 @@ public abstract class TreeMutator implements NodeVisitor {
         if (expr != null) {
             node.setExpression((Expression)expr.accept(this));
         }
-        
+
         node.setParams((ExpressionList)node.getParams().accept(this));
-        
+
         Statement init = node.getInitializer();
         if (init != null) {
             node.setInitializer((Statement)init.accept(this));
@@ -223,7 +223,7 @@ public abstract class TreeMutator implements NodeVisitor {
         if (subParam != null) {
             node.setSubstitutionParam(visitBlock(subParam));
         }
-        
+
         return node;
     }
 
@@ -305,30 +305,30 @@ public abstract class TreeMutator implements NodeVisitor {
 
         return node;
     }
-    
+
     public Object visit(CompareExpression node) {
         node.setLeftExpression((Expression) node.getLeftExpression().accept(this));
         node.setRightExpression((Expression) node.getRightExpression().accept(this));
-        
+
         return node;
     }
 
     public Object visit(NoOpExpression node) {
         return node;
     }
-    
+
     public Object visit(SpreadExpression node) {
         node.setExpression((Expression) node.getExpression().accept(this));
         node.setOperation((Expression) node.getOperation().accept(this));
-        
+
         return node;
     }
-    
+
     public Object visit(TypeExpression node) {
         node.setTypeName((TypeName) node.getTypeName().accept(this));
         return node;
     }
-    
+
     public Object visit(NullLiteral node) {
         return node;
     }

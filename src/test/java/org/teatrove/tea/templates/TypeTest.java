@@ -21,10 +21,10 @@ public class TypeTest extends AbstractTemplateTest {
 
     protected static final String TEST_SOURCE_2 =
         "String.class.name";
-    
+
     protected static final String TEST_SOURCE_3 =
         "java.lang.String.class.name";
-    
+
     protected static final String TEST_SOURCE_4 =
         "java.lang.String.valueOf(1)";
 }

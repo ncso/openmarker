@@ -20,7 +20,7 @@ import java.lang.reflect.Type;
 import java.lang.reflect.WildcardType;
 
 /**
- * 
+ *
  *
  * @author Nick Hagan
  */

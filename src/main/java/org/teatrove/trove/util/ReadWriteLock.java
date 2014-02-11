@@ -22,9 +22,9 @@ package org.teatrove.trove.util;
  * resource, then they may get a read lock which only blocks writers. A
  * resource can be shared more efficiently in this way.
  *
- * <p>When using the locking mechanisms, its a good idea to release the lock 
+ * <p>When using the locking mechanisms, its a good idea to release the lock
  * inside a finally statement to ensure the lock is always released. Example:
- * 
+ *
  * <pre>
  *     private Lock fileLock = new ReadWriteLock();
  *
@@ -98,7 +98,7 @@ public interface ReadWriteLock {
 
     /**
      * An upgradable lock is obtained when no threads currently hold write or
-     * upgradable locks. When a thread has an upgradable lock, it blocks 
+     * upgradable locks. When a thread has an upgradable lock, it blocks
      * threads that wish to acquire upgradable or write locks.
      * <p>
      * Upgradable locks are to be used when a thread needs a read lock, but
@@ -108,10 +108,10 @@ public interface ReadWriteLock {
      * would be deadlocked with itself.
      * <p>
      * To prevent deadlock, threads that may need to upgrade a read lock
-     * to a write lock should acquire an upgradable lock instead of a read 
+     * to a write lock should acquire an upgradable lock instead of a read
      * lock. Upgradable locks will not block threads that wish to only read.
      * <p>
-     * To perform an upgrade, call acquireWriteLock while the upgradable 
+     * To perform an upgrade, call acquireWriteLock while the upgradable
      * lock is still held.
      *
      * @param timeout milliseconds to wait for lock acquisition. If negative,
@@ -129,7 +129,7 @@ public interface ReadWriteLock {
         throws InterruptedException, IllegalStateException;
 
     /**
-     * A write lock is obtained only when there are no read, upgradable or 
+     * A write lock is obtained only when there are no read, upgradable or
      * write locks held by any other thread. When a thread has a write lock,
      * it blocks any thread that wishes to acquire any kind of lock.
      * <p>

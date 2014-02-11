@@ -66,7 +66,7 @@ Change History
 
 3.5.0 to 3.5.1
 ===============================
-- Resolve issue #DPTS-29 - add the ability to call out of tea to other view technologies like JSP 
+- Resolve issue #DPTS-29 - add the ability to call out of tea to other view technologies like JSP
 - Resolve issue #TEA-39 - Remove overly verbose logging added in DPTS-17
 
 
@@ -80,9 +80,9 @@ Change History
 3.4.3 to 3.4.4
 ===============================
 - Resolve issue #TEA-35. Ability to do partial re-compiles.
-- Resolve issue #TEA-36. All templates recompiling when a Windows template 
+- Resolve issue #TEA-36. All templates recompiling when a Windows template
   server is referenced from Linux.
- 
+
 
 
 3.4.2 to 3.4.3
@@ -103,14 +103,14 @@ Change History
 3.4.0 to 3.4.1
 ===============================
 - Verified that Tea compiles cleanly on JDK 1.6.
-- Resolved Jira issue #TEA-23.  Add compile time error when class names 
+- Resolved Jira issue #TEA-23.  Add compile time error when class names
   exist in multiple imported packages.
-- Resolved Jira issue #TEA-18.  Allow the 'as' keyword to be utilized to 
-  type foreach array iterator variables.  Type casts can be either 
+- Resolved Jira issue #TEA-18.  Allow the 'as' keyword to be utilized to
+  type foreach array iterator variables.  Type casts can be either
   narrowing or widening
 - Resolved Jira issue #TEA-22.  Allow Perl like '=>' delimiter syntax when
   declaring associative arrays (in addition to ',').
-- Resolved Jira issue #TEA-21.  Fix type unknown error when assigning 
+- Resolved Jira issue #TEA-21.  Fix type unknown error when assigning
   statically typed arrays.
 - "Re-fixed" Jira issue #TEA-8.  This locale fix was undone by the Joda
   upgrade.
@@ -146,22 +146,22 @@ Change History
 
 3.3.8 to 3.3.9
 ===============================
-- Resolved Issue #TEA-2. The dependency checking code is using '/' file path 
-  delimiters while the high level Compile interface is expecting '.' path 
-  separators. While this was working for the FileCompiler, it will not work 
-  when using RemoteCompiler (via a template server). The change involves 
-  replacing '/' with '.' in the TemplateRepository class. 
-- Resolved Issues #TEA-3, TEA-4, TEA-5, TEA-6, and TEA-7.  Added ability to 
-  make declarative typing 'static' such that any assignments that violate type 
+- Resolved Issue #TEA-2. The dependency checking code is using '/' file path
+  delimiters while the high level Compile interface is expecting '.' path
+  separators. While this was working for the FileCompiler, it will not work
+  when using RemoteCompiler (via a template server). The change involves
+  replacing '/' with '.' in the TemplateRepository class.
+- Resolved Issues #TEA-3, TEA-4, TEA-5, TEA-6, and TEA-7.  Added ability to
+  make declarative typing 'static' such that any assignments that violate type
   safety will result in a compile-time error.  Primitive types are also supported.
 
 
 3.3.7 to 3.3.8
 ===============================
-- Added new keywords 'define', 'as', and 'import'.  These all revolve around adding 
+- Added new keywords 'define', 'as', and 'import'.  These all revolve around adding
   declarative typing to the Tea language.
 - Modified the DefaultContext to use SimpleDateFormat instead of the Joda date formatting
-  class.  This resolves an issue introduced when upgrading to JDK 1.5, without 
+  class.  This resolves an issue introduced when upgrading to JDK 1.5, without
   compromising support for earlier JDKs.
 
 
@@ -195,13 +195,13 @@ Change History
 3.3.0 to 3.3.1
 ===============================
 - Added support for method/function call hierarchies to the template repository.
-- Precompiled templates are extracted from all jar files in the system classpath 
+- Precompiled templates are extracted from all jar files in the system classpath
   when the repository file is generated.
 
 3.2.11 to 3.3.0
 ===============================
 - Added the TeaLog which simplifies stack traces from Tea templates so they are
-  easier for template authors to understand.  It strips off irrelevant stack 
+  easier for template authors to understand.  It strips off irrelevant stack
   trace elements in the stack trace leaving only the relevant elements
   remaining.
 - TemplateRepository will not be initialized (and safely ignored) when Tea is
@@ -220,12 +220,12 @@ Change History
 
 3.2.9 to 3.2.10
 ===============================
-- Added a feature to allow for invocation of pre-compiled templates from other 
-  templates be they dynamic or pre-compiled.   A pre-compiled template may in 
-  turn nest calls to other templates as long as they are compiled against the 
-  same common merged interface.   A new class named CompiledTemplate that subclasses 
+- Added a feature to allow for invocation of pre-compiled templates from other
+  templates be they dynamic or pre-compiled.   A pre-compiled template may in
+  turn nest calls to other templates as long as they are compiled against the
+  same common merged interface.   A new class named CompiledTemplate that subclasses
   CompilationUnit has been added.
-- Fixed a stack depth problem relating to conversion of peer wrapper types to 
+- Fixed a stack depth problem relating to conversion of peer wrapper types to
   java.lang.Integer.
 
 3.2.8 to 3.2.9
@@ -264,9 +264,9 @@ Change History
 3.2.3 to 3.2.4
 ===============================
 - TemplateComplationResult now has a setAlreadyReloading() method.
-- TemplateError now implements Serializable so they can be sent between 
+- TemplateError now implements Serializable so they can be sent between
   multiple machines.
-- Fixed to synchronization issues related to template compilation. The 
+- Fixed to synchronization issues related to template compilation. The
   TemplateSourceImpl will only allow one compilation at a time.
 - Added getTemplateLoader() to the TemplateSource interface and implementation.
 - Fixed bug in generating break statement. Foreach loop finalizers were not
@@ -298,15 +298,15 @@ Change History
 
 3.2.2 to 3.2.3
 ===============================
-- Moved the TemplateAdapter to the engine package so precompiled templates 
-  would work properly. TemplateSource implementations should use this class 
+- Moved the TemplateAdapter to the engine package so precompiled templates
+  would work properly. TemplateSource implementations should use this class
   to instead of creating TemplateLoaders directly.
 
 3.2.1 to 3.2.2
 ===============================
 - Fixed a bug in the TypeChecker. In "if (a == null and ...) {} else {}", the
   else scope would treat variable "a" as always being non-null.
-- Added the org.teatrove.tea.engine package to simplify the process of integrating 
+- Added the org.teatrove.tea.engine package to simplify the process of integrating
   tea into other applications.
 - Shared associative array instances are now created as unmodifiable. Although
   templates couldn't directly modify it, rogue Java functions could.
@@ -321,20 +321,20 @@ Change History
 
 3.1.5 to 3.2.0
 ===============================
-- Fixed problem that allowed for infinite loops. Now The loop variable 
+- Fixed problem that allowed for infinite loops. Now The loop variable
   cannot be modified or reused within that loop.
-- Added new language keyword: 'break', which allows for breaking out of 
+- Added new language keyword: 'break', which allows for breaking out of
   foreach loops.
 - Improved performance of date formatting and printing of unformatted integers.
 
 3.1.4 to 3.1.5
 ===============================
 - Added status reporting to Compiler. Allows a user interface tool to add a
-  status listener to the Compiler that will be notified of compilation 
+  status listener to the Compiler that will be notified of compilation
   progress.
-- The Compiler now checks if the thread that it is running in has been 
-  interrupted. If it has, then it returns the names of all the templates it 
-  finished compiling. The Compiler only checks between files, so interrupting 
+- The Compiler now checks if the thread that it is running in has been
+  interrupted. If it has, then it returns the names of all the templates it
+  finished compiling. The Compiler only checks between files, so interrupting
   within a file is not possible.
 - Bug fix involving detached substitutions when passing its own substitutions.
 - Added format accessor methods to Context.
@@ -385,9 +385,9 @@ Change History
 - Conversion of object numbers to other object numbers was being rejected.
 - Added support for exception guardian mode of template compilation.
 - Added BeanDoc to the build process for Tea. The Context BeanInfo classes
-  are now auto-generated from the source files.  
-- Deleted the BeanInfo and FunctionDescription.properties files from the 
-  runtime package. They are no longer needed since BeanDoc now generates the 
+  are now auto-generated from the source files.
+- Deleted the BeanInfo and FunctionDescription.properties files from the
+  runtime package. They are no longer needed since BeanDoc now generates the
   BeanInfo files.
 - Fixed NullPointerException caused in JavaClassGenerator by certain recursive
   template calls.
@@ -489,7 +489,7 @@ Change History
 - Repackaged starwave.tea.classfile to starwave.classfile.
 - JDK1.2 Collection API supported by foreach statement. Reverse looping only
   supported for collections that implement the List interface.
-- Supports relational tests against classes that implement the JDK1.2 
+- Supports relational tests against classes that implement the JDK1.2
   Comparable interface.
 - Better support for handling types defined by interfaces.
 - Overloaded replace function to also operate on a mapping of pattern
@@ -586,11 +586,11 @@ Change History
 
 2.1.4 to 2.1.5
 ===============================
-- Parsetree walker wasn't visiting the second, optional range expression of 
+- Parsetree walker wasn't visiting the second, optional range expression of
   the foreach statement. This prevented Kettle's statement completion
   feature from working while typing the second range expression.
 - More fixes for bug introduced in 2.1.3 with respect to parameters. Version
-  2.1.4 didn't completely fix it. Parameter local variable slot numbers were 
+  2.1.4 didn't completely fix it. Parameter local variable slot numbers were
   being re-assigned under certain conditions.
 
 2.1.3 to 2.1.4

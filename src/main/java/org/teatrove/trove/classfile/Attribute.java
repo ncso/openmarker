@@ -126,7 +126,7 @@ public abstract class Attribute {
 	    public Factory(AttributeFactory attrFactory) {
 	            mAttrFactory = attrFactory;
 	    }
-	
+
 	    public Attribute createAttribute(ConstantPool cp,
 	                                         String name,
 	                                         final int length,
@@ -164,7 +164,7 @@ public abstract class Attribute {
 	        }
 	        else if (name.equals(RUNTIME_VISIBLE_ANNOTATIONS)) {
 	            return new RuntimeVisibleAnnotationsAttr(cp, name, length, din);
-	        } 
+	        }
 	        else if (name.equals(RUNTIME_INVISIBLE_ANNOTATIONS)) {
 	            return new RuntimeInvisibleAnnotationsAttr(cp, name, length, din);
 	        }
@@ -182,13 +182,13 @@ public abstract class Attribute {
 	                return attr;
 	            }
 	        }
-	
+
 	        // Default case, return attribute that captures the data, but
 	        // doesn't decode it.
-	
+
 	        final byte[] data = new byte[length];
 	        din.readFully(data);
-	
+
             return new Attribute(cp, name) {
                 public int getLength() {
                     return length;

@@ -254,7 +254,7 @@ public class BasicOptimizer {
                 if (value instanceof Number) {
                     Expression result = null;
                     Number number = (Number)value;
-                    
+
                     if (value instanceof Integer) {
                         result = new NumberLiteral(info, -number.intValue());
                     }
@@ -274,7 +274,7 @@ public class BasicOptimizer {
                             result.convertTo(conversion.getToType());
                         }
                     }
-                    
+
                     return result;
                 }
             }
@@ -842,7 +842,7 @@ public class BasicOptimizer {
 
             return node;
         }
-        
+
         @SuppressWarnings({ "rawtypes", "unchecked" })
         public Object visit(CompareExpression node) {
             Expression left = visitExpression(node.getLeftExpression());
@@ -858,16 +858,16 @@ public class BasicOptimizer {
                         return new NumberLiteral(node.getSourceInfo(), result);
                     }
                     else {
-                        int result = 
+                        int result =
                             lvalue.toString().compareTo(rvalue.toString());
                         return new NumberLiteral(node.getSourceInfo(), result);
                     }
                 }
             }
-            
+
             node.setLeftExpression(left);
             node.setRightExpression(right);
-            
+
             return node;
         }
     }

@@ -24,7 +24,7 @@ import org.teatrove.trove.util.ReadWriteLock;
  * A TxFileBuffer implementation that satisfies the API requirements, but
  * doesn't actually do anything useful for transactions. All calls are
  * delegated to a wrapped FileBuffer, and calls to write and truncate call
- * begin and commit. At a minimum, subclasses implementing transaction support 
+ * begin and commit. At a minimum, subclasses implementing transaction support
  * need to override only begin and commit.
  *
  * @author Brian S O'Neill
@@ -60,7 +60,7 @@ public class NonTxFileBuffer implements TxFileBuffer {
         mFile.write(position, value);
         commit();
     }
-    
+
     public long size() throws IOException {
         return mFile.size();
     }

@@ -21,32 +21,32 @@ import java.io.*;
 /**
  * This class corresponds to the CONSTANT_Integer_info structure as defined in
  * section 4.4.4 of <i>The Java Virtual Machine Specification</i>.
- * 
+ *
  * @author Brian S O'Neill
  */
 public class ConstantIntegerInfo extends ConstantInfo {
     private Integer mValue;
-    
-    /** 
+
+    /**
      * Will return either a new ConstantIntegerInfo object or one already in
-     * the constant pool. If it is a new ConstantIntegerInfo, it will be 
+     * the constant pool. If it is a new ConstantIntegerInfo, it will be
      * inserted into the pool.
      */
     static ConstantIntegerInfo make(ConstantPool cp, int value) {
         ConstantInfo ci = new ConstantIntegerInfo(value);
         return (ConstantIntegerInfo)cp.addConstant(ci);
     }
-    
+
     ConstantIntegerInfo(int value) {
         super(TAG_INTEGER);
         mValue = new Integer(value);
     }
-    
+
     ConstantIntegerInfo(Integer value) {
         super(TAG_INTEGER);
         mValue = value;
     }
-    
+
     public Integer getValue() {
         return mValue;
     }
@@ -54,16 +54,16 @@ public class ConstantIntegerInfo extends ConstantInfo {
     public int hashCode() {
         return mValue.hashCode();
     }
-    
+
     public boolean equals(Object obj) {
         if (obj instanceof ConstantIntegerInfo) {
             ConstantIntegerInfo other = (ConstantIntegerInfo)obj;
             return mValue.equals(other.mValue);
         }
-        
+
         return false;
     }
-    
+
     boolean hasPriority() {
         return true;
     }

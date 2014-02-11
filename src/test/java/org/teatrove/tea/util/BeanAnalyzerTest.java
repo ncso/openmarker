@@ -18,7 +18,7 @@ public class BeanAnalyzerTest {
         assertEquals(Integer.class, value.getPropertyType());
         assertEquals(Integer.class, value.getReadMethod().getReturnType());
     }
-    
+
     @Test
     public void testGenerics() throws Exception {
         Map<String, PropertyDescriptor> properties =
@@ -32,16 +32,16 @@ public class BeanAnalyzerTest {
     public static class Base {
         public Number getValue() { return null; }
     }
-    
+
     public static class Int extends Base {
         public Integer getValue() { return null; }
     }
-    
+
     public static class BaseGenerics<T extends Number> {
         public T getValue() { return null; }
         public void setValue(T value) { }
     }
-    
+
     public static class IntGenerics extends BaseGenerics<Integer> {
         public Integer getValue() { return null; }
         public void setValue(Integer value) { }

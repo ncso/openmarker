@@ -21,7 +21,7 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 
 /**
- * Intended to wrap any exceptions thrown by createContext when used in the 
+ * Intended to wrap any exceptions thrown by createContext when used in the
  * MergingContextSource so exceptions can pass through the getInstance() call
  * of MergedClass.InstanceFactory.  Calls are passed to the wrapped Exception
  * leaving this class as a transparent wrapper.

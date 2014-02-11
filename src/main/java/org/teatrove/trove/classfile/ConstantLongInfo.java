@@ -21,32 +21,32 @@ import java.io.*;
 /**
  * This class corresponds to the CONSTANT_Long_info structure as defined in
  * section 4.4.5 of <i>The Java Virtual Machine Specification</i>.
- * 
+ *
  * @author Brian S O'Neill
  */
 public class ConstantLongInfo extends ConstantInfo {
     private Long mValue;
-    
-    /** 
+
+    /**
      * Will return either a new ConstantLongInfo object or one already in
-     * the constant pool. If it is a new ConstantLongInfo, it will be 
+     * the constant pool. If it is a new ConstantLongInfo, it will be
      * inserted into the pool.
      */
     static ConstantLongInfo make(ConstantPool cp, long value) {
         ConstantInfo ci = new ConstantLongInfo(value);
         return (ConstantLongInfo)cp.addConstant(ci);
     }
-    
+
     ConstantLongInfo(long value) {
         super(TAG_LONG);
         mValue = new Long(value);
     }
-    
+
     ConstantLongInfo(Long value) {
         super(TAG_LONG);
         mValue = value;
     }
-    
+
     public Long getValue() {
         return mValue;
     }
@@ -54,7 +54,7 @@ public class ConstantLongInfo extends ConstantInfo {
     public int hashCode() {
         return mValue.hashCode();
     }
-    
+
     public boolean equals(Object obj) {
         if (obj instanceof ConstantLongInfo) {
             ConstantLongInfo other = (ConstantLongInfo)obj;
@@ -63,7 +63,7 @@ public class ConstantLongInfo extends ConstantInfo {
 
         return false;
     }
-    
+
     int getEntryCount() {
         return 2;
     }

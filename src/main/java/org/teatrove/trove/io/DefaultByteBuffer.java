@@ -45,7 +45,7 @@ public class DefaultByteBuffer implements ByteBuffer, Serializable {
     public DefaultByteBuffer() {
         init();
     }
-    
+
     public long getBaseByteCount() {
         if (mBuffer != null) {
             return mBaseCount + mCursor;
@@ -130,19 +130,19 @@ public class DefaultByteBuffer implements ByteBuffer, Serializable {
                     mBaseCount += length;
                     return;
                 }
-                
+
                 mBuffer = new byte[BUFFER_SIZE];
                 mCursor = 0;
             }
-            
+
             int available = BUFFER_SIZE - mCursor;
-            
+
             if (length <= available) {
                 System.arraycopy(bytes, offset, mBuffer, mCursor, length);
                 mCursor += length;
                 return;
             }
-            
+
             System.arraycopy(bytes, offset, mBuffer, mCursor, available);
             mChunks.add(new ArrayByteData(mBuffer));
             mBaseCount += BUFFER_SIZE;
@@ -202,10 +202,10 @@ public class DefaultByteBuffer implements ByteBuffer, Serializable {
             }
         }
     }
-    
+
     public void clear() throws IOException {
         init();
-        
+
         int size;
         List<ByteBuffer> captureBuffers;
         if ((captureBuffers = mCaptureBuffers) != null) {
@@ -215,7 +215,7 @@ public class DefaultByteBuffer implements ByteBuffer, Serializable {
             }
         }
     }
-    
+
     private void init() {
         mCursor = 0;
         mBaseCount = 0;

@@ -19,7 +19,7 @@ package org.teatrove.tea.parsetree;
 import org.teatrove.tea.compiler.SourceInfo;
 
 /**
- * A literal is an expression that has a constant value. 
+ * A literal is an expression that has a constant value.
  *
  * @author Brian S O'Neill
  */

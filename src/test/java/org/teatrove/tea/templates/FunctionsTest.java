@@ -22,7 +22,7 @@ public class FunctionsTest extends AbstractTemplateTest {
     private static final String TEST_GREETING = "blah";
     private static final int TEST_WEIGHT = 10;
     private static final int TEST_HEIGHT = 5;
-    
+
     public static final FunctionsContext INSTANCE = new FunctionsContext();
 
     @Before
@@ -76,13 +76,13 @@ public class FunctionsTest extends AbstractTemplateTest {
 
     protected static final String TEST_GREETING_SOURCE_2 =
         "getFunction().getGreeting().length";
-    
+
     protected static final String TEST_GREETING_SOURCE_3 =
         "func = getFunction(); func.greeting.length()";
 
     protected static final String TEST_GREETING_SOURCE_4 =
         "func = FunctionsApplication.getFunction(); func.greeting";
-    
+
     protected static final String TEST_NULL_SOURCE_1 =
         "getFunction().getNull()?.toString() ?: 'none'";
 
@@ -121,34 +121,34 @@ public class FunctionsTest extends AbstractTemplateTest {
 
     protected static final String TEST_STATIC_SOURCE_1 =
     	"Math.PI";
-    
+
     protected static final String TEST_STATIC_SOURCE_2 =
     	"radius = 5; area = java.lang.Math.PI *  java.lang.Math.pow(radius, 2); area";
-    
+
     protected static final String TEST_STATIC_SOURCE_3 =
     	"list = java.util.Collections.singletonList('test'); list[0];";
-    
+
     protected static final String TEST_STATIC_SOURCE_4 =
     	"Collections.singletonList('test')[0]";
-    
+
     protected static final String TEST_STATIC_SOURCE_5 =
     	"org.teatrove.tea.templates.FunctionsTest.INSTANCE.getFunction().getGreeting()";
-    
+
     protected static final String TEST_STATIC_SOURCE_6 =
     	"org.teatrove.tea.templates.FunctionsTest.INSTANCE.function.getGreeting()";
-    
+
     protected static final String TEST_STATIC_SOURCE_7 =
     	"org.teatrove.tea.templates.FunctionsTest.INSTANCE.function.greeting";
-    
+
     protected static final String TEST_STATIC_SOURCE_8 =
     	"org.teatrove.tea.templates.FunctionsTest.INSTANCE.function.greeting.length";
-    
+
     protected static final String TEST_STATIC_SOURCE_9 =
     	"org.teatrove.tea.templates.FunctionsTest$Interface.GREETING";
-    
+
     public static interface Interface {
     	public static final String GREETING = TEST_GREETING;
-    	
+
         public String getGreeting();
     }
 

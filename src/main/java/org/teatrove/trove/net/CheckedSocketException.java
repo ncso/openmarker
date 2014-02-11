@@ -64,7 +64,7 @@ public class CheckedSocketException extends SocketException {
             remoteAddr = source.getInetAddress().getHostAddress();
         }
 
-        return 
+        return
             "[" + localAddr + ':' + source.getLocalPort() +
             ',' + remoteAddr + ':' + source.getPort() + ']';
     }

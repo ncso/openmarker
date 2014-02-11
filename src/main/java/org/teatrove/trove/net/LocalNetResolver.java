@@ -30,48 +30,48 @@ import org.teatrove.trove.log.Syslog;
 
 /**
  * This class provides functionality for finding the right network interface.
- * 
+ *
  * @author Jonathan Colwell, Reece Wilton
  */
 public class LocalNetResolver {
 
     /**
-     * The method finds the local InetAddress to bind to.  The netInterface 
+     * The method finds the local InetAddress to bind to.  The netInterface
      * parameter is the bind mask of the network interface.  It must be
      * specified in the format:  10.192.0.0/24
-     * 
+     *
      * There are four possible ways this method can be called:
-     * 
+     *
      * 1. host == null and netInterface == null.
      *      The local host name is looked up and returned.
-     * 
+     *
      * 2. host != null and netInterface == null.
      *      The host is looked up and returned.
-     * 
+     *
      * 3. host == null and netInterface != null.
      *      All the local network adapters and all their IPs are looked up.  The
      *      first IP that matches the bind mask is returned.
-     *     
-     * 4. host != null and netInterface != null.  
-     *      The host is looked up and the first IP that matches the bind mask is 
+     *
+     * 4. host != null and netInterface != null.
+     *      The host is looked up and the first IP that matches the bind mask is
      *      returned.
-     * 
+     *
      * @param host  the name or IP of the host
      * @param netInterface  the bind mask of the network interface
      * @return
      * @throws IOException
      */
-    // TODO: remove the LocalNetResolver from TeaServlet and use this instead 
-    public static InetAddress resolveLocalNet(String host, 
-                                              String netInterface) 
+    // TODO: remove the LocalNetResolver from TeaServlet and use this instead
+    public static InetAddress resolveLocalNet(String host,
+                                              String netInterface)
     	throws IOException {
-        
+
         return resolveLocalNet(host, netInterface, null);
     }
-    
-    public static InetAddress resolveLocalNet(String host, 
+
+    public static InetAddress resolveLocalNet(String host,
                                               String netInterface,
-                                              Log log) 
+                                              Log log)
         throws IOException {
 
         if (netInterface != null) {
@@ -94,7 +94,7 @@ public class LocalNetResolver {
                     byte[] maskedNet = new byte[4];
                     for(int k=0; k<4;k++) {
                         String token = st.nextToken();
-                        maskedNet[k] = (byte)(Integer.parseInt(token) 
+                        maskedNet[k] = (byte)(Integer.parseInt(token)
                                               & mask[k]);
                     }
                     if (log != null) {
@@ -102,7 +102,7 @@ public class LocalNetResolver {
                                   + (maskedNet[0] &0xFF)
                                   + "." + (maskedNet[1] & 0xFF)
                                   + "." + (maskedNet[2] & 0XFF)
-                                  + "." + (maskedNet[3] & 0xFF)); 
+                                  + "." + (maskedNet[3] & 0xFF));
                     }
 
                     InetAddress[] addresses;
@@ -123,18 +123,18 @@ public class LocalNetResolver {
                     for (int j=0;j<addresses.length;j++) {
                         byte[] testAddress = addresses[j].getAddress();
                         if (log != null) {
-                            log.debug("testing: " 
+                            log.debug("testing: "
                                       + addresses[j].getHostAddress());
                         }
-                        if (maskedNet[0] == (testAddress[0] & mask[0]) 
-                            && maskedNet[1] == (testAddress[1] & mask[1]) 
-                            && maskedNet[2] == (testAddress[2] & mask[2]) 
+                        if (maskedNet[0] == (testAddress[0] & mask[0])
+                            && maskedNet[1] == (testAddress[1] & mask[1])
+                            && maskedNet[2] == (testAddress[2] & mask[2])
                             && maskedNet[3] == (testAddress[3] & mask[3])) {
 
-                            Syslog.info(addresses[j].getHostAddress() 
+                            Syslog.info(addresses[j].getHostAddress()
                                         + " matched the specified localNet");
-                            
-                            return addresses[j];                             
+
+                            return addresses[j];
                         }
                     }
                 }
@@ -151,14 +151,14 @@ public class LocalNetResolver {
             return InetAddress.getLocalHost();
         }
     }
-    
-    // TODO: the IPs returned by this method don't return host names.  
+
+    // TODO: the IPs returned by this method don't return host names.
     //       calling getHostName returns the IP.  how do we get the host?
-    private static InetAddress[] getAllLocalInetAddresses(final Log log) 
+    private static InetAddress[] getAllLocalInetAddresses(final Log log)
     throws SocketException {
 
         final List addresses = new ArrayList();
-        
+
         // get the network adapters
         final Enumeration netInterfaces = NetworkInterface.getNetworkInterfaces();
         while (netInterfaces.hasMoreElements()) {
@@ -166,13 +166,13 @@ public class LocalNetResolver {
             if (log != null) {
                 log.debug("Found interface: " + ni.getName());
             }
-            
+
             // get the IPs for this network interface
             final Enumeration ips = ni.getInetAddresses();
             while (ips.hasMoreElements()) {
                 final InetAddress ip = (InetAddress)ips.nextElement();
                 if (log != null) {
-                    log.debug("Found ip: " + ip.getHostName() + "/" 
+                    log.debug("Found ip: " + ip.getHostName() + "/"
                         + ip.getHostAddress() + " on interface: " + ni.getName());
                 }
 
@@ -185,7 +185,7 @@ public class LocalNetResolver {
                 }
             }
         }
-        
+
         return (InetAddress[])addresses.toArray(new InetAddress[addresses.size()]);
     }
 }

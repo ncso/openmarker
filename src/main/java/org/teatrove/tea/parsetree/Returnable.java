@@ -19,11 +19,11 @@ package org.teatrove.tea.parsetree;
 import org.teatrove.tea.compiler.Type;
 
 /**
- * 
+ *
  * @author Nick Hagan
  */
 public interface Returnable {
     Type getReturnType();
     void setReturnType(Type type);
 }
- 
+

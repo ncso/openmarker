@@ -57,11 +57,11 @@ public class VariableRef extends Expression implements NullSafe {
         mVariable = var;
         setInitialType(var.getType());
     }
-    
+
     public int hashCode() {
         return mName.hashCode();
     }
-    
+
     public boolean equals(Object other) {
         if (other instanceof VariableRef) {
             VariableRef ref = (VariableRef)other;
@@ -71,11 +71,11 @@ public class VariableRef extends Expression implements NullSafe {
             return false;
         }
     }
-    
+
     public boolean isNullSafe() {
         return mNullSafe;
     }
-    
+
     public void setNullSafe(boolean nullSafe) {
         mNullSafe = nullSafe;
     }

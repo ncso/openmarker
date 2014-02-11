@@ -17,13 +17,13 @@
 package org.teatrove.tea.engine;
 
 /**
- * 
+ *
  * @author Jonathan Colwell
  */
 public class ReloadLock {
 
     private boolean mReloadInProgress;
-        
+
     public ReloadLock() {
         mReloadInProgress = false;
     }

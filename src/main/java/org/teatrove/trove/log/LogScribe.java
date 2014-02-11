@@ -93,7 +93,7 @@ public class LogScribe implements LogListener {
 
     public void logException(LogEvent e) {
         Throwable t = e.getException();
-        
+
         if (t == null) {
             logMessage(e);
         }
@@ -133,7 +133,7 @@ public class LogScribe implements LogListener {
      */
     protected String createPrepend(LogEvent e) {
         StringBuffer pre = new StringBuffer(80);
-                
+
         String code = "??";
         switch (e.getType()) {
         case LogEvent.DEBUG_TYPE:

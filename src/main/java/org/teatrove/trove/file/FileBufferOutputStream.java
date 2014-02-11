@@ -23,7 +23,7 @@ import org.teatrove.trove.io.AbstractDataOutputStream;
  * An OutputStream interface to a FileBuffer which supports repositioning.
  * FileBufferOutputStream is not thread-safe, but then its uncommon for
  * multiple threads to write to the same OutputStream.
- * 
+ *
  * @author Brian S O'Neill
  */
 public class FileBufferOutputStream extends AbstractDataOutputStream

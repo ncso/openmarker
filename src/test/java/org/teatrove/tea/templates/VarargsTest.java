@@ -67,27 +67,27 @@ public class VarargsTest extends AbstractTemplateTest {
         public String doSomethingElse(String... values) {
             return "7";
         }
-        
+
         public String doSomethingElse(String a, String b) {
             return "9";
         }
-        
+
         public String doSomethingMore(String value) {
             return "1";
         }
-        
+
         public String doSomethingMore(String... value) {
             return "2";
         }
-        
+
         public String doSomethingMore(Object value) {
             return "3";
         }
-        
+
         public String doNumbers(Number x, Number y) {
             return "1";
         }
-        
+
         public String doNumbers(Integer... values) {
             return "2";
         }
@@ -151,15 +151,15 @@ public class VarargsTest extends AbstractTemplateTest {
     protected static final String TEST_SOURCE_13 =
         "doSomething('test', 5.2, 2.3, 2.9, 'test');" +
         "getContext()?.doSomething('test', 5.2, 2.3, 2.9, 'test');"; // 1
-    
+
     protected static final String TEST_SOURCE_14 =
         "doSomethingElse('test', 'test2');" +
         "getContext().doSomethingElse('test', 'test2');"; // 9
-    
+
     protected static final String TEST_SOURCE_15 =
         "doSomethingMore('test');" +
         "getContext().doSomethingMore('test');"; // 1
-    
+
     protected static final String TEST_SOURCE_16 =
         "doNumbers(5, 6);" +
         "getContext().doNumbers(5, 6);"; // 1

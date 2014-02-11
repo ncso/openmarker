@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
- 
+
 package org.teatrove.trove.util.properties;
 
 import org.teatrove.trove.util.PropertyMap;
@@ -24,6 +24,6 @@ import org.teatrove.trove.util.PropertyMap;
 public interface SubstitutionFactory {
 
     public void init(PropertyMap props);
-    
+
     public String getSubstitution(String key);
 }

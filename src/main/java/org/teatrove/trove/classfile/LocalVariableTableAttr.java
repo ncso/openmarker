@@ -20,20 +20,20 @@ import java.util.*;
 import java.io.*;
 
 /**
- * This class corresponds to the LocalVariableTable_attribute structure as 
+ * This class corresponds to the LocalVariableTable_attribute structure as
  * defined in section 4.7.7 of <i>The Java Virtual Machine Specification</i>.
- * 
+ *
  * @author Brian S O'Neill
  */
 class LocalVariableTableAttr extends Attribute {
     private List<Entry> mEntries = new ArrayList<Entry>(10);
     private List<Entry> mCleanEntries;
     private int mRangeCount;
-    
+
     public LocalVariableTableAttr(ConstantPool cp) {
         super(cp, LOCAL_VARIABLE_TABLE);
     }
-    
+
     /**
      * Add an entry into the LocalVariableTableAttr.
      */
@@ -41,7 +41,7 @@ class LocalVariableTableAttr extends Attribute {
         String varName = localVar.getName();
         if (varName != null) {
             ConstantUTFInfo name = ConstantUTFInfo.make(mCp, varName);
-            ConstantUTFInfo descriptor = 
+            ConstantUTFInfo descriptor =
                 ConstantUTFInfo.make(mCp, localVar.getType().toString());
 
             mEntries.add(new Entry(localVar, name, descriptor));
@@ -49,12 +49,12 @@ class LocalVariableTableAttr extends Attribute {
 
         mCleanEntries = null;
     }
-    
+
     public int getLength() {
         clean();
         return 2 + 10 * mRangeCount;
     }
-    
+
     public void writeDataTo(DataOutput dout) throws IOException {
         dout.writeShort(mRangeCount);
 
@@ -68,7 +68,7 @@ class LocalVariableTableAttr extends Attribute {
             int index = localVar.getNumber();
 
             check("local variable table entry name index", name_index);
-            check("local variable table entry descriptor index", 
+            check("local variable table entry descriptor index",
                   descriptor_index);
             check("local variable table entry index", index);
 
@@ -141,7 +141,7 @@ class LocalVariableTableAttr extends Attribute {
                     continue outer;
                 }
             }
-            
+
             mCleanEntries.add(entry);
             mRangeCount += entry.getRangeCount();
         }
@@ -162,9 +162,9 @@ class LocalVariableTableAttr extends Attribute {
             int descriptor_index = din.readUnsignedShort();
             final int index = din.readUnsignedShort();
 
-            final ConstantUTFInfo varName = 
+            final ConstantUTFInfo varName =
                 (ConstantUTFInfo)cp.getConstant(name_index);
-            final ConstantUTFInfo varDesc = 
+            final ConstantUTFInfo varDesc =
                 (ConstantUTFInfo)cp.getConstant(descriptor_index);
 
             final Location startLocation = new FixedLocation(start_pc);
@@ -195,11 +195,11 @@ class LocalVariableTableAttr extends Attribute {
                 public TypeDesc getType() {
                     return mType;
                 }
-                
+
                 public boolean isDoubleWord() {
                     return mType.isDoubleWord();
                 }
-                
+
                 public int getNumber() {
                     return index;
                 }

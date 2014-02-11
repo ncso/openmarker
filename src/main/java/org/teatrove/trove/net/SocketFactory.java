@@ -40,7 +40,7 @@ public interface SocketFactory {
      * connection if factory is distributed. If null, then no session is used.
      */
     public InetAddressAndPort getInetAddressAndPort(Object session);
-    
+
     /**
      * Returns the default timeout for creating or getting sockets or -1 if
      * infinite.
@@ -80,7 +80,7 @@ public interface SocketFactory {
      */
     public CheckedSocket createSocket(long timeout)
         throws ConnectException, SocketException;
-    
+
     /**
      * Returns a new socket connection. When the socket is no longer
      * needed, call {@link recycleSocket} so that it be used again.
@@ -163,6 +163,6 @@ public interface SocketFactory {
 
     /**
      * Returns the number of recycled sockets currently available.
-     */    
+     */
     public int getAvailableCount();
 }

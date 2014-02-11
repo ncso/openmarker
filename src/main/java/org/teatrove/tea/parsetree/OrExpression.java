@@ -20,10 +20,10 @@ import org.teatrove.tea.compiler.SourceInfo;
 import org.teatrove.tea.compiler.Token;
 
 /**
- * OrExpression defines a logical "or" operation with short-circuit 
+ * OrExpression defines a logical "or" operation with short-circuit
  * semantics. The type of an OrExpression is Boolean, and it operates only
  * on expressions that return Booleans.
- * 
+ *
  * @author Brian S O'Neill
  */
 public class OrExpression extends BinaryLogicalExpression {

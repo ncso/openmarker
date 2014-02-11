@@ -36,24 +36,24 @@ public abstract class AbstractMapEntry implements Map.Entry {
         if (!(obj instanceof Map.Entry)) {
             return false;
         }
-        
+
         Map.Entry e = (Map.Entry)obj;
-        
+
         Object key = getKey();
         Object value = getValue();
-        
-        return 
+
+        return
             (key == null ?
              e.getKey() == null : key.equals(e.getKey())) &&
             (value == null ?
              e.getValue() == null : value.equals(e.getValue()));
     }
-    
+
     public int hashCode() {
         Object key = getKey();
         Object value = getValue();
-        
-        return 
+
+        return
             (key == null ? 0 : key.hashCode()) ^
             (value == null ? 0 : value.hashCode());
     }

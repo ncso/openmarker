@@ -15,7 +15,7 @@ public class StringCompilerTest {
 
     private Compiler compiler;
     private StringCompilationProvider provider;
-    
+
     @Before
     public void init() {
         compiler = new Compiler(new ClassInjector());
@@ -24,7 +24,7 @@ public class StringCompilerTest {
         provider.setTemplateSource("abc", "<% template abc() 'abc' %>");
         compiler.addCompilationProvider(provider);
     }
-    
+
     @Test
     public void testSourceExists() {
         assertTrue(compiler.sourceExists("test"));

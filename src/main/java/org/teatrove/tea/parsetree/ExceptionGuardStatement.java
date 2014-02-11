@@ -22,7 +22,7 @@ import org.teatrove.tea.compiler.SourceInfo;
  * A statement that catches instances of Exception, calls
  * ThreadGroup.uncaughtException, and moves on. This statement is inserted
  * by a TypeChecker, and does not appear directly in Tea templates.
- * 
+ *
  * @author Brian S O'Neill
  */
 public class ExceptionGuardStatement extends Statement {

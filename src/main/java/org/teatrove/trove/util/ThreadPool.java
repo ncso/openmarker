@@ -77,7 +77,7 @@ public class ThreadPool extends ThreadGroup {
      *
      * @throws IllegalArgumentException
      */
-    public ThreadPool(ThreadGroup parent, String name, int max) 
+    public ThreadPool(ThreadGroup parent, String name, int max)
         throws IllegalArgumentException
     {
         this(parent, name, max, true);
@@ -92,7 +92,7 @@ public class ThreadPool extends ThreadGroup {
      *
      * @throws IllegalArgumentException
      */
-    public ThreadPool(String name, int max, boolean daemon) 
+    public ThreadPool(String name, int max, boolean daemon)
         throws IllegalArgumentException
     {
         super(name);
@@ -137,7 +137,7 @@ public class ThreadPool extends ThreadGroup {
     /**
      * Sets the timeout (in milliseconds) for getting threads from the pool
      * or for closing the pool. A negative value specifies an infinite timeout.
-     * Calling the start method that accepts a timeout value will override 
+     * Calling the start method that accepts a timeout value will override
      * this setting.
      */
     public synchronized void setTimeout(long timeout) {
@@ -189,7 +189,7 @@ public class ThreadPool extends ThreadGroup {
             return mPriority;
         }
     }
-    
+
     /**
      * Sets the priority given to each thread in the pool.
      *
@@ -268,8 +268,8 @@ public class ThreadPool extends ThreadGroup {
     }
 
     /**
-     * Waits for a Thread to become available and starts a Runnable in it. 
-     * If there are no available threads and the number of active threads is 
+     * Waits for a Thread to become available and starts a Runnable in it.
+     * If there are no available threads and the number of active threads is
      * less than the maximum allowed, then a newly created thread is returned.
      *
      * @param target The Runnable instance that gets started by the returned
@@ -292,8 +292,8 @@ public class ThreadPool extends ThreadGroup {
     }
 
     /**
-     * Waits for a Thread to become available and starts a Runnable in it. 
-     * If there are no available threads and the number of active threads is 
+     * Waits for a Thread to become available and starts a Runnable in it.
+     * If there are no available threads and the number of active threads is
      * less than the maximum allowed, then a newly created thread is returned.
      *
      * @param target The Runnable instance that gets started by the returned
@@ -319,8 +319,8 @@ public class ThreadPool extends ThreadGroup {
 
 
     /**
-     * Waits for a Thread to become available and starts a Runnable in it. 
-     * If there are no available threads and the number of active threads is 
+     * Waits for a Thread to become available and starts a Runnable in it.
+     * If there are no available threads and the number of active threads is
      * less than the maximum allowed, then a newly created thread is returned.
      *
      * @param target The Runnable instance that gets started by the returned
@@ -344,8 +344,8 @@ public class ThreadPool extends ThreadGroup {
     }
 
     /**
-     * Waits for a Thread to become available and starts a Runnable in it. 
-     * If there are no available threads and the number of active threads is 
+     * Waits for a Thread to become available and starts a Runnable in it.
+     * If there are no available threads and the number of active threads is
      * less than the maximum allowed, then a newly created thread is returned.
      *
      * @param target The Runnable instance that gets started by the returned
@@ -358,7 +358,7 @@ public class ThreadPool extends ThreadGroup {
      * thread to become available.
      * @return A Thread that has been started on the given Runnable.
      */
-    public Thread start(Runnable target, long timeout, String name) 
+    public Thread start(Runnable target, long timeout, String name)
         throws NoThreadException, InterruptedException
     {
         try {
@@ -370,7 +370,7 @@ public class ThreadPool extends ThreadGroup {
         }
     }
 
-    private Thread start0(Runnable target, long timeout, String name) 
+    private Thread start0(Runnable target, long timeout, String name)
         throws NoThreadException, InterruptedException
     {
         PooledThread thread;
@@ -398,13 +398,13 @@ public class ThreadPool extends ThreadGroup {
             if (thread.setTarget(target)) {
                 return thread;
             }
-            
+
             // Couldn't set the target because the pooled thread is exiting.
             // Wait for it to exit to ensure that the active count is less
             // than the maximum and try to obtain another thread.
             thread.join();
         }
-        
+
         if (timeout == 0) {
             throw new NoThreadException("No thread available from " + this);
         }
@@ -429,20 +429,20 @@ public class ThreadPool extends ThreadGroup {
                     // have stolen the thread away.
                     if (mPool.size() <= 0 &&
                         System.currentTimeMillis() > expireTime) {
-                        
+
                         throw new NoThreadException
-                            ("No thread available after waiting " + 
+                            ("No thread available after waiting " +
                              timeout + " milliseconds: " + this);
                     }
                 }
             }
-        
+
             thread = (PooledThread)mPool.removeLast();
             if (thread.setTarget(target)) {
                 return thread;
             }
         }
-        
+
         // Couldn't set the target because the pooled thread is exiting.
         // Wait for it to exit to ensure that the active count is less
         // than the maximum and create a new thread.
@@ -464,7 +464,7 @@ public class ThreadPool extends ThreadGroup {
     }
 
     /**
-     * Will close down all the threads in the pool as they become 
+     * Will close down all the threads in the pool as they become
      * available. If all the threads cannot become available within the
      * specified timeout, any active threads not yet returned to the
      * thread pool are interrupted.
@@ -476,7 +476,7 @@ public class ThreadPool extends ThreadGroup {
         synchronized (mPool) {
             mClosed = true;
             mPool.notifyAll();
-            
+
             if (timeout != 0) {
                 if (timeout < 0) {
                     while (mActive > 0) {
@@ -507,7 +507,7 @@ public class ThreadPool extends ThreadGroup {
             thread = new PooledThread(getName() + ' ' + nextThreadID());
             thread.setPriority(mPriority);
             thread.setDaemon(mDaemon);
-            
+
             thread.setTarget(target);
             thread.start();
         }
@@ -616,10 +616,10 @@ public class ThreadPool extends ThreadGroup {
 
         private synchronized Runnable waitForTarget() {
             Runnable target;
-            
+
             if ((target = mTarget) == null) {
                 long idle = getIdleTimeout();
-                
+
                 if ((target = mTarget) == null) {
                     if (idle != 0) {
                         try {
@@ -633,7 +633,7 @@ public class ThreadPool extends ThreadGroup {
                         catch (InterruptedException e) {
                         }
                     }
-                    
+
                     if ((target = mTarget) == null) {
                         mExiting = true;
                     }

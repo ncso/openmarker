@@ -19,7 +19,7 @@ package org.teatrove.tea.parsetree;
 /**
  * An interface that marks an expression as performing a boolean logic
  * operation.
- * 
+ *
  * @author Brian S O'Neill
  *
  * @see NotExpression

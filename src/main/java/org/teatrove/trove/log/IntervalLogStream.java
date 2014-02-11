@@ -22,7 +22,7 @@ import java.util.*;
 
 /**
  * IntervalLogStream writes to an underlying OutputStream that is opened once
- * per a specific time interval. This class forms the basis of a dated file 
+ * per a specific time interval. This class forms the basis of a dated file
  * logging mechanism.
  *
  * @author Brian S O'Neill
@@ -63,7 +63,7 @@ public abstract class IntervalLogStream extends OutputStream {
     }
 
     /**
-     * If the auto-rollover thread was started, calling this method will 
+     * If the auto-rollover thread was started, calling this method will
      * stop it.
      */
     public synchronized void stopAutoRollover() {
@@ -91,7 +91,7 @@ public abstract class IntervalLogStream extends OutputStream {
         getOutputStream().write(array, 0, array.length);
     }
 
-    public synchronized void write(byte[] array, int off, int len) 
+    public synchronized void write(byte[] array, int off, int len)
         throws IOException {
 
         getOutputStream().write(array, off, len);
@@ -125,7 +125,7 @@ public abstract class IntervalLogStream extends OutputStream {
 
         Calendar cal = Calendar.getInstance();
 
-        if (mOut == null || 
+        if (mOut == null ||
             cal.before(mIntervalStart) || !cal.before(mNextIntervalStart)) {
 
             if (mOut != null) {
@@ -169,7 +169,7 @@ public abstract class IntervalLogStream extends OutputStream {
         public void run() {
             try {
                 while (!Thread.interrupted()) {
-                    IntervalLogStream stream = 
+                    IntervalLogStream stream =
                         (IntervalLogStream)mLogStream.get();
 
                     if (stream == null || stream.mIsClosed) {
@@ -185,7 +185,7 @@ public abstract class IntervalLogStream extends OutputStream {
 
                     Calendar cal = Calendar.getInstance();
                     stream.moveToNextIntervalStart(cal);
-                    
+
                     // Clear reference to stream so that it isn't strongly
                     // reachable from this thread.
                     stream = null;

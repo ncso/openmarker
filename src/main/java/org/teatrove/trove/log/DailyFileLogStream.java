@@ -42,8 +42,8 @@ public class DailyFileLogStream extends DailyLogStream {
         this(directory, format, DEFAULT_EXTENSION);
     }
 
-    public DailyFileLogStream(File directory, 
-                              DateFormat format, 
+    public DailyFileLogStream(File directory,
+                              DateFormat format,
                               String extension) {
 
         super(new FileLogStreamFactory(directory, format, extension));

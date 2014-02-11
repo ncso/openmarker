@@ -19,7 +19,7 @@ package org.teatrove.tea.parsetree;
 import org.teatrove.tea.compiler.SourceInfo;
 
 /**
- * 
+ *
  * @author Sean T. Treat
  */
 public class BreakStatement extends Statement {

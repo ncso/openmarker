@@ -31,7 +31,7 @@ import java.util.*;
  * accessing this map, be sure to synchronize this map first. Also, do not
  * rely on the value returned by size() when using an iterator from this map.
  * The iterators may return less entries than the amount reported by size().
- * 
+ *
  * @author Brian S O'Neill
  * @see Cache
  */
@@ -52,10 +52,10 @@ public class SoftHashMap extends AbstractMap implements Map, Cloneable {
 
             Integer key = new Integer(i);
             Integer value = new Integer(j);
-            
+
             cache.put(key, value);
         }
-      
+
         Map.Entry entry = (Map.Entry)cache.entrySet().iterator().next();
         System.out.println(entry);
         //entry = null;
@@ -115,14 +115,14 @@ public class SoftHashMap extends AbstractMap implements Map, Cloneable {
     private transient int mModCount = 0;
 
     // Views
-    
+
     private transient Set mKeySet = null;
     private transient Set mEntrySet = null;
     private transient Collection mValues = null;
 
     /**
-     * Constructs a new, empty map with the specified initial 
-     * capacity and the specified load factor. 
+     * Constructs a new, empty map with the specified initial
+     * capacity and the specified load factor.
      *
      * @param      initialCapacity   the initial capacity of the HashMap.
      * @param      loadFactor        the load factor of the HashMap
@@ -148,7 +148,7 @@ public class SoftHashMap extends AbstractMap implements Map, Cloneable {
         mTable = new Entry[initialCapacity];
         mThreshold = (int)(initialCapacity * loadFactor);
     }
-    
+
     /**
      * Constructs a new, empty map with the specified initial capacity
      * and default load factor, which is <tt>0.75</tt>.
@@ -213,7 +213,7 @@ public class SoftHashMap extends AbstractMap implements Map, Cloneable {
         }
 
         Entry tab[] = mTable;
-        
+
         for (int i = tab.length ; i-- > 0 ;) {
             for (Entry e = tab[i], prev = null; e != null; e = e.mNext) {
                 Object entryValue = e.getValue();
@@ -244,7 +244,7 @@ public class SoftHashMap extends AbstractMap implements Map, Cloneable {
     /**
      * Returns <tt>true</tt> if this map contains a mapping for the specified
      * key.
-     * 
+     *
      * @return <tt>true</tt> if this map contains a mapping for the specified
      * key.
      * @param key key whose presence in this Map is to be tested.
@@ -373,7 +373,7 @@ public class SoftHashMap extends AbstractMap implements Map, Cloneable {
      */
     private void cleanup() {
         Entry tab[] = mTable;
-        
+
         for (int i = tab.length ; i-- > 0 ;) {
             for (Entry e = tab[i], prev = null; e != null; e = e.mNext) {
                 if (e.getValue() == null) {
@@ -402,14 +402,14 @@ public class SoftHashMap extends AbstractMap implements Map, Cloneable {
     private void rehash() {
         int oldCapacity = mTable.length;
         Entry oldMap[] = mTable;
-        
+
         int newCapacity = oldCapacity * 2 + 1;
         Entry newMap[] = new Entry[newCapacity];
-        
+
         mModCount++;
         mThreshold = (int)(newCapacity * mLoadFactor);
         mTable = newMap;
-        
+
         for (int i = oldCapacity ; i-- > 0 ;) {
             for (Entry old = oldMap[i] ; old != null ; ) {
                 Entry e = old;
@@ -427,7 +427,7 @@ public class SoftHashMap extends AbstractMap implements Map, Cloneable {
             }
         }
     }
-    
+
     /**
      * Associates the specified value with the specified key in this map.
      * If the map previously contained a mapping for this key, the old
@@ -516,14 +516,14 @@ public class SoftHashMap extends AbstractMap implements Map, Cloneable {
             tab = mTable;
             index = (hash & 0x7FFFFFFF) % tab.length;
         }
-        
+
         // Creates the new entry.
         Entry e = new Entry(hash, key, (Object)value, tab[index]);
         tab[index] = e;
         mCount++;
         return null;
     }
-    
+
     /**
      * Removes the mapping for this key from this map if present.
      *
@@ -539,7 +539,7 @@ public class SoftHashMap extends AbstractMap implements Map, Cloneable {
         if (key != null) {
             int hash = key.hashCode();
             int index = (hash & 0x7FFFFFFF) % tab.length;
-            
+
             for (Entry e = tab[index], prev = null; e != null; e = e.mNext) {
                 Object entryValue = e.getValue();
 
@@ -608,10 +608,10 @@ public class SoftHashMap extends AbstractMap implements Map, Cloneable {
 
         return null;
     }
-    
+
     /**
      * Copies all of the mappings from the specified map to this one.
-     * 
+     *
      * These mappings replace any mappings that this map had for any of the
      * keys currently in the specified Map.
      *
@@ -644,11 +644,11 @@ public class SoftHashMap extends AbstractMap implements Map, Cloneable {
      * @return a shallow copy of this map.
      */
     public Object clone() {
-        try { 
+        try {
             SoftHashMap t = (SoftHashMap)super.clone();
             t.mTable = new Entry[mTable.length];
             for (int i = mTable.length ; i-- > 0 ; ) {
-                t.mTable[i] = (mTable[i] != null) 
+                t.mTable[i] = (mTable[i] != null)
                     ? (Entry)mTable[i].clone() : null;
             }
             t.mKeySet = null;
@@ -657,12 +657,12 @@ public class SoftHashMap extends AbstractMap implements Map, Cloneable {
             t.mModCount = 0;
             return t;
         }
-        catch (CloneNotSupportedException e) { 
+        catch (CloneNotSupportedException e) {
             // this shouldn't happen, since we are Cloneable
             throw new InternalError();
         }
     }
-    
+
     /**
      * Returns a set view of the keys contained in this map.  The set is
      * backed by the map, so changes to the map are reflected in the set, and
@@ -710,7 +710,7 @@ public class SoftHashMap extends AbstractMap implements Map, Cloneable {
         }
         return mKeySet;
     }
-    
+
     /**
      * Returns a collection view of the values contained in this map.  The
      * collection is backed by the map, so changes to the map are reflected in
@@ -778,7 +778,7 @@ public class SoftHashMap extends AbstractMap implements Map, Cloneable {
 
                     for (Entry e = tab[index], prev = null; e != null; e = e.mNext) {
                         Object entryValue = e.getValue();
-                        
+
                         if (entryValue == null) {
                             // Clean up after a cleared Reference.
                             mModCount++;
@@ -813,7 +813,7 @@ public class SoftHashMap extends AbstractMap implements Map, Cloneable {
 
                     for (Entry e = tab[index], prev = null; e != null; e = e.mNext) {
                         Object entryValue = e.getValue();
-                        
+
                         if (entryValue == null) {
                             // Clean up after a cleared Reference.
                             mModCount++;
@@ -848,7 +848,7 @@ public class SoftHashMap extends AbstractMap implements Map, Cloneable {
                 public int size() {
                     return mCount;
                 }
-                
+
                 public void clear() {
                     SoftHashMap.this.clear();
                 }
@@ -858,14 +858,14 @@ public class SoftHashMap extends AbstractMap implements Map, Cloneable {
                 }
             };
         }
-        
+
         return mEntrySet;
     }
-    
+
     public String toString() {
         StringBuffer buf = new StringBuffer();
         Iterator it = entrySet().iterator();
-        
+
         buf.append("{");
         for (int i = 0; it.hasNext(); i++) {
             if (i > 0) {
@@ -894,7 +894,7 @@ public class SoftHashMap extends AbstractMap implements Map, Cloneable {
         int mHash;
         Object mKey;
         Entry mNext;
-        
+
         private Reference mValue;
 
         Entry(int hash, Object key, Object value, Entry next) {
@@ -903,29 +903,29 @@ public class SoftHashMap extends AbstractMap implements Map, Cloneable {
             mValue = new SoftReference(value);
             mNext = next;
         }
-        
+
         private Entry(int hash, Object key, Reference value, Entry next) {
             mHash = hash;
             mKey = key;
             mValue = value;
             mNext = next;
         }
-        
+
         protected Object clone() {
             return new Entry(mHash, mKey, (Reference)mValue,
                              (mNext==null ? null : (Entry)mNext.clone()));
         }
-        
-        // Map.Entry Ops 
-        
+
+        // Map.Entry Ops
+
         public Object getKey() {
             return mKey;
         }
-        
+
         public Object getValue() {
             return mValue.get();
         }
-        
+
         public Object setValue(Object value) {
             Object oldValue = getValue();
             if (value == null) {
@@ -936,7 +936,7 @@ public class SoftHashMap extends AbstractMap implements Map, Cloneable {
             }
             return oldValue;
         }
-        
+
         public boolean equals(Object o) {
             if (!(o instanceof Map.Entry)) {
                 return false;
@@ -944,7 +944,7 @@ public class SoftHashMap extends AbstractMap implements Map, Cloneable {
             Map.Entry e = (Map.Entry)o;
 
             Object value = getValue();
-            
+
             return (mKey==null ? e.getKey()==null : mKey.equals(e.getKey())) &&
                 (value==null ? e.getValue()==null : value.equals(e.getValue()));
         }
@@ -953,7 +953,7 @@ public class SoftHashMap extends AbstractMap implements Map, Cloneable {
             Object value = getValue();
             return mHash ^ (value==null ? 0 : value.hashCode());
         }
-        
+
         public String toString() {
             return mKey + "=" + getValue();
         }
@@ -969,18 +969,18 @@ public class SoftHashMap extends AbstractMap implements Map, Cloneable {
         private Object mEntryValue;
         private Entry mLastReturned;
         private int mType;
-        
+
         /**
          * The modCount value that the iterator believes that the backing
          * List should have.  If this expectation is violated, the iterator
          * has detected concurrent modification.
          */
         private int expectedModCount = mModCount;
-        
+
         HashIterator(int type) {
             mType = type;
         }
-        
+
         public boolean hasNext() {
             while (mEntry == null ||
                    (mEntryValue = mEntry.getValue()) == null) {
@@ -1002,12 +1002,12 @@ public class SoftHashMap extends AbstractMap implements Map, Cloneable {
 
             return true;
         }
-        
+
         public Object next() {
             if (mModCount != expectedModCount) {
                 throw new ConcurrentModificationException();
             }
-            
+
             if (!hasNext()) {
                 throw new NoSuchElementException();
             }
@@ -1026,7 +1026,7 @@ public class SoftHashMap extends AbstractMap implements Map, Cloneable {
                 return mLastReturned;
             }
         }
-        
+
         public void remove() {
             if (mLastReturned == null) {
                 throw new IllegalStateException();
@@ -1041,7 +1041,7 @@ public class SoftHashMap extends AbstractMap implements Map, Cloneable {
         private void remove(Entry toRemove) {
             Entry[] tab = mTable;
             int index = (toRemove.mHash & 0x7FFFFFFF) % tab.length;
-            
+
             for (Entry e = tab[index], prev = null; e != null; e = e.mNext) {
                 if (e == toRemove) {
                     mModCount++;

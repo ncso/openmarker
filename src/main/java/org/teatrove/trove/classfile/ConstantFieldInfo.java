@@ -21,14 +21,14 @@ import java.io.*;
 /**
  * This class corresponds to the CONSTANT_Fieldref_info structure as defined in
  * section 4.4.2 of <i>The Java Virtual Machine Specification</i>.
- * 
+ *
  * @author Brian S O'Neill
  */
 public class ConstantFieldInfo extends ConstantInfo {
     private ConstantClassInfo mParentClass;
     private ConstantNameAndTypeInfo mNameAndType;
-    
-    /** 
+
+    /**
      * Will return either a new ConstantFieldInfo object or one already in
      * the constant pool. If it is a new ConstantFieldInfo, it will be inserted
      * into the pool.
@@ -39,19 +39,19 @@ public class ConstantFieldInfo extends ConstantInfo {
         ConstantInfo ci = new ConstantFieldInfo(parentClass, nameAndType);
         return (ConstantFieldInfo)cp.addConstant(ci);
     }
-    
+
     ConstantFieldInfo(ConstantClassInfo parentClass,
                       ConstantNameAndTypeInfo nameAndType) {
         super(TAG_FIELD);
-        
+
         mParentClass = parentClass;
         mNameAndType = nameAndType;
     }
-    
+
     public ConstantClassInfo getParentClass() {
         return mParentClass;
     }
-    
+
     public ConstantNameAndTypeInfo getNameAndType() {
         return mNameAndType;
     }
@@ -59,17 +59,17 @@ public class ConstantFieldInfo extends ConstantInfo {
     public int hashCode() {
         return mNameAndType.hashCode();
     }
-    
+
     public boolean equals(Object obj) {
         if (obj instanceof ConstantFieldInfo) {
             ConstantFieldInfo other = (ConstantFieldInfo)obj;
-            return (mParentClass.equals(other.mParentClass) && 
+            return (mParentClass.equals(other.mParentClass) &&
                     mNameAndType.equals(other.mNameAndType));
         }
-        
+
         return false;
     }
-    
+
     public void writeTo(DataOutput dout) throws IOException {
         super.writeTo(dout);
         dout.writeShort(mParentClass.getIndex());

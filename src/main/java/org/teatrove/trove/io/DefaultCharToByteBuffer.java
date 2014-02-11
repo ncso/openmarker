@@ -20,7 +20,7 @@ import java.io.*;
 
 /**
  * A CharToByteBuffer implementation that wraps a ByteBuffer for storage.
- * 
+ *
  * @author Brian S O'Neill
  */
 public class DefaultCharToByteBuffer
@@ -34,12 +34,12 @@ public class DefaultCharToByteBuffer
     private char[] mChars;
     private int mCapacity;
     private int mCursor;
-    
+
     private String mDefaultEncoding;
 
     /**
      * @param buffer Buffer that receives the characters converted to bytes.
-     */    
+     */
     public DefaultCharToByteBuffer(ByteBuffer buffer) {
         this(buffer, null);
     }
@@ -48,7 +48,7 @@ public class DefaultCharToByteBuffer
      * @param buffer Buffer that receives the characters converted to bytes.
      * @param defaultEncoding Default character encoding to use if setEncoding
      * is not called.
-     */    
+     */
     public DefaultCharToByteBuffer(ByteBuffer buffer, String defaultEncoding) {
         mBuffer = buffer;
         mChars = new char[4000];
@@ -61,12 +61,12 @@ public class DefaultCharToByteBuffer
         mConvertor = new OutputStreamWriter
             (new ByteBufferOutputStream(mBuffer), enc);
     }
-    
+
     public String getEncoding() {
         return (mConvertor == null) ? mDefaultEncoding :
             mConvertor.getEncoding();
     }
-    
+
     public long getBaseByteCount() throws IOException {
         return mBuffer.getBaseByteCount();
     }
@@ -75,21 +75,21 @@ public class DefaultCharToByteBuffer
         drain(true);
         return mBuffer.getByteCount();
     }
-    
+
     public void writeTo(OutputStream out) throws IOException {
         drain(true);
         mBuffer.writeTo(out);
     }
-    
+
     public void append(byte b) throws IOException {
         drain(true);
         mBuffer.append(b);
     }
-    
+
     public void append(byte[] bytes) throws IOException {
         append(bytes, 0, bytes.length);
     }
-    
+
     public void append(byte[] bytes, int offset, int length)
         throws IOException {
 
@@ -98,14 +98,14 @@ public class DefaultCharToByteBuffer
             mBuffer.append(bytes, offset, length);
         }
     }
-    
+
     public void appendSurrogate(ByteData s) throws IOException {
         if (s != null) {
             drain(true);
             mBuffer.appendSurrogate(s);
         }
     }
-    
+
     public void addCaptureBuffer(ByteBuffer buffer) throws IOException {
         drain(true);
         mBuffer.addCaptureBuffer(buffer);
@@ -122,13 +122,13 @@ public class DefaultCharToByteBuffer
         }
         mChars[mCursor++] = c;
     }
-    
+
     public void append(char[] chars) throws IOException {
         append(chars, 0, chars.length);
     }
-    
-    public void append(char[] chars, int offset, int length) 
-        throws IOException 
+
+    public void append(char[] chars, int offset, int length)
+        throws IOException
     {
         if (length == 0) {
             return;
@@ -154,11 +154,11 @@ public class DefaultCharToByteBuffer
         // Write the whole chunk out at once.
         getConvertor().write(chars, offset, length);
     }
-    
+
     public void append(String str) throws IOException {
         append(str, 0, str.length());
     }
-    
+
     public void append(String str, int offset, int length) throws IOException {
         if (length == 0) {
             return;
@@ -203,7 +203,7 @@ public class DefaultCharToByteBuffer
     public void drain() throws IOException {
         drain(true);
     }
-    
+
     public void clear() throws IOException {
         mCursor = 0;
         mBuffer.clear();

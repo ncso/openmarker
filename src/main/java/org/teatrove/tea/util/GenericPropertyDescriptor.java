@@ -25,7 +25,7 @@ import java.util.Enumeration;
 import org.teatrove.trove.generics.GenericType;
 
 /**
- * 
+ *
  * @author Nick Hagan
  */
 public class GenericPropertyDescriptor extends PropertyDescriptor {

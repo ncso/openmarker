@@ -34,14 +34,14 @@ public class TransactionQueueEvent extends EventObject {
 
     private transient Date mTimestamp;
 
-    public TransactionQueueEvent(TransactionQueue source, 
+    public TransactionQueueEvent(TransactionQueue source,
                                  Transaction transaction) {
         super(source);
         mTransaction = transaction;
         mTimestampMillis = System.currentTimeMillis();
     }
 
-    public TransactionQueueEvent(TransactionQueue source, 
+    public TransactionQueueEvent(TransactionQueue source,
                                  Transaction transaction,
                                  Throwable throwable) {
         super(source);

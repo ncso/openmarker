@@ -24,7 +24,7 @@ import org.teatrove.tea.compiler.CompilationProvider;
 import org.teatrove.tea.compiler.CompilationSource;
 
 /**
- * ResourceCompilationProvider provides tea sources using the resource loading 
+ * ResourceCompilationProvider provides tea sources using the resource loading
  * mechanism built into Java. The resource name must have the extension ".tea".
  *
  * @author Brian S O'Neill
@@ -34,15 +34,15 @@ public class ResourceCompilationProvider implements CompilationProvider {
 
     private ClassLoader mLoader;
     private String mRootPackage;
-    
+
     public ResourceCompilationProvider() {
         this(Thread.currentThread().getContextClassLoader(), "");
     }
-    
+
     public ResourceCompilationProvider(String rootPackage) {
         this(Thread.currentThread().getContextClassLoader(), rootPackage);
     }
-    
+
     public ResourceCompilationProvider(ClassLoader loader, String rootPackage) {
         mLoader = loader;
         mRootPackage = rootPackage;
@@ -50,7 +50,7 @@ public class ResourceCompilationProvider implements CompilationProvider {
             mRootPackage = mRootPackage.concat("/");
         }
     }
-    
+
     @Override
     public boolean sourceExists(String name) {
         String resName = mRootPackage + name.replace('.', '/') + ".tea";
@@ -70,7 +70,7 @@ public class ResourceCompilationProvider implements CompilationProvider {
         if (resource == null) {
             return null;
         }
-           
+
         return new ResourceSource(resource);
     }
 
@@ -78,11 +78,11 @@ public class ResourceCompilationProvider implements CompilationProvider {
         String resName = '/' + name.replace('.', '/') + ".tea";
         return this.getClass().getResource(resName);
     }
-    
+
     public static class ResourceSource implements CompilationSource {
-        
+
         private URL mResource;
-        
+
         public ResourceSource(URL resource) {
             mResource = resource;
         }
@@ -91,7 +91,7 @@ public class ResourceCompilationProvider implements CompilationProvider {
         public String getSourcePath() {
             return mResource.toExternalForm();
         }
-        
+
         @Override
         public long getLastModified() {
             try { return mResource.openConnection().getLastModified(); }
@@ -99,15 +99,15 @@ public class ResourceCompilationProvider implements CompilationProvider {
                 System.err.println(
                     "unable to get last modified for resource: " + mResource);
                 ioe.printStackTrace();
-                
+
                 return -1;
             }
         }
-        
+
         @Override
-        public InputStream getSource() 
+        public InputStream getSource()
             throws IOException {
-    
+
             return mResource.openStream();
         }
     }

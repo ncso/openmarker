@@ -180,7 +180,7 @@ public class FileBufferInputStream extends AbstractDataInputStream
             switch (c) {
             case '\n':
                 break loop;
-                
+
             case '\r':
                 long oldPos = mPosition;
                 int c2 = read();
@@ -188,7 +188,7 @@ public class FileBufferInputStream extends AbstractDataInputStream
                     mPosition = oldPos;
                 }
                 break loop;
-                
+
             default:
                 buf.append((char)c);
                 break;

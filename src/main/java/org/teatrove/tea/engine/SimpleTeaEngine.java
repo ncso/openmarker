@@ -19,7 +19,7 @@ package org.teatrove.tea.engine;
 import org.teatrove.tea.runtime.Context;
 
 /**
- * 
+ *
  * @author Jonathan Colwell
  */
 public class SimpleTeaEngine implements TeaExecutionEngine {
@@ -30,14 +30,14 @@ public class SimpleTeaEngine implements TeaExecutionEngine {
         mTemplateSource = config.getTemplateSource();
     }
 
-    public void executeTemplate(String templateName, 
-                                Object contextParameter, 
+    public void executeTemplate(String templateName,
+                                Object contextParameter,
                                 Object[] templateParameters)
         throws Exception {
-        
+
         mTemplateSource.getTemplate(templateName)
             .execute((Context)mTemplateSource.getContextSource()
-                     .createContext(contextParameter), 
+                     .createContext(contextParameter),
                      templateParameters);
     }
 

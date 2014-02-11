@@ -13,19 +13,19 @@ public class WarningTest extends AbstractTemplateTest {
     }
 
     /* DISABLE as this check happens often enough and should not be a warning
-     * 
+     *
     @Test
     public void testTruthfulWarnings() throws Exception {
-        String source = 
+        String source =
             "obj = createObject(null); " +
             "if (obj) { 'valid' } " +
             "else { 'invalid' }";
-        
+
         adddMockListener(0, 1);
         assertEquals("invalid", executeSource(source));
     }
     */
-    
+
     @Test
     public void testCompareWarnings() throws Exception {
         String source =
@@ -33,16 +33,16 @@ public class WarningTest extends AbstractTemplateTest {
             "obj2 = createInteger(5); " +
             "result = obj1 <=> obj2; " +
             "if (result < 0) { 'valid' }";
-        
+
         adddMockListener(0, 1);
         assertEquals("valid", executeSource(source));
     }
-    
+
     public static class WarningContext {
         public Object createObject(Object value) {
             return value;
         }
-        
+
         public Integer createInteger(Integer value) {
             return value;
         }

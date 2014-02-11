@@ -32,22 +32,22 @@ import org.teatrove.tea.compiler.CompilationProvider;
 import org.teatrove.tea.compiler.CompilationSource;
 
 /**
- * JarCompilationProvider provides access to tea source files by reading them 
+ * JarCompilationProvider provides access to tea source files by reading them
  * from a given JAR file. When given a JAR file, all files with the JAR file
- * with the extension ".tea" will be provided. 
+ * with the extension ".tea" will be provided.
  *
  * @author Brian S O'Neill
  */
 public class JarCompilationProvider implements CompilationProvider {
 
     private JarOfTemplates mSourceJar;
-    
+
     public JarCompilationProvider(File sourceJarFile) {
-        
+
     	if (sourceJarFile == null ) {
             throw new IllegalArgumentException("sourceJarFile");
         }
-        
+
         try { mSourceJar = new JarOfTemplates(sourceJarFile); }
         catch (IOException ioe) {
             throw new IllegalArgumentException("sourceJarFile", ioe);
@@ -55,26 +55,26 @@ public class JarCompilationProvider implements CompilationProvider {
     }
 
     @Override
-    public String[] getKnownTemplateNames(boolean recurse) 
+    public String[] getKnownTemplateNames(boolean recurse)
         throws IOException {
-        
+
         Collection<String> sources = new TreeSet<String>();
         gatherSources(sources);
         return sources.toArray(new String[sources.size()]);
     }
-    
+
     @Override
     public boolean sourceExists(String name) {
         return findJarEntry(name) != null;
     }
-    
+
     @Override
     public CompilationSource createCompilationSource(String name) {
         JarEntry jarEntry = findJarEntry(name);
         if (jarEntry == null) {
             return null;
         }
-        
+
         try { return new JarredSource(jarEntry, mSourceJar); }
         catch (IOException ioe) {
             // TODO: log error
@@ -87,9 +87,9 @@ public class JarCompilationProvider implements CompilationProvider {
         return mSourceJar.getEntry(fileName);
     }
 
-    protected void gatherSources(Collection<String> sources) 
+    protected void gatherSources(Collection<String> sources)
         throws IOException {
-    
+
         Enumeration<JarEntry> entries = mSourceJar.getEntries();
         while (entries.hasMoreElements()) {
             String name = entries.nextElement().getName();
@@ -109,7 +109,7 @@ public class JarCompilationProvider implements CompilationProvider {
         private JarOfTemplates mJarOfTemplates;
         private URL mUrl;
 
-        public JarredSource(JarEntry entry, JarOfTemplates jarOfTemplates) 
+        public JarredSource(JarEntry entry, JarOfTemplates jarOfTemplates)
             throws IOException {
 
             mJarEntry = entry;
@@ -120,22 +120,22 @@ public class JarCompilationProvider implements CompilationProvider {
         public JarEntry getJarEntry() {
             return mJarEntry;
         }
-        
+
         @Override
         public String getSourcePath() {
             return mUrl.toExternalForm();
         }
 
         @Override
-        public InputStream getSource() 
+        public InputStream getSource()
             throws IOException {
-            
+
             return mJarOfTemplates.getInputStream(mJarEntry);
         }
-        
+
         @Override
         public long getLastModified() {
-            return (mJarEntry == null ? -1 : mJarEntry.getTime());            
+            return (mJarEntry == null ? -1 : mJarEntry.getTime());
         }
     }
 
@@ -146,10 +146,10 @@ public class JarCompilationProvider implements CompilationProvider {
 
         public JarOfTemplates(File file) throws IOException {
             mUrl = makeJarUrlFromFile(file);
-            
+
             mConn = (JarURLConnection)mUrl.openConnection();
             mConn.setUseCaches(false);
-            
+
             mJarFile = mConn.getJarFile();
         }
 

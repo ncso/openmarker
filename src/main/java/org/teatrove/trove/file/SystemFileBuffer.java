@@ -257,7 +257,7 @@ public final class SystemFileBuffer implements FileBuffer {
         if (position < 0) {
             throw new IllegalArgumentException("position < 0: " + position);
         }
-        
+
         if (offset < 0) {
             throw new ArrayIndexOutOfBoundsException("offset < 0: " + offset);
         }

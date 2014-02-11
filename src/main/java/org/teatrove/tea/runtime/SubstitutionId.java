@@ -44,12 +44,12 @@ public class SubstitutionId extends java.lang.ref.WeakReference<Class<?>> {
         }
         return false;
     }
-    
+
     public int hashCode() {
         Object c = get();
         return (c == null) ? mBlockId : c.hashCode() + mBlockId;
     }
-    
+
     public String toString() {
         Class<?> c = get();
         if (c != null) {

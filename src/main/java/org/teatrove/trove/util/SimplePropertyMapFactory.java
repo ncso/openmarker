@@ -22,28 +22,28 @@ import java.io.Reader;
 public class SimplePropertyMapFactory implements PropertyMapFactory {
 
     private Reader reader;
-    
+
     public SimplePropertyMapFactory(Reader reader) {
         this.reader = reader;
     }
-    
+
     @Override
-    public PropertyMap createProperties() 
+    public PropertyMap createProperties()
         throws IOException {
-        
+
         return createProperties(null);
     }
 
     @Override
     public PropertyMap createProperties(PropertyChangeListener listener)
         throws IOException {
-        
+
         PropertyMap properties = new PropertyMap();
         PropertyParser parser = new PropertyParser(properties);
         if (listener != null) {
             parser.addPropertyChangeListener(listener);
         }
-        
+
         parser.parse(reader);
         return properties;
     }

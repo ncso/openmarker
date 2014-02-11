@@ -23,7 +23,7 @@ import org.teatrove.trove.log.LogEvent;
 /**
  * The TeaLogEvent class works with the TeaLog and the TeaLogListener to
  * simplify stack traces for Tea templates.
- * 
+ *
  * @author Reece Wilton
  */
 public class TeaLogEvent extends LogEvent {

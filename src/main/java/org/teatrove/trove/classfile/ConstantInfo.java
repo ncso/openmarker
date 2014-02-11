@@ -23,7 +23,7 @@ import java.io.*;
  * section 4.4 of <i>The Java Virtual Machine Specification</i>.
  * Subclasses should override the default hashCode and equals methods so
  * that the ConstantPool will only contain one instance of this constant.
- * 
+ *
  * @author Brian S O'Neill
  */
 public abstract class ConstantInfo {
@@ -42,7 +42,7 @@ public abstract class ConstantInfo {
     // mIndex is manipulated by ConstantPool
     int mIndex = -1;
     private int mTag;
-    
+
     protected ConstantInfo(int tag) {
         mTag = tag;
     }
@@ -59,7 +59,7 @@ public abstract class ConstantInfo {
     boolean hasPriority() {
         return false;
     }
-    
+
     int getEntryCount() {
         return 1;
     }

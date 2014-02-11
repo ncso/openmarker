@@ -274,20 +274,20 @@ public class TransactionQueueData implements java.io.Serializable {
     }
 
     /**
-     * Returns the average amount of time, in milliseconds, that a 
+     * Returns the average amount of time, in milliseconds, that a
      * transaction was in the queue.
      */
     public double getAverageQueueDuration() {
-        return ((double)getTotalQueueDuration()) / 
+        return ((double)getTotalQueueDuration()) /
             ((double)getTotalEnqueued());
     }
 
     /**
-     * Returns the average amount of time, in milliseconds, it took servicing 
+     * Returns the average amount of time, in milliseconds, it took servicing
      * a transaction.
      */
     public double getAverageServiceDuration() {
-        return ((double)getTotalServiceDuration()) / 
+        return ((double)getTotalServiceDuration()) /
             ((double)getTotalServiced());
     }
 
@@ -305,7 +305,7 @@ public class TransactionQueueData implements java.io.Serializable {
      * the snapshot interval.
      */
     public double getEnqueueSuccessRate() {
-        return ((double)getTotalEnqueued() * 1000) / 
+        return ((double)getTotalEnqueued() * 1000) /
             ((double)getSnapshotDuration());
     }
 
@@ -314,7 +314,7 @@ public class TransactionQueueData implements java.io.Serializable {
      * snapshot interval.
      */
     public double getServiceRate() {
-        return ((double)getTotalServiced() * 1000) / 
+        return ((double)getTotalServiced() * 1000) /
             ((double)getSnapshotDuration());
     }
 
@@ -323,7 +323,7 @@ public class TransactionQueueData implements java.io.Serializable {
      * a number in between if some failed.
      */
     public double getEnqueueFailureRatio() {
-        return 1.0d - ((double)getTotalEnqueued()) / 
+        return 1.0d - ((double)getTotalEnqueued()) /
             ((double)getTotalEnqueueAttempts());
     }
 }

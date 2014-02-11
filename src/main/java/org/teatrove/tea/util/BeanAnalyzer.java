@@ -147,7 +147,7 @@ public class BeanAnalyzer {
                 Class<?> propertyType = desc.getPropertyType();
                 if (propertyType != null) {
                     boolean modified = false;
-                    
+
                     // check if read method is bridge and lookup real method
                     Method readMethod = desc.getReadMethod();
                     if (readMethod != null && readMethod.isBridge()) {
@@ -155,7 +155,7 @@ public class BeanAnalyzer {
                             readMethod = clazz.getMethod(
                                 readMethod.getName()
                             );
-                            
+
                             modified = true;
                             propertyType = readMethod.getReturnType();
                         }
@@ -166,7 +166,7 @@ public class BeanAnalyzer {
                             throw new IntrospectionException(e.toString());
                         }
                     }
-                    
+
                     // check if write method is bridge and lookup real method
                     Method writeMethod = desc.getWriteMethod();
                     if (writeMethod != null && writeMethod.isBridge()) {
@@ -174,7 +174,7 @@ public class BeanAnalyzer {
                             writeMethod = clazz.getMethod(
                                 writeMethod.getName(), propertyType
                             );
-                            
+
                             modified = true;
                         }
                         catch (NoSuchMethodException nsme) {
@@ -184,7 +184,7 @@ public class BeanAnalyzer {
                             throw new IntrospectionException(e.toString());
                         }
                     }
-                    
+
                     // overwrite the methods if they were modified...note that
                     // we must set writeMethod to null first since invoking the
                     // setter will attempt to vaildate the types are the same
@@ -195,7 +195,7 @@ public class BeanAnalyzer {
                         desc.setReadMethod(readMethod);
                         desc.setWriteMethod(writeMethod);
                     }
-                    
+
                     // save the property
                     properties.put(desc.getName(), desc);
                 }
@@ -265,7 +265,7 @@ public class BeanAnalyzer {
                 throw new LinkageError(e.toString());
             }
         }
-        
+
         // Analyze design patterns for keyed properties.
 
         KeyedPropertyDescriptor keyed = new KeyedPropertyDescriptor();

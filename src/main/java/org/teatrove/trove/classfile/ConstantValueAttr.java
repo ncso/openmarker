@@ -21,26 +21,26 @@ import java.io.*;
 /**
  * This class corresponds to the ConstantValue_attribute structure as defined
  * in section 4.7.3 of <i>The Java Virtual Machine Specification</i>.
- * 
+ *
  * @author Brian S O'Neill
  */
 class ConstantValueAttr extends Attribute {
     private ConstantInfo mConstant;
-    
+
     public ConstantValueAttr(ConstantPool cp, ConstantInfo constant) {
         super(cp, CONSTANT_VALUE);
-        
+
         mConstant = constant;
     }
-    
+
     public ConstantInfo getConstant() {
         return mConstant;
     }
-    
+
     public int getLength() {
         return 2;
     }
-    
+
     public void writeDataTo(DataOutput dout) throws IOException {
         dout.writeShort(mConstant.getIndex());
     }
@@ -49,7 +49,7 @@ class ConstantValueAttr extends Attribute {
                             String name,
                             int length,
                             DataInput din) throws IOException {
-        
+
         int index = din.readUnsignedShort();
         if ((length -= 2) > 0) {
             din.skipBytes(length);

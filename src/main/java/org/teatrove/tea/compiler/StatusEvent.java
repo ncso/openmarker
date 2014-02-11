@@ -1,7 +1,7 @@
 package org.teatrove.tea.compiler;
 
 /**
- * This has been moved to {@link org.teatrove.trove.util.StatusEvent} 
+ * This has been moved to {@link org.teatrove.trove.util.StatusEvent}
  *
  * @deprecated
  */

@@ -24,7 +24,7 @@ import java.util.WeakHashMap;
 import java.text.MessageFormat;
 
 /**
- * 
+ *
  * @author Brian S O'Neill
  */
 class MessageFormatter {

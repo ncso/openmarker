@@ -21,7 +21,7 @@ import org.teatrove.tea.compiler.Token;
 import org.teatrove.tea.compiler.Type;
 
 /**
- * 
+ *
  * @author Brian S O'Neill
  */
 public abstract class BinaryLogicalExpression extends BinaryExpression

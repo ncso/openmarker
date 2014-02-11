@@ -1016,7 +1016,7 @@ public class Parser {
 
     private Expression parseCompareExpression(Token token)
         throws IOException {
-        
+
         SourceInfo info = token.getSourceInfo();
         Expression expr = parseConcatenateExpression(token);
 
@@ -1147,12 +1147,12 @@ public class Parser {
             // check for null-safe or spread operators
             Token prefix = null;
             if (token.getID() == Token.QUESTION) {
-                
+
                 prefix = read();
                 token = peek();
-                if (token.getID() == Token.DOT || 
+                if (token.getID() == Token.DOT ||
                     token.getID() == Token.LBRACK) {
-                    
+
                     nullsafe = true;
                 }
                 else {
@@ -1162,9 +1162,9 @@ public class Parser {
 
             if (!nullsafe && token.getID() == Token.SPREAD) {
                 // "spread" lookup i.e.: a*.b
-                
+
                 Token spread = read(); // read the spread operator
-                
+
                 token = read();
 
                 Name lookupName;
@@ -1196,7 +1196,7 @@ public class Parser {
                 else {
                     operation = new Lookup(info, noop, spread, lookupName);
                 }
-                
+
                 // create spread expression
                 expr = new SpreadExpression(info, expr, operation);
             }
@@ -1269,7 +1269,7 @@ public class Parser {
             else {
                 break;
             }
-            
+
             if (expr instanceof NullSafe) {
                 ((NullSafe) expr).setNullSafe(nullsafe);
             }
@@ -1325,7 +1325,7 @@ public class Parser {
 
         case Token.CALL:
             return parseTemplateCallExpression(token);
-            
+
 
 
 
@@ -1408,17 +1408,17 @@ public class Parser {
 
     private TemplateCallExpression parseTemplateCallExpression(Token token)
         throws IOException {
-        
+
         SourceInfo info = token.getSourceInfo();
-        
+
         Name target = parseName();
         info.setEndPosition(target.getSourceInfo());
 
         // parse remainder of call expression
-        return parseCallExpression(TemplateCallExpression.class, 
+        return parseCallExpression(TemplateCallExpression.class,
                                    null, target, info);
     }
-    
+
     // Special parse method in that it may return null if it couldn't parse
     // a FunctionCallExpression. Token passed in must be an identifier.
     private FunctionCallExpression parseFunctionCallExpression(Token token)
@@ -1428,20 +1428,20 @@ public class Parser {
     	if (next.getID() != Token.LPAREN) {
     		return null;
     	}
-    	
+
     	SourceInfo info = token.getSourceInfo();
         Name target = new Name(info, token.getStringValue());
 
         // parse remainder of call expression
-        return parseCallExpression(FunctionCallExpression.class, 
+        return parseCallExpression(FunctionCallExpression.class,
                                    null, target, info);
     }
 
-    private <T extends CallExpression> 
-    T parseCallExpression(Class<T> clazz, Expression expression, Node target, 
+    private <T extends CallExpression>
+    T parseCallExpression(Class<T> clazz, Expression expression, Node target,
                           SourceInfo info)
         throws IOException {
-        
+
         ExpressionList list =
             parseList(Token.LPAREN, Token.RPAREN, false);
         info = info.setEndPosition(list.getSourceInfo());
@@ -1455,7 +1455,7 @@ public class Parser {
 
         try {
             return clazz.getConstructor(SourceInfo.class, Expression.class,
-                                        Name.class, ExpressionList.class, 
+                                        Name.class, ExpressionList.class,
                                         Block.class)
                         .newInstance(info, expression, target, list, subParam);
         }
@@ -1495,7 +1495,7 @@ public class Parser {
         public void compileError(CompileEvent e) {
             System.err.println(e.getDetailedMessage());
         }
-        
+
         public void compileWarning(CompileEvent e) {
             System.out.println(e.getDetailedMessage());
         }

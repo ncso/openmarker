@@ -20,7 +20,7 @@ import org.teatrove.tea.compiler.SourceInfo;
 import org.teatrove.tea.compiler.Type;
 
 /**
- * BooleanLiterals can only have one of two values, true or false. 
+ * BooleanLiterals can only have one of two values, true or false.
  *
  * @author Brian S O'Neill
  */

@@ -32,9 +32,9 @@ import org.teatrove.trove.classfile.CodeDisassembler;
 import org.teatrove.trove.classfile.CodeAssemblerPrinter;
 
 /**
- * 
+ *
  * @author Guy A. Molinari
- * 
+ *
  * A utility class to facilitate generation of template metadata.
  */
 public class TemplateCallExtractor {

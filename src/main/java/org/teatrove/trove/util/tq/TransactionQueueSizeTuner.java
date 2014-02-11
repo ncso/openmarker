@@ -18,11 +18,11 @@ package org.teatrove.trove.util.tq;
 
 /**
  * Automatically tunes a TransactionQueue by dynamically adjusting the maximum
- * size of the queue. TransactionQueueSizeTuner only works for 
+ * size of the queue. TransactionQueueSizeTuner only works for
  * TransactionQueues that have a transaction timeout, and a
  * TransactionQueueSizeTuner instance should only be added to one
  * TransactionQueue.
- * 
+ *
  * @author Brian S O'Neill
  */
 public class TransactionQueueSizeTuner extends TransactionQueueAdapter {

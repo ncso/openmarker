@@ -38,18 +38,18 @@ public class SubstitutionPropertyMapFactory implements PropertyMapFactory {
 
     private URL m_url;
     private PropertyChangeListener m_listener;
-    
+
     public static final String DEFAULT_KEY_START = "$(";
     public static final String DEFAULT_KEY_END = ")";
-    
+
     public SubstitutionPropertyMapFactory(String sFile) throws MalformedURLException {
         m_url = makeURL(sFile);
     }
-    
+
     public SubstitutionPropertyMapFactory(URL u) {
         m_url = u;
     }
-    
+
     public PropertyMap createProperties() throws IOException {
         PropertyMap properties = new PropertyMap();
         Syslog.debug(getClass().getName() + " loading properties from " + m_url);
@@ -65,7 +65,7 @@ public class SubstitutionPropertyMapFactory implements PropertyMapFactory {
         m_listener = null;
         return map;
     }
-    
+
     private void load(PropertyMap properties, Reader reader) throws IOException
     {
         // first pass - load all properties from the file
@@ -82,48 +82,48 @@ public class SubstitutionPropertyMapFactory implements PropertyMapFactory {
         finally {
             reader.close();
         }
-        
+
         PropertyMap propsSub = properties.subMap("properties.substitution");
-        
+
         SubstitutionFactory subs = initSubstitutionFactory(propsSub);
-        
+
         String sSubStart = propsSub.getString("key.start", DEFAULT_KEY_START);
         String sSubEnd = propsSub.getString("key.end", DEFAULT_KEY_END);
-        
+
         // check for requested substitutions
-        
+
         // this is NOT recursive.  If your substitution is a substitution-formatted string
         // it will be inserted literally, not interpreted.
         for (Iterator i = properties.keySet().iterator(); i.hasNext(); ) {
-            
+
             String sKey = (String)i.next();
             String sValue = properties.getString(sKey);
-            
+
             if (sValue.startsWith(sSubStart) && sValue.endsWith(sSubEnd)) {
                 // we need a substitution!
                 String sName = sValue.substring(sSubStart.length(), sValue.length() - sSubEnd.length());
                 String sNew = subs.getSubstitution(sName);
-                
+
                 if (sNew == null) {
                     Syslog.error("No substitution found for value (" + sName + ") in key " + sKey);
                     continue;
                 }
-                
+
                 // TODO is there danger of ConcurrentModificationException here?
                 properties.put(sKey, sNew);
             }
         }
 
-        
+
     }
-    
+
     private SubstitutionFactory initSubstitutionFactory(PropertyMap props) {
-                
+
         if (props == null) return null;
-        
+
         String sClass = props.getString("factory.class");
         if (sClass == null) return null;
-        
+
         SubstitutionFactory factory;
         try {
             Class clazz = Class.forName(sClass);
@@ -133,7 +133,7 @@ public class SubstitutionPropertyMapFactory implements PropertyMapFactory {
             Syslog.error(e);
             return null;
         } catch (ClassCastException e) {
-            Syslog.error("Class " + sClass + " is not an instance of " + 
+            Syslog.error("Class " + sClass + " is not an instance of " +
                     SubstitutionFactory.class.getName());
             Syslog.error(e);
             return null;
@@ -147,7 +147,7 @@ public class SubstitutionPropertyMapFactory implements PropertyMapFactory {
         factory.init(props.subMap("factory.init"));
         return factory;
     }
-    
+
     private static URL makeURL(String path) throws MalformedURLException {
         path = path.replace(File.separatorChar, '/');
 

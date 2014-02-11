@@ -21,29 +21,29 @@ import java.io.*;
 /**
  * This class corresponds to the CONSTANT_NameAndType_info structure as defined
  * in section 4.4.6 of <i>The Java Virtual Machine Specification</i>.
- * 
+ *
  * @author Brian S O'Neill
  */
 public class ConstantNameAndTypeInfo extends ConstantInfo {
     private String mName;
     private Descriptor mType;
-    
+
     private ConstantUTFInfo mNameConstant;
     private ConstantUTFInfo mDescriptorConstant;
-    
-    /** 
-     * Will return either a new ConstantNameAndTypeInfo object or one 
-     * already in the constant pool. 
+
+    /**
+     * Will return either a new ConstantNameAndTypeInfo object or one
+     * already in the constant pool.
      * If it is a new ConstantNameAndTypeInfo, it will be inserted
      * into the pool.
      */
-    static ConstantNameAndTypeInfo make(ConstantPool cp, 
+    static ConstantNameAndTypeInfo make(ConstantPool cp,
                                         String name,
                                         Descriptor type) {
         ConstantInfo ci = new ConstantNameAndTypeInfo(cp, name, type);
         return (ConstantNameAndTypeInfo)cp.addConstant(ci);
     }
-    
+
     ConstantNameAndTypeInfo(ConstantUTFInfo nameConstant,
                             ConstantUTFInfo descConstant) {
         super(TAG_NAME_AND_TYPE);
@@ -54,17 +54,17 @@ public class ConstantNameAndTypeInfo extends ConstantInfo {
         mType = Descriptor.parse(descConstant.getValue());
     }
 
-    private ConstantNameAndTypeInfo(ConstantPool cp, 
-                                    String name, 
+    private ConstantNameAndTypeInfo(ConstantPool cp,
+                                    String name,
                                     Descriptor type) {
         super(TAG_NAME_AND_TYPE);
         mName = name;
         mType = type;
-        
+
         mNameConstant = ConstantUTFInfo.make(cp, name);
         mDescriptorConstant = ConstantUTFInfo.make(cp, mType.toString());
     }
-    
+
     public String getName() {
         return mName;
     }
@@ -76,17 +76,17 @@ public class ConstantNameAndTypeInfo extends ConstantInfo {
     public int hashCode() {
         return mName.hashCode();
     }
-    
+
     public boolean equals(Object obj) {
         if (obj instanceof ConstantNameAndTypeInfo) {
             ConstantNameAndTypeInfo other = (ConstantNameAndTypeInfo)obj;
-            return mName.equals(other.mName) && 
+            return mName.equals(other.mName) &&
                 mType.toString().equals(other.mType.toString());
         }
-        
+
         return false;
     }
-    
+
     public void writeTo(DataOutput dout) throws IOException {
         super.writeTo(dout);
         dout.writeShort(mNameConstant.getIndex());

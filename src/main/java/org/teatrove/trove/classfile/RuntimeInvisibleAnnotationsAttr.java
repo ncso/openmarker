@@ -34,7 +34,7 @@ public class RuntimeInvisibleAnnotationsAttr extends AnnotationsAttr {
     public RuntimeInvisibleAnnotationsAttr(ConstantPool cp, String name) {
         super(cp, name);
     }
-    
+
     public RuntimeInvisibleAnnotationsAttr(ConstantPool cp, String name, int length, DataInput din)
         throws IOException
     {

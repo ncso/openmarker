@@ -53,7 +53,7 @@ public class Syslog {
                     ps.println(message);
                 }
             }
-            
+
             public void logException(LogEvent e) {
                 Throwable t = e.getException();
                 if (t == null) {
@@ -63,7 +63,7 @@ public class Syslog {
                     t.printStackTrace(getPrintStream(e));
                 }
             }
-                
+
             private PrintStream getPrintStream(LogEvent e) {
                 synchronized (log()) {
                     switch (e.getType()) {
@@ -71,16 +71,16 @@ public class Syslog {
                         case LogEvent.INFO_TYPE:
                         return (cInstalled) ? cOriginalOut : System.out;
                     }
-                    
+
                     return (cInstalled) ? cOriginalErr : System.err;
                 }
             }
         };
-        
+
         log().addLogListener(cSystemLogEventPrinter);
     }
 
-    /** 
+    /**
      * Returns the system Log instance that, by default, only has one
      * LogListener. It prints debug and info LogEvent messages to System.out
      * and other LogEvent messages to System.err.
@@ -91,7 +91,7 @@ public class Syslog {
         return cLog;
     }
 
-    /** 
+    /**
      * Returns a simple LogListener that prints debug and info LogEvent
      * messages to System.out and other LogEvent messages to System.err.
      * Remove this listener to disable printing to System.out and System.err.
@@ -103,16 +103,16 @@ public class Syslog {
     /**
      * When installed, System.out and System.err are redirected to Syslog.log.
      * System.out produces info events, and System.err produces error events.
-     */ 
+     */
     public static void install() {
         synchronized (log()) {
             if (!cInstalled) {
                 cInstalled = true;
                 cOriginalOut = System.out;
                 cOriginalErr = System.err;
-                
+
                 cSystemOut = new LogEventParsingOutputStream
-                    (log(), LogEvent.INFO_TYPE) 
+                    (log(), LogEvent.INFO_TYPE)
                 {
                     public boolean isEnabled() {
                         return log().isInfoEnabled();
@@ -122,7 +122,7 @@ public class Syslog {
                 System.setOut(new PrintStream(cSystemOut, true));
 
                 cSystemErr = new LogEventParsingOutputStream
-                    (log(), LogEvent.ERROR_TYPE) 
+                    (log(), LogEvent.ERROR_TYPE)
                 {
                     public boolean isEnabled() {
                         return log().isErrorEnabled();

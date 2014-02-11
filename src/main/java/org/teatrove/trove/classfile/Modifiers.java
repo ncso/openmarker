@@ -23,7 +23,7 @@ import java.lang.reflect.Modifier;
  * methods provided to manipulate the Modifier ensure that it is always
  * legal. i.e. setting it public automatically clears it from being
  * private or protected.
- * 
+ *
  * @author Brian S O'Neill, Nick Hagan
  */
 public class Modifiers extends Modifier implements Cloneable {
@@ -39,7 +39,7 @@ public class Modifiers extends Modifier implements Cloneable {
             return modifier & ~PUBLIC;
         }
     }
-    
+
     /**
      * When set private, the modifier is cleared from being public or
      * protected.
@@ -65,7 +65,7 @@ public class Modifiers extends Modifier implements Cloneable {
             return modifier & ~PROTECTED;
         }
     }
-    
+
     public static int setStatic(int modifier, boolean b) {
         if (b) {
             return modifier | STATIC;
@@ -87,7 +87,7 @@ public class Modifiers extends Modifier implements Cloneable {
             return modifier & ~FINAL;
         }
     }
-    
+
     /**
      * When set synchronized, non-method settings are cleared.
      */
@@ -100,7 +100,7 @@ public class Modifiers extends Modifier implements Cloneable {
             return modifier & ~SYNCHRONIZED;
         }
     }
-    
+
     /**
      * When set volatile, non-field settings are cleared.
      */
@@ -113,7 +113,7 @@ public class Modifiers extends Modifier implements Cloneable {
             return modifier & ~VOLATILE;
         }
     }
-    
+
     /**
      * When set transient, non-field settings are cleared.
      */
@@ -126,27 +126,27 @@ public class Modifiers extends Modifier implements Cloneable {
             return modifier & ~TRANSIENT;
         }
     }
-    
+
     /**
      * When set native, non-native-method settings are cleared.
      */
     public static int setNative(int modifier, boolean b) {
         if (b) {
-            return (modifier | NATIVE) & 
+            return (modifier | NATIVE) &
                 (~VOLATILE & ~TRANSIENT & ~INTERFACE & ~ABSTRACT & ~STRICT);
         }
         else {
             return modifier & ~NATIVE;
         }
     }
-    
+
     /**
      * When set as an interface, non-interface settings are cleared and the
      * modifier is set abstract.
      */
     public static int setInterface(int modifier, boolean b) {
         if (b) {
-            return (modifier | (INTERFACE | ABSTRACT)) & 
+            return (modifier | (INTERFACE | ABSTRACT)) &
                 (~FINAL & ~SYNCHRONIZED & ~VOLATILE & ~TRANSIENT & ~NATIVE);
         }
         else {
@@ -161,7 +161,7 @@ public class Modifiers extends Modifier implements Cloneable {
      */
     public static int setAbstract(int modifier, boolean b) {
         if (b) {
-            return (modifier | ABSTRACT) & 
+            return (modifier | ABSTRACT) &
                 (~FINAL & ~VOLATILE & ~TRANSIENT & ~NATIVE &
                  ~SYNCHRONIZED & ~STRICT);
         }
@@ -178,11 +178,11 @@ public class Modifiers extends Modifier implements Cloneable {
             return modifier & ~STRICT;
         }
     }
-    
+
     public static int setBridge(int modifier, boolean b) {
         // NOTE: JDK 1.6 and less do not expose Modifier.BRIDGE as public
         // API...hower it shares its value with VOLATILE, so use that
-        
+
         if (b) {
             return modifier | VOLATILE;
         }
@@ -192,7 +192,7 @@ public class Modifiers extends Modifier implements Cloneable {
     }
 
     int mModifier;
-    
+
     /** Construct with a modifier of 0. */
     public Modifiers() {
         mModifier = 0;
@@ -201,11 +201,11 @@ public class Modifiers extends Modifier implements Cloneable {
     public Modifiers(int modifier) {
         mModifier = modifier;
     }
-    
+
     public final int getModifier() {
         return mModifier;
     }
-    
+
     public boolean isPublic() {
         return isPublic(mModifier);
     }
@@ -217,7 +217,7 @@ public class Modifiers extends Modifier implements Cloneable {
     public boolean isProtected() {
         return isProtected(mModifier);
     }
-    
+
     public boolean isStatic() {
         return isStatic(mModifier);
     }
@@ -237,15 +237,15 @@ public class Modifiers extends Modifier implements Cloneable {
     public boolean isTransient() {
         return isTransient(mModifier);
     }
-    
+
     public boolean isNative() {
         return isNative(mModifier);
     }
-    
+
     public boolean isInterface() {
         return isInterface(mModifier);
     }
-    
+
     public boolean isAbstract() {
         return isAbstract(mModifier);
     }
@@ -259,11 +259,11 @@ public class Modifiers extends Modifier implements Cloneable {
         // the same value as volatile so test for that
         return isVolatile(mModifier);
     }
-    
+
     public void setPublic(boolean b) {
         mModifier = setPublic(mModifier, b);
     }
-    
+
     public void setPrivate(boolean b) {
         mModifier = setPrivate(mModifier, b);
     }
@@ -307,7 +307,7 @@ public class Modifiers extends Modifier implements Cloneable {
     public void setStrict(boolean b) {
         mModifier = setStrict(mModifier, b);
     }
-    
+
     public void setBridge(boolean b) {
         mModifier = setBridge(mModifier, b);
     }

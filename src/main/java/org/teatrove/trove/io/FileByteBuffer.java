@@ -54,7 +54,7 @@ public class FileByteBuffer implements ByteBuffer {
         if (mSurrogates == null) {
             return count;
         }
-        
+
         int size = mSurrogates.size();
         for (int i=0; i<size; i++) {
             count += mSurrogates.get(i).mByteData.getByteCount();
@@ -72,14 +72,14 @@ public class FileByteBuffer implements ByteBuffer {
         else {
             bufSize = (int)length;
         }
-        
+
         byte[] inputBuffer = new byte[bufSize];
-        
+
         mFile.seek(0);
 
         if (mSurrogates != null) {
             long currentPos = 0;
-            
+
             int size = mSurrogates.size();
             for (int i=0; i<size; i++) {
                 Surrogate s = mSurrogates.get(i);
@@ -95,7 +95,7 @@ public class FileByteBuffer implements ByteBuffer {
         }
     }
 
-    private long writeTo(byte[] inputBuffer, OutputStream out, 
+    private long writeTo(byte[] inputBuffer, OutputStream out,
                          long fromPos, long toPos) throws IOException {
         if (toPos == fromPos) {
             return fromPos;
@@ -146,8 +146,8 @@ public class FileByteBuffer implements ByteBuffer {
         mFile.write(bytes);
     }
 
-    public void append(byte[] bytes, int offset, int length) 
-        throws IOException 
+    public void append(byte[] bytes, int offset, int length)
+        throws IOException
     {
         List<ByteBuffer> captureBuffers;
         if ((captureBuffers = mCaptureBuffers) != null) {
@@ -157,7 +157,7 @@ public class FileByteBuffer implements ByteBuffer {
             }
         }
 
-        mFile.write(bytes, offset, length); 
+        mFile.write(bytes, offset, length);
     }
 
     public void appendSurrogate(ByteData s) throws IOException {
@@ -219,7 +219,7 @@ public class FileByteBuffer implements ByteBuffer {
         // nothing to do as we do not want to clear the entire file as doing
         // so may be harmful as the file could have been opened for read and
         // write and the clear would overwrite the previously written data
-        
+
         int i, size;
         List<ByteBuffer> byteDatas;
         if ((byteDatas = mCaptureBuffers) != null) {
@@ -229,7 +229,7 @@ public class FileByteBuffer implements ByteBuffer {
             }
         }
     }
-    
+
     private class Surrogate {
         public final ByteData mByteData;
         public final long mPos;

@@ -17,7 +17,7 @@
 package org.teatrove.trove.classfile;
 
 /**
- * 
+ *
  *
  * @author Nick Hagan
  */

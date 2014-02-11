@@ -82,9 +82,9 @@ public class MergedClass {
     public static final int OBSERVER_ACTIVE = 2;    // Invocation events enabled and active.
     public static final int OBSERVER_EXTERNAL = 4;    // Invocation events enabled but triggered externally.
 
-    private static final boolean DEBUG = 
+    private static final boolean DEBUG =
         Boolean.getBoolean(MergedClass.class.getName().concat(".DEBUG"));
-    
+
     static {
         try {
             cMergedMap = new IdentityMap(7);
@@ -128,7 +128,7 @@ public class MergedClass {
     {
         return getConstructor(injector, classes, null, null, OBSERVER_DISABLED);
     }
-    
+
     public static Constructor<?> getConstructor(ClassInjector injector,
                                                 Class<?>[] classes,
                                                 Class<?>[] interfaces)
@@ -136,7 +136,7 @@ public class MergedClass {
     {
         return getConstructor(injector, classes, null, interfaces, OBSERVER_DISABLED);
     }
-    
+
     /**
      * Returns the constructor for a class that merges all of the given source
      * classes. The constructor's parameter types match the source classes.
@@ -187,7 +187,7 @@ public class MergedClass {
 
         return getConstructor(injector, classes, prefixes, interfaces, OBSERVER_DISABLED);
     }
-    
+
     /**
      * Returns the constructor for a class that merges all of the given source
      * classes. The constructor's parameter types match the source classes.
@@ -246,14 +246,14 @@ public class MergedClass {
                 ("More than 254 merged classes: " + classes.length);
         }
 
-        Class<?> clazz = 
+        Class<?> clazz =
             getMergedClass(injector, classes, prefixes, interfaces, observerMode);
 
         try {
             if ((observerMode & OBSERVER_ENABLED) == 0)
                 return clazz.getConstructor(classes);
             else {
-                ArrayList<Class<?>> classList = 
+                ArrayList<Class<?>> classList =
                     new ArrayList<Class<?>>(classes.length + 1);
                 classList.add(InvocationEventObserver.class);
                 for (int i = 0; i < classes.length; i++)
@@ -265,7 +265,7 @@ public class MergedClass {
             throw new InternalError(e.toString());
         }
     }
-    
+
     /**
      * Returns the constructor for a class that merges all of the given source
      * classes. The constructor accepts one parameter type: an
@@ -290,7 +290,7 @@ public class MergedClass {
     {
         return getConstructor2(injector, classes, null, null, OBSERVER_DISABLED);
     }
-    
+
     public static Constructor<?> getConstructor2(ClassInjector injector,
                                                  Class<?>[] classes,
                                                  Class<?>[] interfaces)
@@ -336,7 +336,7 @@ public class MergedClass {
             throws IllegalArgumentException {
         return getConstructor2(injector, classes, prefixes, null, OBSERVER_DISABLED);
     }
-    
+
     public static Constructor<?> getConstructor2(ClassInjector injector,
                                                  Class<?>[] classes,
                                                  String[] prefixes,
@@ -395,7 +395,7 @@ public class MergedClass {
                                                  int observerMode)
         throws IllegalArgumentException
     {
-        Class<?> clazz = getMergedClass(injector, classes, prefixes, interfaces, 
+        Class<?> clazz = getMergedClass(injector, classes, prefixes, interfaces,
                                         observerMode);
 
         try {
@@ -408,7 +408,7 @@ public class MergedClass {
             throw new InternalError(e.toString());
         }
     }
-    
+
     /**
      * Just create the bytecode for the merged class, but don't load it. Since
      * no ClassInjector is provided to resolve name conflicts, the class name
@@ -422,7 +422,7 @@ public class MergedClass {
     {
         return buildClassFile(className, classes, null, null, OBSERVER_DISABLED);
     }
-    
+
     public static ClassFile buildClassFile(String className, Class<?>[] classes,
                                            Class<?>[] interfaces)
         throws IllegalArgumentException
@@ -441,13 +441,13 @@ public class MergedClass {
      * class to eliminate duplicate method names
      */
     public static ClassFile buildClassFile(String className,
-                                           Class<?>[] classes, 
+                                           Class<?>[] classes,
                                            String[] prefixes) {
         return buildClassFile(className, classes, prefixes, null, OBSERVER_DISABLED);
     }
 
     public static ClassFile buildClassFile(String className,
-                                           Class<?>[] classes, 
+                                           Class<?>[] classes,
                                            String[] prefixes,
                                            Class<?>[] interfaces) {
         return buildClassFile(className, classes, prefixes, interfaces, OBSERVER_DISABLED);
@@ -466,7 +466,7 @@ public class MergedClass {
      * @param observeMethods boolean Enable function call profiling.
      */
     public static ClassFile buildClassFile(String className,
-                                           Class<?>[] classes, 
+                                           Class<?>[] classes,
                                            String[] prefixes,
                                            int observerMode)
         throws IllegalArgumentException
@@ -475,7 +475,7 @@ public class MergedClass {
     }
 
     public static ClassFile buildClassFile(String className,
-                                           Class<?>[] classes, 
+                                           Class<?>[] classes,
                                            String[] prefixes,
                                            Class<?>[] interfaces,
                                            int observerMode)
@@ -496,7 +496,7 @@ public class MergedClass {
         }
         return buildClassFile(null, className, classEntries, interfaces, observerMode);
     }
-    
+
     private static Class<?> getMergedClass(ClassInjector injector,
                                            Class<?>[] classes,
                                            String[] prefixes,
@@ -509,7 +509,7 @@ public class MergedClass {
     private static Class<?> getMergedClass(ClassInjector injector,
                                            Class<?>[] classes,
                                            String[] prefixes,
-                                           Class<?>[] interfaces, 
+                                           Class<?>[] interfaces,
                                            int observerMode)
         throws IllegalArgumentException
     {
@@ -539,7 +539,7 @@ public class MergedClass {
 
         return getMergedClass(injector, classEntries, interfaces, observerMode);
     }
-    
+
     /**
      * Creates a class with a public constructor whose parameter types match
      * the given source classes. Another constructor is also created that
@@ -569,7 +569,7 @@ public class MergedClass {
 
         ClassFile cf;
         try {
-            cf = buildClassFile(injector, null, classEntries, interfaces, 
+            cf = buildClassFile(injector, null, classEntries, interfaces,
                                 observerMode);
         }
         catch (IllegalArgumentException e) {
@@ -585,7 +585,7 @@ public class MergedClass {
         catch (Throwable e) {
             String output = outputClassToFile(cf);
             throw new RuntimeException(
-                "Error generating merged class, contents saved to: " + output, 
+                "Error generating merged class, contents saved to: " + output,
                 e
             );
         }
@@ -594,7 +594,7 @@ public class MergedClass {
             String output = outputClassToFile(cf);
             System.out.println("Saved merged class to: " + output);
         }
-        
+
         Class<?> merged;
         try {
             merged = injector.loadClass(cf.getClassName());
@@ -609,7 +609,7 @@ public class MergedClass {
 
     private static String outputClassToFile(ClassFile cf) {
         try {
-            File file = 
+            File file =
                 File.createTempFile(cf.getClassName(), ".class");
             FileOutputStream out = new FileOutputStream(file);
             cf.writeTo(out);
@@ -621,7 +621,7 @@ public class MergedClass {
             return "Error: ".concat(e.getMessage());
         }
     }
-    
+
     private static MultiKey generateKey(ClassEntry[] classEntries) {
         int length = classEntries.length;
         Object[] mainElements = new Object[length];
@@ -645,13 +645,13 @@ public class MergedClass {
                                             int observerMode)
         throws IllegalArgumentException
     {
-        Set<ClassEntry> classSet = 
+        Set<ClassEntry> classSet =
             new UsageSet<ClassEntry>(classEntries.length * 2 + 1);
         Set<ClassEntry> nonConflictingClasses =
             new HashSet<ClassEntry>(classEntries.length * 2 + 1);
         String commonPackage = null;
         Set<MethodEntry> conflictingMethods = new HashSet<MethodEntry>();
-        Map<MethodEntry, SortedSet<MethodEntry>> methodMap = 
+        Map<MethodEntry, SortedSet<MethodEntry>> methodMap =
             new HashMap<MethodEntry, SortedSet<MethodEntry>>();
 
         for (int i=0; i<classEntries.length; i++) {
@@ -698,9 +698,9 @@ public class MergedClass {
                 Method method = methods[j];
 
                 String name = method.getName();
-                if ("getObserverMode".equals(name) || 
+                if ("getObserverMode".equals(name) ||
                     "getInvocationObserver".equals(name)) {
-                    
+
                     continue; // don't wrap this.
                 }
 
@@ -709,30 +709,30 @@ public class MergedClass {
                     continue;
                 }
 
-                MethodEntry methodEntry = 
+                MethodEntry methodEntry =
                     new MethodEntry(clazz, i, method, name);
-                
+
                 boolean valid = addMethods
                 (
-                    classEntry, methodEntry, methodMap, 
+                    classEntry, methodEntry, methodMap,
                     conflictingMethods, nonConflictingClasses
                 );
-                
+
                 if (!valid && prefix == null) {
                     throw new IllegalArgumentException(
                         "Conflicting return types: " + methodEntry);
                 }
 
                 if (prefix != null) {
-                    methodEntry = 
+                    methodEntry =
                         new MethodEntry(clazz, i, method, prefix + name);
-                    
+
                     valid = addMethods
                     (
-                        classEntry, methodEntry, methodMap, 
+                        classEntry, methodEntry, methodMap,
                         conflictingMethods, nonConflictingClasses
                     );
-                    
+
                     if (!valid) {
                         throw new IllegalArgumentException(
                             "Conflicting return types: " + methodEntry);
@@ -772,14 +772,14 @@ public class MergedClass {
         cf.markSynthetic();
 
         List<GenericTypeDesc> generics = new ArrayList<GenericTypeDesc>();
-        
+
         if (interfaces != null) {
             for (int i = 0; i < interfaces.length; i++) {
                 GenericType classType = new GenericType(interfaces[i]);
                 addAllInterfaces(cf, generics, classType);
             }
         }
-        
+
         for (int i = 0; i < classEntries.length; i++) {
             ClassEntry classEntry = classEntries[i];
             if (nonConflictingClasses.contains(classEntry)) {
@@ -790,11 +790,11 @@ public class MergedClass {
                 addAllInterfaces(cf, generics, classType);
             }
         }
-        
+
         cf.setSignature(SignatureDesc.forClass(
             null, null, generics.toArray(new GenericTypeDesc[generics.size()])
         ).toString());
-        
+
         Modifiers privateAccess = new Modifiers();
         privateAccess.setPrivate(true);
         Modifiers privateFinalAccess = new Modifiers();
@@ -902,7 +902,7 @@ public class MergedClass {
             if ((observerMode & OBSERVER_ENABLED) == 0)
                 mi = cf.addConstructor(publicAccess, types);
             else {
-                ArrayList<TypeDesc> typesList = 
+                ArrayList<TypeDesc> typesList =
                     new ArrayList<TypeDesc>(types.length + 1);
                 typesList.add(methodObserverType);
                 for (int i = 0; i < types.length; i++)
@@ -968,20 +968,20 @@ public class MergedClass {
             Method[] methods = clazz.getMethods();
             for (int j = 0; j < methods.length; j++) {
                 Method method = methods[j];
-                
+
                 // Workaround for JDK1.2 bug #4187388.
                 if ("<clinit>".equals(method.getName())) {
                     continue;
                 }
-                
-                if ("getObserverMode".equals(method.getName()) || 
+
+                if ("getObserverMode".equals(method.getName()) ||
                     "getInvocationObserver".equals(method.getName())) {
                     continue;
                 }
 
                 // add general method
                 MethodEntry methodEntry = new MethodEntry(clazz, method);
-                generateMethods(cf, fieldNames, types, methodEntry, 
+                generateMethods(cf, fieldNames, types, methodEntry,
                                 observerMode, methodMap, conflictingMethods);
 
                 // add method with prefix if available
@@ -990,28 +990,28 @@ public class MergedClass {
                     (
                         clazz, method, prefix + method.getName()
                     );
-                    
-                    generateMethods(cf, fieldNames, types, methodEntry, 
-                                    observerMode, 
+
+                    generateMethods(cf, fieldNames, types, methodEntry,
+                                    observerMode,
                                     methodMap, conflictingMethods);
                 }
             }
         }
-        
+
         return cf;
     }
-    
-    private static boolean addMethods(ClassEntry classEntry, 
-        MethodEntry methodEntry, 
-        Map<MethodEntry, SortedSet<MethodEntry>> methodMap, 
+
+    private static boolean addMethods(ClassEntry classEntry,
+        MethodEntry methodEntry,
+        Map<MethodEntry, SortedSet<MethodEntry>> methodMap,
         Set<MethodEntry> conflictingMethods,
         Set<ClassEntry> nonConflictingClasses) {
-        
+
         // ignore if method is conflicting with other similar methods
         // conflicting methods are ones that have different return types
         // with the same method name and parameter types
         if (conflictingMethods.contains(methodEntry)) { return true; }
-        
+
         // check if method was previously discovered with similar signature
         SortedSet<MethodEntry> existing = methodMap.get(methodEntry);
 
@@ -1024,7 +1024,7 @@ public class MergedClass {
             methodMap.put(methodEntry, existing);
             return true;
         }
-        
+
         // otherwise, check for compatibility
         // if valid, add to the list
         // if not, mark as conflict and update conflicts
@@ -1036,7 +1036,7 @@ public class MergedClass {
                 nonConflictingClasses.remove(classEntry);
             }
         }
-        
+
         // add to set
         if (!conflict) {
             existing.add(methodEntry);
@@ -1045,50 +1045,50 @@ public class MergedClass {
         // return whether type caused conflict or not
         return !conflict;
     }
-    
-    private static void generateMethods(ClassFile cf, String[] fieldNames, 
+
+    private static void generateMethods(ClassFile cf, String[] fieldNames,
         TypeDesc[] types, MethodEntry methodEntry, int observerMode,
-        Map<MethodEntry, SortedSet<MethodEntry>> methodMap, 
+        Map<MethodEntry, SortedSet<MethodEntry>> methodMap,
         Set<MethodEntry> conflictingMethods) {
-        
+
         // ignore if method is conflicting with other similar methods
         // conflicting methods are ones that have different return types
         // with the same method name and parameter types
         if (conflictingMethods.contains(methodEntry)) { return; }
-        
+
         // check if the method and its bridges were properly discovered
         SortedSet<MethodEntry> methodEntries = methodMap.get(methodEntry);
         if (methodEntries != null) {
-            boolean observeMethods = 
-                (observerMode & OBSERVER_ENABLED) != 0 && 
+            boolean observeMethods =
+                (observerMode & OBSERVER_ENABLED) != 0 &&
                 (observerMode & OBSERVER_ACTIVE) != 0;
-            
+
             // mark processed by removing from list
             methodMap.remove(methodEntry);
-            
+
             // add top level method as most specific type (lowest bounds)
             Iterator<MethodEntry> it = methodEntries.iterator();
             MethodEntry firstEntry = it.next();
-            
+
             String fieldName = fieldNames[firstEntry.getIndex()];
             TypeDesc type = types[firstEntry.getIndex()];
             addWrapperMethod(cf, firstEntry, fieldName, type, observeMethods);
-            
+
             // add any remaining methods (superclasses) as bridged methods
             while (it.hasNext()) {
                 addBridgeMethod(cf, firstEntry, it.next());
             }
         }
     }
-    
-    private static void addAllInterfaces(ClassFile cf, 
+
+    private static void addAllInterfaces(ClassFile cf,
                                          List<GenericTypeDesc> generics,
                                          GenericType type) {
 
         if (type == null) {
             return;
         }
-        
+
         if (type.isInterface()) {
             Class<?> clazz = type.getRawType().getType();
             cf.addInterface(clazz);
@@ -1096,10 +1096,10 @@ public class MergedClass {
             if (args != null && args.length > 0) {
                 GenericTypeDesc[] typeArgs = new GenericTypeDesc[args.length];
                 for (int i = 0; i < args.length; i++) {
-                    typeArgs[i] = 
+                    typeArgs[i] =
                         ClassTypeDesc.forType(args[i].getRawType().getType());
                 }
-                
+
                 generics.add(ParameterizedTypeDesc.forType(
                     ClassTypeDesc.forType(clazz), typeArgs));
             }
@@ -1107,7 +1107,7 @@ public class MergedClass {
                 generics.add(ClassTypeDesc.forType(clazz));
             }
         }
-        
+
         addAllInterfaces(cf, generics, type.getSupertype());
 
         GenericType[] interfaces = type.getInterfaces();
@@ -1168,7 +1168,7 @@ public class MergedClass {
         if (isDefinedInObject(method)) {
             return;
         }
-        
+
         Modifiers modifiers = new Modifiers(method.getModifiers());
         modifiers.setAbstract(false);
         modifiers.setFinal(true);
@@ -1183,7 +1183,7 @@ public class MergedClass {
         GenericType mainType = new GenericType(mainMethod.getReturnType());
         TypeDesc mainReturn = TypeDesc.forClass(mainType.getRawType().getType(),
                                          resolve(mainType));
-        
+
         GenericType returnType = new GenericType(bridgeMethod.getReturnType());
         TypeDesc ret = TypeDesc.forClass(returnType.getRawType().getType(),
                                          resolve(returnType));
@@ -1195,7 +1195,7 @@ public class MergedClass {
             params[i] = TypeDesc.forClass(paramType.getRawType().getType(),
                                           resolve(paramType));
         }
-        
+
         MethodInfo mi;
         if (Modifier.isStatic(method.getModifiers())) {
             mi = cf.addMethod
@@ -1215,22 +1215,22 @@ public class MergedClass {
         if (ClassUtils.isDeprecated(method)) {
             mi.addRuntimeVisibleAnnotation(TypeDesc.forClass(Deprecated.class));
         }
-        
+
         // Delegate to wrapped object.
         CodeBuilder builder = new CodeBuilder(mi);
         if (!Modifier.isStatic(method.getModifiers())) {
             builder.loadThis();
         }
-        
+
         LocalVariable[] locals = builder.getParameters();
         for (int i=0; i<locals.length; i++) {
             builder.loadLocal(locals[i]);
         }
-        
+
         builder.invokeVirtual(bridgeMethod.getName(), mainReturn, params);
         builder.returnValue(TypeDesc.OBJECT);
     }
-    
+
     private static void addWrapperMethod(ClassFile cf,
                                          MethodEntry methodEntry,
                                          String fieldName,
@@ -1244,7 +1244,7 @@ public class MergedClass {
         if (isDefinedInObject(method)) {
             return;
         }
-        
+
         Modifiers modifiers = new Modifiers(method.getModifiers());
         modifiers.setAbstract(false);
         modifiers.setFinal(true);
@@ -1266,10 +1266,10 @@ public class MergedClass {
         Class<?>[] paramTypes = methodEntry.getParameterTypes();
         TypeDesc[] params = new TypeDesc[paramTypes.length];
         for (int i=0; i<params.length; i++) {
-            params[i] = 
+            params[i] =
                 TypeDesc.forClass(paramTypes[i], resolve(genericParams[i]));
         }
-        
+
         MethodInfo mi;
         if (Modifier.isStatic(method.getModifiers())) {
             mi = cf.addMethod
@@ -1289,7 +1289,7 @@ public class MergedClass {
         if (ClassUtils.isDeprecated(method)) {
             mi.addRuntimeVisibleAnnotation(TypeDesc.forClass(Deprecated.class));
         }
-        
+
         // Delegate to wrapped object.
         CodeBuilder builder = new CodeBuilder(mi);
 
@@ -1363,7 +1363,7 @@ public class MergedClass {
             builder.returnValue(ret);
         }
     }
-    
+
     private static boolean isDefinedInObject(Method method) {
         if (method.getDeclaringClass() == Object.class) {
             return true;
@@ -1479,19 +1479,19 @@ public class MergedClass {
         public MethodEntry(Class<?> type, Method method) {
             this(type, -1, method, method.getName());
         }
-        
+
         public MethodEntry(Class<?> type, Method method, String name) {
             this(type, -1, method, name);
         }
-        
-        public MethodEntry(Class<?> type, int index, Method method, 
+
+        public MethodEntry(Class<?> type, int index, Method method,
                            String name) {
             mMethod = method;
             mName = name;
             mIndex = index;
             mGenericReturn = new GenericType
             (
-                new GenericType(type), 
+                new GenericType(type),
                 method.getReturnType(), method.getGenericReturnType()
             );
             mReturn = mGenericReturn.getRawType().getType();
@@ -1505,7 +1505,7 @@ public class MergedClass {
                 (
                     new GenericType(type), paramClasses[i], paramTypes[i]
                 );
-                
+
                 mGenericParams.add(param);
                 mParams.add(param.getRawType().getType());
             }
@@ -1514,22 +1514,22 @@ public class MergedClass {
             for (Class<?> param : mParams) {
                 paramHash = 31 * paramHash + param.getName().hashCode();
             }
-            
+
             mHashCode = mName.hashCode() ^ paramHash;
         }
-        
+
         public Class<?> getReturnType() {
             return mReturn;
         }
-        
+
         public GenericType getGenericReturnType() {
             return mGenericReturn;
         }
-        
+
         public Class<?>[] getParameterTypes() {
             return mParams.toArray(new Class<?>[mParams.size()]);
         }
-        
+
         public GenericType[] getGenericParameterTypes() {
             return mGenericParams.toArray(
                new GenericType[mGenericParams.size()]);
@@ -1546,7 +1546,7 @@ public class MergedClass {
         public int getIndex() {
             return mIndex;
         }
-        
+
         public boolean returnTypeDiffers(MethodEntry methodEntry) {
             return !(mReturn.isAssignableFrom(methodEntry.mReturn) ||
                      methodEntry.mReturn.isAssignableFrom(mReturn));
@@ -1562,9 +1562,9 @@ public class MergedClass {
             if (!(other instanceof MethodEntry)) {
                 return false;
             }
-            
+
             MethodEntry methodEntry = (MethodEntry) other;
-            
+
             // check if name and return type equal
             // NOTE: check fully-qualified name to avoid class loader issues
             //       we accept different class loaders as the types should
@@ -1572,12 +1572,12 @@ public class MergedClass {
             if (!mName.equals(methodEntry.mName)) {
                 return false;
             }
-            
+
             // check compatible parameter lists
             if (mParams.size() != methodEntry.mParams.size()) {
                 return false;
             }
-            
+
             // check each paramater type name (see note above on return type)
             int size = mParams.size();
             for (int i = 0; i < size; i++) {
@@ -1586,7 +1586,7 @@ public class MergedClass {
                     return false;
                 }
             }
-            
+
             // all valid
             return true;
         }
@@ -1602,20 +1602,20 @@ public class MergedClass {
             if (mReturn.equals(entry.mReturn)) {
                 return 0;
             }
-            
+
             // check if super class
             if (mReturn.isAssignableFrom(entry.mReturn)) {
                 return 1;
             }
-            
+
             // check if subclass
             if (entry.mReturn.isAssignableFrom(mReturn)) {
                 return -1;
             }
-            
+
             // invalid case
             throw new IllegalArgumentException(
-                "return types are not compatible: " + 
+                "return types are not compatible: " +
                 mReturn + ", " + entry.mReturn
             );
         }

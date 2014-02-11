@@ -26,38 +26,38 @@ public class XMLPropertyMapFactory implements PropertyMapFactory {
 
     private Reader reader;
     private boolean stripRoot;
-    
+
     public XMLPropertyMapFactory(Reader reader) {
         this(reader, false);
     }
-    
+
     public XMLPropertyMapFactory(Reader reader, boolean stripRoot) {
         this.reader = reader;
         this.stripRoot = stripRoot;
     }
-    
+
     @Override
-    public PropertyMap createProperties() 
+    public PropertyMap createProperties()
         throws IOException {
-        
+
         return createProperties(null);
     }
 
     @Override
     public PropertyMap createProperties(PropertyChangeListener listener)
         throws IOException {
-        
+
         try {
             Document document = XMLMapFactory.createDocument(reader);
-            
+
             Element element = document.getRootElement();
             PropertyMap properties =
                 XMLMapFactory.getPropertyMapFromElement(element);
-            
+
             if (this.stripRoot && properties.size() > 0) {
                 properties = properties.subMap(element.getName());
             }
-            
+
             return properties;
         }
         catch (Exception e) {

@@ -38,11 +38,11 @@ public class FieldInfo {
 
     private ConstantUTFInfo mNameConstant;
     private ConstantUTFInfo mDescriptorConstant;
-    
+
     private List<Attribute> mAttributes = new ArrayList<Attribute>(2);
 
     private ConstantValueAttr mConstant;
-    
+
     FieldInfo(ClassFile parent,
               Modifiers modifiers,
               String name,
@@ -57,7 +57,7 @@ public class FieldInfo {
         mNameConstant = ConstantUTFInfo.make(mCp, name);
         mDescriptorConstant = ConstantUTFInfo.make(mCp, type.toString());
     }
-    
+
     private FieldInfo(ClassFile parent,
                       int modifier,
                       ConstantUTFInfo nameConstant,
@@ -93,7 +93,7 @@ public class FieldInfo {
     public TypeDesc getType() {
         return mType;
     }
-    
+
     /**
      * Returns a copy of this field's modifiers.
      */
@@ -107,9 +107,9 @@ public class FieldInfo {
     public ConstantUTFInfo getNameConstant() {
         return mNameConstant;
     }
-    
+
     /**
-     * Returns a constant from the constant pool with this field's type 
+     * Returns a constant from the constant pool with this field's type
      * descriptor string.
      * @see TypeDesc
      */
@@ -188,7 +188,7 @@ public class FieldInfo {
         addAttribute(new ConstantValueAttr
                      (mCp, ConstantStringInfo.make(mCp, value)));
     }
-    
+
     /**
      * Mark this field as being synthetic by adding a special attribute.
      */
@@ -218,21 +218,21 @@ public class FieldInfo {
         Attribute[] attrs = new Attribute[mAttributes.size()];
         return mAttributes.toArray(attrs);
     }
-    
+
     /**
      * Returns the length (in bytes) of this object in the class file.
      */
     public int getLength() {
         int length = 8;
-        
+
         int size = mAttributes.size();
         for (int i=0; i<size; i++) {
             length += mAttributes.get(i).getLength();
         }
-        
+
         return length;
     }
-    
+
 
     /**
      * Returns all the runtime invisible annotations defined for this class
@@ -308,7 +308,7 @@ public class FieldInfo {
         dout.writeShort(mModifier);
         dout.writeShort(mNameConstant.getIndex());
         dout.writeShort(mDescriptorConstant.getIndex());
-        
+
         int size = mAttributes.size();
         dout.writeShort(size);
         for (int i=0; i<size; i++) {
@@ -327,7 +327,7 @@ public class FieldInfo {
         }
     }
 
-    static FieldInfo readFrom(ClassFile parent, 
+    static FieldInfo readFrom(ClassFile parent,
                               DataInput din,
                               AttributeFactory attrFactory)
         throws IOException

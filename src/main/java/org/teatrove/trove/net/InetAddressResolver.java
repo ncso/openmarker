@@ -26,7 +26,7 @@ import org.teatrove.trove.util.SoftHashMap;
  * notification.
  * <p>
  * Note: This class makes use of the java.util.Timer class, available only in
- * Java 2, version 1.3. 
+ * Java 2, version 1.3.
  *
  * @author Brian S O'Neill
  */
@@ -58,11 +58,11 @@ public class InetAddressResolver {
      *
      * @param host host to resolve into InetAddresses
      * @param listener listens for InetAddresses
-     */    
+     */
     public static InetAddressResolver listenFor(String host,
                                                 InetAddressListener listener) {
         synchronized (cResolvers) {
-            InetAddressResolver resolver = 
+            InetAddressResolver resolver =
                 (InetAddressResolver)cResolvers.get(host);
             if (resolver == null) {
                 resolver = new InetAddressResolver(host);
@@ -76,7 +76,7 @@ public class InetAddressResolver {
     private final String mHost;
 
     private List mListeners = new ArrayList();
-    
+
     // Is either an instance of UnknownHostException or InetAddress[].
     private Object mResolutionResults;
 

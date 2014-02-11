@@ -17,7 +17,7 @@
 package org.teatrove.trove.classfile;
 
 /**
- * 
+ *
  * @author Brian S O'Neill
  */
 public class FilteredCodeAssembler implements CodeAssembler {
@@ -45,7 +45,7 @@ public class FilteredCodeAssembler implements CodeAssembler {
         mAssembler.exceptionHandler
             (startLocation, endLocation, catchClassName);
     }
-    
+
     public void mapLineNumber(int lineNumber) {
         mAssembler.mapLineNumber(lineNumber);
     }
@@ -268,7 +268,7 @@ public class FilteredCodeAssembler implements CodeAssembler {
         mAssembler.ifEqualBranch(location, choice);
     }
 
-    public void ifZeroComparisonBranch(Location location, String choice) 
+    public void ifZeroComparisonBranch(Location location, String choice)
         throws IllegalArgumentException {
         mAssembler.ifZeroComparisonBranch(location, choice);
     }
@@ -278,7 +278,7 @@ public class FilteredCodeAssembler implements CodeAssembler {
         mAssembler.ifComparisonBranch(location, choice);
     }
 
-    public void switchBranch(int[] cases, 
+    public void switchBranch(int[] cases,
                              Location[] locations, Location defaultLocation) {
         mAssembler.switchBranch(cases, locations, defaultLocation);
     }

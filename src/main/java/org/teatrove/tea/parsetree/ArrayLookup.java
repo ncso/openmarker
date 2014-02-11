@@ -21,16 +21,16 @@ import org.teatrove.tea.compiler.Token;
 import java.lang.reflect.Method;
 
 /**
- * An ArrayLookup can access indexed properties on objects. A Bean 
+ * An ArrayLookup can access indexed properties on objects. A Bean
  * Introspector can be used to get the available indexed properties from
  * an object, however, the only ones supported by Tea are unnamed.
  * For this reason, the Introspector is not used. Any class with methods named
- * "get" that return something and have a single parameter (the type of which 
+ * "get" that return something and have a single parameter (the type of which
  * is not limited to ints) will support an array lookup.
  *
- * <p>Arrays, Collections and Strings are treated specially, and they all 
+ * <p>Arrays, Collections and Strings are treated specially, and they all
  * support array lookup on an int typed index.
- * 
+ *
  * @author Brian S O'Neill
  * @see org.teatrove.tea.util.BeanAnalyzer
  */
@@ -42,7 +42,7 @@ public class ArrayLookup extends Expression implements NullSafe {
     private Expression mLookupIndex;
     private Method mMethod;
     private boolean mNullSafe;
-    
+
     public ArrayLookup(SourceInfo info, Expression expr, Token lookupToken,
                        Expression lookupIndex) {
         super(info);
@@ -101,11 +101,11 @@ public class ArrayLookup extends Expression implements NullSafe {
     public void setReadMethod(Method m) {
         mMethod = m;
     }
-    
+
     public boolean isNullSafe() {
         return mNullSafe;
     }
-    
+
     public void setNullSafe(boolean nullSafe) {
         mNullSafe = nullSafe;
     }

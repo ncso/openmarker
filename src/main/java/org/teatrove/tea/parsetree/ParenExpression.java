@@ -93,11 +93,11 @@ public class ParenExpression extends Expression implements NullSafe {
     public void setExpression(Expression expr) {
         mExpr = expr;
     }
-    
+
     public boolean isNullSafe() {
         return mNullSafe;
     }
-    
+
     public void setNullSafe(boolean nullSafe) {
         mNullSafe = nullSafe;
     }

@@ -27,7 +27,7 @@ import java.util.*;
  * <p>
  * Consider wrapping with a {@link LazySocketFactory} for automatic checking
  * against socket factories that may be dead.
- * 
+ *
  * @author Brian S O'Neill
  */
 public class MultiPooledSocketFactory extends DistributedSocketFactory {
@@ -154,7 +154,7 @@ public class MultiPooledSocketFactory extends DistributedSocketFactory {
 
         // Maps InetAddress objects to SocketFactories.
         private Map mAddressedFactories;
-    
+
         public Listener(int port, long timeout) {
             mPort = port;
             mTimeout = timeout;
@@ -168,12 +168,12 @@ public class MultiPooledSocketFactory extends DistributedSocketFactory {
             // Remove all the addressed factories.
             Iterator it = mAddressedFactories.keySet().iterator();
             while (it.hasNext()) {
-                SocketFactory factory = 
+                SocketFactory factory =
                     (SocketFactory)mAddressedFactories.get(it.next());
                 removeSocketFactory(factory);
             }
         }
-        
+
         public void resolved(InetAddress[] addresses) {
             // Add newly discovered addresses.
             for (int i=0; i<addresses.length; i++) {
@@ -185,7 +185,7 @@ public class MultiPooledSocketFactory extends DistributedSocketFactory {
                     addSocketFactory(factory);
                 }
             }
-            
+
             // Remove addresses no longer being routed to.
             Iterator it = mAddressedFactories.keySet().iterator();
             mainLoop:

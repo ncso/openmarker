@@ -27,34 +27,34 @@ public class EnumsTest extends AbstractTemplateTest {
 
     protected static final String TEST_ENUM_SOURCE_1 =
         "org.teatrove.tea.templates.EnumsTest$TestEnum.VALID.ordinal()";
-    
+
     protected static final String TEST_ENUM_SOURCE_2 =
         "org.teatrove.tea.templates.EnumsTest$TestEnum.INVALID.name()";
-    
+
     protected static final String TEST_ENUM_SOURCE_3 =
         "org.teatrove.tea.templates.EnumsTest$TestEnum.values()[0].name()";
-    
+
     protected static final String TEST_ENUM_SOURCE_4 =
         "org.teatrove.tea.templates.EnumsTest$TestEnum.valueOf('VALID').name()";
-    
+
     protected static final String TEST_ENUM_SOURCE_5 =
         "a = getTestEnum(0); if (a == org.teatrove.tea.templates.EnumsTest$TestEnum.VALID) { 'true' }";
-    
+
     protected static final String TEST_ENUM_SOURCE_6 =
         "a = getTestEnum(1); if (a == org.teatrove.tea.templates.EnumsTest$TestEnum.INVALID) { 'true' }";
-    
+
     protected static final String TEST_ENUM_SOURCE_7 =
         "org.teatrove.tea.templates.EnumsTest$TestEnum.VALID.test()";
 
     // TODO: if both left and right is enum, only do ==
-    
+
     public static enum TestEnum {
         VALID,
         INVALID;
-        
+
         public String test() { return "blah"; }
     }
-    
+
     public static class EnumsContext {
        public TestEnum getTestEnum(int value) {
            return TestEnum.values()[value];

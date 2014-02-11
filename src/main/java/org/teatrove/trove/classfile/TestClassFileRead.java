@@ -19,7 +19,7 @@ package org.teatrove.trove.classfile;
 import java.io.*;
 
 /**
- * Reads a class file and prints out its contents. 
+ * Reads a class file and prints out its contents.
  *
  * @author Brian S O'Neill
  */
@@ -137,17 +137,17 @@ public class TestClassFileRead {
 
         if (method.getCodeAttr() != null) {
             println("code:", indent);
-            
+
             PrintWriter writer = new PrintWriter(System.out);
-            
+
             TypeDesc[] paramTypes =
                 method.getMethodDescriptor().getParameterTypes();
             boolean isStatic = method.getModifiers().isStatic();
-            
+
             new CodeDisassembler(method).disassemble
                 (new CodeAssemblerPrinter(paramTypes, isStatic,
                                           writer, indent + "    ", null));
-            
+
             writer.flush();
         }
 

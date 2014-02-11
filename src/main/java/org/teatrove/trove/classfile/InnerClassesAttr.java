@@ -21,9 +21,9 @@ import java.io.*;
 
 /**
  * This class corresponds to the InnerClasses_attribute structure introduced in
- * JDK1.1. It is not defined in the first edition of 
+ * JDK1.1. It is not defined in the first edition of
  * <i>The Java Virual Machine Specification</i>.
- * 
+ *
  * @author Brian S O'Neill
  */
 class InnerClassesAttr extends Attribute {
@@ -43,9 +43,9 @@ class InnerClassesAttr extends Attribute {
                               String outer,
                               String name,
                               Modifiers modifiers) {
-        
+
         ConstantClassInfo innerInfo = ConstantClassInfo.make(mCp, inner);
-        ConstantClassInfo outerInfo; 
+        ConstantClassInfo outerInfo;
         if (outer == null) {
             outerInfo = null;
         }
@@ -61,7 +61,7 @@ class InnerClassesAttr extends Attribute {
             nameInfo = ConstantUTFInfo.make(mCp, name);
         }
 
-        mInnerClasses.add(new Info(innerInfo, outerInfo, nameInfo, 
+        mInnerClasses.add(new Info(innerInfo, outerInfo, nameInfo,
                                    modifiers.getModifier()));
     }
 
@@ -95,7 +95,7 @@ class InnerClassesAttr extends Attribute {
             int outer_index = din.readUnsignedShort();
             int name_index = din.readUnsignedShort();
             int af = din.readUnsignedShort();
-            
+
             ConstantClassInfo inner;
             if (inner_index == 0) {
                 inner = null;
@@ -111,7 +111,7 @@ class InnerClassesAttr extends Attribute {
             else {
                 outer = (ConstantClassInfo)cp.getConstant(outer_index);
             }
-            
+
             ConstantUTFInfo innerName;
             if (name_index == 0) {
                 innerName = null;
@@ -198,7 +198,7 @@ class InnerClassesAttr extends Attribute {
             else {
                 dout.writeShort(mName.getIndex());
             }
-            
+
             dout.writeShort(mModifier);
         }
     }

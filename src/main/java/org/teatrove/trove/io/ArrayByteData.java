@@ -22,7 +22,7 @@ import java.io.Serializable;
 
 /**
  * A ByteData implementation that wraps an array of bytes.
- * 
+ *
  * @author Brian S O'Neill
  */
 public class ArrayByteData implements ByteData, Serializable {

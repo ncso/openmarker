@@ -21,16 +21,16 @@ import java.io.*;
 /**
  * This class corresponds to the CONSTANT_Methodref_info structure as defined
  * in section 4.4.2 of <i>The Java Virtual Machine Specification</i>.
- * 
+ *
  * @author Brian S O'Neill
  */
 public class ConstantMethodInfo extends ConstantInfo {
     private ConstantClassInfo mParentClass;
     private ConstantNameAndTypeInfo mNameAndType;
-    
-    /** 
+
+    /**
      * Will return either a new ConstantMethodInfo object or one already in
-     * the constant pool. If it is a new ConstantMethodInfo, it will be 
+     * the constant pool. If it is a new ConstantMethodInfo, it will be
      * inserted into the pool.
      */
     static ConstantMethodInfo make(ConstantPool cp,
@@ -44,7 +44,7 @@ public class ConstantMethodInfo extends ConstantInfo {
     ConstantMethodInfo(ConstantClassInfo parentClass,
                        ConstantNameAndTypeInfo nameAndType) {
         super(TAG_METHOD);
-        
+
         mParentClass = parentClass;
         mNameAndType = nameAndType;
     }
@@ -52,7 +52,7 @@ public class ConstantMethodInfo extends ConstantInfo {
     public ConstantClassInfo getParentClass() {
         return mParentClass;
     }
-    
+
     public ConstantNameAndTypeInfo getNameAndType() {
         return mNameAndType;
     }
@@ -60,17 +60,17 @@ public class ConstantMethodInfo extends ConstantInfo {
     public int hashCode() {
         return mNameAndType.hashCode();
     }
-    
+
     public boolean equals(Object obj) {
         if (obj instanceof ConstantMethodInfo) {
             ConstantMethodInfo other = (ConstantMethodInfo)obj;
-            return (mParentClass.equals(other.mParentClass) && 
+            return (mParentClass.equals(other.mParentClass) &&
                     mNameAndType.equals(other.mNameAndType));
         }
-        
+
         return false;
     }
-    
+
     public void writeTo(DataOutput dout) throws IOException {
         super.writeTo(dout);
         dout.writeShort(mParentClass.getIndex());

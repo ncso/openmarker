@@ -17,16 +17,16 @@
 package org.teatrove.trove.classfile;
 
 /**
- * 
+ *
  * @author Brian S O'Neill
  */
 class FixedLocation implements Location {
     private int mLocation;
-    
+
     public FixedLocation(int location) {
         mLocation = location;
     }
-    
+
     public int getLocation() {
         return mLocation;
     }
@@ -36,10 +36,10 @@ class FixedLocation implements Location {
             return 0;
         }
         Location other = (Location)obj;
-        
+
         int loca = getLocation();
         int locb = other.getLocation();
-        
+
         if (loca < locb) {
             return -1;
         }

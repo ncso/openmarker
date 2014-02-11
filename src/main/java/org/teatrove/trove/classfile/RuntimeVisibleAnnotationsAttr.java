@@ -34,7 +34,7 @@ public class RuntimeVisibleAnnotationsAttr extends AnnotationsAttr {
     public RuntimeVisibleAnnotationsAttr(ConstantPool cp, String name) {
         super(cp, name);
     }
-    
+
     public RuntimeVisibleAnnotationsAttr(ConstantPool cp, String name, int length, DataInput din)
         throws IOException
     {

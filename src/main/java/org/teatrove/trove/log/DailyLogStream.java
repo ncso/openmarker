@@ -27,7 +27,7 @@ public class DailyLogStream extends IntervalLogStream {
     public DailyLogStream(Factory factory) {
         super(factory);
     }
-    
+
     /**
      * Moves calendar to beginning of day.
      */

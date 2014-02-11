@@ -42,7 +42,7 @@ public class XMLMapFactory {
 		if (element != null) {
 			result = new PropertyMap();
 			String name = element.getName();
-			String value = element.getTextTrim();                 
+			String value = element.getTextTrim();
 			if (name != null) {
 				if (value != null && !value.equals("")) {
 					result.put(name, value);
@@ -58,7 +58,7 @@ public class XMLMapFactory {
 		}
 		return result;
 	}
-    
+
     private static final PropertyMap getChildPropertyMap(List list) {
         PropertyMap result = null;
         if (list != null) {
@@ -69,7 +69,7 @@ public class XMLMapFactory {
                 if (child instanceof Element) {
                     Element childElement = (Element) child;
                     String childName = childElement.getName();
-                    String childValue = childElement.getTextTrim();                 
+                    String childValue = childElement.getTextTrim();
                     if (childName != null) {
                         if (childValue != null && !childValue.equals("")) {
                             result.put(childName, childValue);
@@ -83,7 +83,7 @@ public class XMLMapFactory {
                         }
                     }
                 }
-            }           
+            }
         }
         return result;
     }

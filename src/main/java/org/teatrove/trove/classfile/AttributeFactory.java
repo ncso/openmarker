@@ -35,7 +35,7 @@ public interface AttributeFactory {
      * @param length Attribute length, in bytes
      * @param din Attribute data source
      */
-    public Attribute createAttribute(ConstantPool cp, 
+    public Attribute createAttribute(ConstantPool cp,
                                      String name,
                                      int length,
                                      DataInput din) throws IOException;

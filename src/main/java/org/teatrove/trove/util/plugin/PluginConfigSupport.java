@@ -28,17 +28,17 @@ import java.util.Collection;
  * @author Scott Jappinen
  */
 public class PluginConfigSupport extends ConfigSupport implements PluginConfig {
-    
+
     private PluginContext mPluginContext;
     private String mName;
-    
+
     public PluginConfigSupport(PropertyMap properties, Log log, PluginContext context, String name) {
         super(properties, new Log(name, log));
         getLog().applyProperties(properties.subMap("log"));
         mPluginContext = context;
         mName = name;
     }
-    
+
     /**
      * Returns the name of this plugin.
      *
@@ -47,12 +47,12 @@ public class PluginConfigSupport extends ConfigSupport implements PluginConfig {
     public String getName() {
         return mName;
     }
-    
+
     /**
      * Returns a reference to the PluginContext.
-     * 
+     *
      * @return PluginContext the PluginContext object.
-     */	
+     */
     public PluginContext getPluginContext() {
         return mPluginContext;
     }

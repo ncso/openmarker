@@ -25,11 +25,11 @@ import org.teatrove.trove.util.StatusListener;
 
 
 /**
- * Implementations are responsible for providing compiled templates to an 
- * ApplicationDepot.  The context to compile against must be provided by the 
- * TemplateSourceConfig and a subset of available template sources may be 
+ * Implementations are responsible for providing compiled templates to an
+ * ApplicationDepot.  The context to compile against must be provided by the
+ * TemplateSourceConfig and a subset of available template sources may be
  * provided to reduce the number of compilation issues.  Template classes from
- * either a precompiled library or earlier dynamic compilations may also be 
+ * either a precompiled library or earlier dynamic compilations may also be
  * provided.
  *
  * @author Jonathan Colwell
@@ -37,7 +37,7 @@ import org.teatrove.trove.util.StatusListener;
 public interface TemplateSource {
 
     public void init(TemplateSourceConfig config) throws Exception;
-    
+
     /**
      * Compile templates recursively
      *
@@ -57,11 +57,11 @@ public interface TemplateSource {
      * @param all When true, compile all source, even if up-to-date
      * @param listener  The status listener to callback
      */
-    public TemplateCompilationResults 
+    public TemplateCompilationResults
         compileTemplates(ClassInjector injector,
-                         boolean all, 
+                         boolean all,
                          StatusListener listener) throws Exception;
-    
+
     /**
      * Compile templates
      *
@@ -86,12 +86,12 @@ public interface TemplateSource {
      * subdirectories
      * @param listener  The status listener to callback
      */
-    public TemplateCompilationResults 
+    public TemplateCompilationResults
         compileTemplates(ClassInjector injector,
                          boolean all,
                          boolean recurse,
                          StatusListener listener) throws Exception;
-    
+
     /**
      * Compile selected templates
      *
@@ -112,11 +112,11 @@ public interface TemplateSource {
      * @param listener  The status listener to callback
      * @param selectedTemplates an array of template names to compile
      */
-    public TemplateCompilationResults 
+    public TemplateCompilationResults
         compileTemplates(ClassInjector injector,
                          StatusListener listener,
                          String[] selectedTemplates) throws Exception;
-    
+
     /**
      *  Returns a Map of templates that need reloading
      *  - the entry key is the String name of the template

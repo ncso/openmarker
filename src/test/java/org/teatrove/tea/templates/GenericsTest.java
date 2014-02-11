@@ -19,7 +19,7 @@ public class GenericsTest extends AbstractTemplateTest {
     public void setup() {
         addContext("MapApplication", new MapContext());
     }
-    
+
     @Test
     public void testGenerics() throws Exception {
         // setup params
@@ -33,17 +33,17 @@ public class GenericsTest extends AbstractTemplateTest {
         states.put("test", Arrays.asList("going", "going", "gone"));
 
         String result1 =
-            executeSource(TEST_SOURCE_1, TEST_SOURCE_PARAMS, 
+            executeSource(TEST_SOURCE_1, TEST_SOURCE_PARAMS,
                           numbers, states, integers);
         assertEquals("531", result1);
 
         String result2 =
-            executeSource(TEST_SOURCE_2, TEST_SOURCE_PARAMS, 
+            executeSource(TEST_SOURCE_2, TEST_SOURCE_PARAMS,
                           numbers, states, integers);
         assertEquals("goinggoinggone", result2);
-        
+
         String result3 =
-            executeSource(TEST_SOURCE_3, TEST_SOURCE_PARAMS, 
+            executeSource(TEST_SOURCE_3, TEST_SOURCE_PARAMS,
                           numbers, states, integers);
         assertEquals("1", result3);
 
@@ -54,7 +54,7 @@ public class GenericsTest extends AbstractTemplateTest {
     public static class MapContext {
         public Map createHashMap() { return new HashMap(); }
     }
-    
+
     protected static final String TEST_SOURCE_PARAMS =
         "List<List<Integer[]>> numbers, " +
         "Map<String, List<String>> states, " +
@@ -76,14 +76,14 @@ public class GenericsTest extends AbstractTemplateTest {
         "foreach (s in state) {" +
             "s" +
         "}";
-    
+
     protected static final String TEST_SOURCE_3 =
         "foreach (integer in integers) {" +
             "num = integer as Number; " +
             "num" +
         "}";
-    
-    protected static final String TEST_SOURCE_4 = 
+
+    protected static final String TEST_SOURCE_4 =
         "map = createHashMap() as Map<String, List<Integer>>; " +
         "list = map['abc']; " +
         "cnt = 0; if (list != null) { " +
@@ -92,5 +92,5 @@ public class GenericsTest extends AbstractTemplateTest {
             "} " +
         "}" +
         "cnt";
-                
+
 }

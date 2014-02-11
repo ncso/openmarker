@@ -29,7 +29,7 @@ import java.net.ConnectException;
  */
 public class SSLSocketFactory extends PlainSocketFactory {
     private final javax.net.ssl.SSLSocketFactory mSSLFactory;
-       
+
     /**
      * @param addr Address to connect new sockets to.
      * @param port Port to connect new sockets to.
@@ -58,7 +58,7 @@ public class SSLSocketFactory extends PlainSocketFactory {
         mSSLFactory = (javax.net.ssl.SSLSocketFactory)
             javax.net.ssl.SSLSocketFactory.getDefault();
     }
-    
+
     public CheckedSocket createSocket(long timeout)
         throws ConnectException, SocketException
     {
@@ -75,5 +75,5 @@ public class SSLSocketFactory extends PlainSocketFactory {
             throw new SocketException(e.toString());
         }
         return CheckedSocket.check(socket);
-    }    
+    }
 }

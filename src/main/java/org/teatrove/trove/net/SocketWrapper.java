@@ -23,7 +23,7 @@ import java.net.*;
  * A Socket wrapper that passes all calls to an internal Socket. This class is
  * designed for subclasses to override or hook into the behavior of a Socket
  * instance.
- * 
+ *
  * @author Brian S O'Neill
  * @see SocketFaceWrapper
  */

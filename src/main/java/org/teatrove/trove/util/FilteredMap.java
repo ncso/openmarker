@@ -25,14 +25,14 @@ import java.util.Iterator;
 
 
 /**
- * This class can be used to filter the collections returned by the 
- * entrySet(), values(), and keySet() methods.  It uses the GoF 
+ * This class can be used to filter the collections returned by the
+ * entrySet(), values(), and keySet() methods.  It uses the GoF
  * Decorator pattern to hide the details of this from the interface
  * definition.  Just pass the map to filter and the FilteredMap.Filter
  * implementation to it's constructor.<p>
  *
  * Also, a second constructor takes only a backing map instance.  This
- * has a default filter that accepts anything.  It is useful for 
+ * has a default filter that accepts anything.  It is useful for
  * adapting a Map implementation that does not support java generics into
  * one that does.<p>
  *
@@ -69,11 +69,11 @@ public class FilteredMap<K, V> implements Map<K, V> {
     }
 
 
-    /** 
+    /**
      * Return a filtered set of entries.
      * @see Map.entryset
      */
-    public Set<Map.Entry<K, V>> entrySet() { 
+    public Set<Map.Entry<K, V>> entrySet() {
        HashSet s = new HashSet(mBackingMap.size());
        for (Map.Entry e : mBackingMap.entrySet()) {
            if (mFilter.accept(e))
@@ -82,7 +82,7 @@ public class FilteredMap<K, V> implements Map<K, V> {
        return s;
     }
 
-    
+
     /**
      * Return a filtered set of values.
      * @see Map.values
@@ -90,7 +90,7 @@ public class FilteredMap<K, V> implements Map<K, V> {
     public Collection<V> values() {
        Set<Map.Entry<K, V>> s = entrySet();
        ArrayList l = new ArrayList(s.size());
-       for (Map.Entry e : s) 
+       for (Map.Entry e : s)
            l.add(e.getValue());
        return l;
     }
@@ -113,8 +113,8 @@ public class FilteredMap<K, V> implements Map<K, V> {
      * Delegates to backing map.
      * @see java.util.Map.clear()
      */
-    public void clear() { 
-        mBackingMap.clear(); 
+    public void clear() {
+        mBackingMap.clear();
     }
 
 
@@ -122,8 +122,8 @@ public class FilteredMap<K, V> implements Map<K, V> {
      * Delegates to backing map.
      * @see java.util.Map.containsKey
      */
-    public boolean containsKey(Object key) { 
-        return mBackingMap.containsKey(key); 
+    public boolean containsKey(Object key) {
+        return mBackingMap.containsKey(key);
     }
 
 
@@ -135,7 +135,7 @@ public class FilteredMap<K, V> implements Map<K, V> {
        return mBackingMap.containsValue(value);
     }
 
-    
+
     /**
      * Delegates to backing map.
      * @see Object.equals.
@@ -162,7 +162,7 @@ public class FilteredMap<K, V> implements Map<K, V> {
        return mBackingMap.get(key);
     }
 
-    
+
     /**
      * Delegates to backing map.
      * @see java.util.Map.isEmpty
@@ -188,7 +188,7 @@ public class FilteredMap<K, V> implements Map<K, V> {
     public void putAll(Map<? extends K,? extends V> m) {
         mBackingMap.putAll(m);
     }
-    
+
 
     /**
      * Delegates to backing map.

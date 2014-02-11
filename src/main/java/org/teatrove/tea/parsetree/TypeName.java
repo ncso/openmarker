@@ -20,7 +20,7 @@ import org.teatrove.tea.compiler.SourceInfo;
 import org.teatrove.tea.compiler.Type;
 
 /**
- * 
+ *
  * @author Brian S O'Neill, Nick Hagan
  */
 public class TypeName extends Name {

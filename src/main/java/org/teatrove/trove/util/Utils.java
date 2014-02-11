@@ -51,7 +51,7 @@ public class Utils {
      * values are immediately forgotten.
      */
     public static final Map<?, ?> VOID_MAP = new VoidMap<Object, Object>();
-    
+
     public static final <K, V> Map<K, V> voidMap() {
         return new VoidMap<K, V>();
     }
@@ -63,7 +63,7 @@ public class Utils {
     private static final Comparator NULL_EQUAL_ORDER = new NullEqualOrder();
 
     private static FlyweightSet cFlyweightSet;
-    
+
     /**
      * Returns a Comparator that uses a Comparable object's natural ordering,
      * except null values are always considered low order. This Comparator
@@ -108,7 +108,7 @@ public class Utils {
     public static Comparator nullEqualOrder() {
         return NULL_EQUAL_ORDER;
     }
-    
+
     /**
      * Returns a Comparator that wraps the given Comparator except null values
      * are always considered equal order. This Comparator should not be used in
@@ -160,7 +160,7 @@ public class Utils {
         public boolean hasMoreElements() {
             return false;
         }
-        
+
         public Object nextElement() throws NoSuchElementException {
             throw new NoSuchElementException();
         }
@@ -187,7 +187,7 @@ public class Utils {
         public boolean containsValue(Object value) {
             return false;
         }
-        
+
         public V get(Object key) {
             return null;
         }
@@ -313,7 +313,7 @@ public class Utils {
             return nullEqualOrder();
         }
     }
-    
+
     private static class NullEqualOrderC implements Comparator, Serializable {
         private Comparator c;
 

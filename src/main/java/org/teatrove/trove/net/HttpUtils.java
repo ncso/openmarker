@@ -19,7 +19,7 @@ package org.teatrove.trove.net;
 import java.io.*;
 
 /**
- * 
+ *
  * @author Brian S O'Neill
  */
 public class HttpUtils {

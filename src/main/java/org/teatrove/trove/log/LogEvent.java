@@ -26,7 +26,7 @@ import java.lang.ref.WeakReference;
  * timestamp for when the event occurred and a reference to the thread
  * that created it. Most have an embedded message, and some have an
  * embedded exception.
- * 
+ *
  * @author Brian S O'Neill
  */
 public class LogEvent extends EventObject {
@@ -49,19 +49,19 @@ public class LogEvent extends EventObject {
     private String mThreadName;
     // WeakReference to a Thread.
     private transient WeakReference mThread;
-    
-    public LogEvent(Log log, int type, 
+
+    public LogEvent(Log log, int type,
                     String message, Throwable throwable,
                     Thread thread, Date timestamp) {
         super(log);
-        
+
         if (type < DEBUG_TYPE || type > ERROR_TYPE) {
             throw new IllegalArgumentException
                 ("Type out of range: " + type);
         }
-        
+
         mType = type;
-        
+
         if (message == null) {
             if (throwable != null) {
                 mMessage = throwable.getMessage();
@@ -70,16 +70,16 @@ public class LogEvent extends EventObject {
         else {
             mMessage = message;
         }
-        
+
         mThrowable = throwable;
-        
+
         if (thread == null) {
             mThread = new WeakReference(Thread.currentThread());
         }
         else {
             mThread = new WeakReference(thread);
         }
-        
+
         if (timestamp == null) {
             mTimestamp = new Date();
         }
@@ -87,44 +87,44 @@ public class LogEvent extends EventObject {
             mTimestamp = timestamp;
         }
     }
-    
-    public LogEvent(Log log, int type, 
+
+    public LogEvent(Log log, int type,
                     String message, Thread thread, Date timestamp) {
         this(log, type, message, null, thread, timestamp);
     }
-    
-    public LogEvent(Log log, int type, 
+
+    public LogEvent(Log log, int type,
                     Throwable throwable, Thread thread, Date timestamp) {
         this(log, type, null, throwable, thread, timestamp);
     }
-    
-    public LogEvent(Log log, int type, 
+
+    public LogEvent(Log log, int type,
                     String message, Thread thread) {
         this(log, type, message, null, thread, null);
     }
-    
-    public LogEvent(Log log, int type, 
+
+    public LogEvent(Log log, int type,
                     Throwable throwable, Thread thread) {
         this(log, type, null, throwable, thread, null);
     }
-    
-    public LogEvent(Log log, int type, 
+
+    public LogEvent(Log log, int type,
                     String message, Throwable throwable) {
         this(log, type, message, throwable, null, null);
     }
-    
+
     public LogEvent(Log log, int type, String message) {
         this(log, type, message, null, null, null);
     }
-    
+
     public LogEvent(Log log, int type, Throwable throwable) {
         this(log, type, null, throwable, null, null);
     }
-    
+
     public Log getLogSource() {
         return (Log)getSource();
     }
-    
+
     /**
      * Returns the type of this LogEvent, which matches one of the defined
      * type constants.
@@ -132,14 +132,14 @@ public class LogEvent extends EventObject {
     public int getType() {
         return mType;
     }
-    
+
     /**
      * Returns the date and time of this event.
      */
     public Date getTimestamp() {
         return mTimestamp;
     }
-    
+
     /**
      * Message may be null.
      */
@@ -149,20 +149,20 @@ public class LogEvent extends EventObject {
 
     /**
      * Sets the message.
-     * 
+     *
      * @param message  the value to set the message to
      */
     public void setMessage(String message) {
     	mMessage = message;
     }
-    
+
     /**
      * Returns null if there is no exception logged.
      */
     public Throwable getException() {
         return mThrowable;
     }
-    
+
     /**
      * Returns null if there is no exception logged.
      */
@@ -176,7 +176,7 @@ public class LogEvent extends EventObject {
         t.printStackTrace(pw);
         return sw.toString();
     }
-    
+
     /**
      * Returns the name of the thread that created this event.
      */
@@ -189,7 +189,7 @@ public class LogEvent extends EventObject {
         }
         return mThreadName;
     }
-    
+
     /**
      * Returns the thread that created this event, which may be null if
      * this LogEvent was deserialized or the thread has been reclaimed.
@@ -197,7 +197,7 @@ public class LogEvent extends EventObject {
     public Thread getThread() {
         return (Thread)mThread.get();
     }
-    
+
     public String toString() {
         String msg;
         if (getMessage() == null) {
@@ -206,21 +206,21 @@ public class LogEvent extends EventObject {
         else {
             msg = '"' + getMessage() + '"';
         }
-        
-        return 
-            getClass().getName() + "[" + 
+
+        return
+            getClass().getName() + "[" +
             getTimestamp() + ',' +
-            getThreadName() + ',' + 
+            getThreadName() + ',' +
             msg +
             "] from " + getSource();
     }
-    
+
     private void writeObject(ObjectOutputStream out) throws IOException {
         getThreadName();
         out.defaultWriteObject();
     }
-    
-    private void readObject(ObjectInputStream in) 
+
+    private void readObject(ObjectInputStream in)
         throws IOException, ClassNotFoundException {
         in.defaultReadObject();
     }

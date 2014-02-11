@@ -19,7 +19,7 @@ package org.teatrove.tea.io;
 import java.io.*;
 
 /**
- * LinePositionReader aids in printing line numbers for error reporting. 
+ * LinePositionReader aids in printing line numbers for error reporting.
  *
  * @author Brian S O'Neill
  * @deprecated Moved to org.teatrove.trove.io package.

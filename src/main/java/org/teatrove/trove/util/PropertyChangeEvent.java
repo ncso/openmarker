@@ -19,7 +19,7 @@ package org.teatrove.trove.util;
 import org.teatrove.trove.io.SourceInfo;
 
 /**
- * 
+ *
  * @author Sean T. Treat
  */
 public class PropertyChangeEvent extends java.util.EventObject {
@@ -32,7 +32,7 @@ public class PropertyChangeEvent extends java.util.EventObject {
         this(source, null, null, null);
     }
 
-    public PropertyChangeEvent(Object source, String key, String value, 
+    public PropertyChangeEvent(Object source, String key, String value,
                                SourceInfo info) {
         super(source);
         mKey = key;

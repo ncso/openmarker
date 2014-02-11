@@ -38,7 +38,7 @@ public abstract class BeanPropertyAccessor {
     private static final boolean DEBUG;
 
     @SuppressWarnings("unchecked")
-    private static Map<Class<?>, BeanPropertyAccessor> cAccessors = 
+    private static Map<Class<?>, BeanPropertyAccessor> cAccessors =
         new IdentityMap();
 
     static {
@@ -62,7 +62,7 @@ public abstract class BeanPropertyAccessor {
     }
 
     private static BeanPropertyAccessor generate(Class<?> beanType) {
-        
+
         ClassInjector injector = new ClassInjector
             (Thread.currentThread().getContextClassLoader(), (File)null, null);
 
@@ -392,7 +392,7 @@ public abstract class BeanPropertyAccessor {
      * PropertyDescriptors whose name hash matched on the case.
      */
     @SuppressWarnings("unchecked")
-    private static 
+    private static
     List<PropertyDescriptor>[] caseMethods(int caseCount,
                                            PropertyDescriptor[] props) {
         List<PropertyDescriptor>[] cases = new List[caseCount];
@@ -403,7 +403,7 @@ public abstract class BeanPropertyAccessor {
             int caseValue = (hashCode & 0x7fffffff) % caseCount;
             List<PropertyDescriptor> matches = cases[caseValue];
             if (matches == null) {
-                matches = cases[caseValue] = 
+                matches = cases[caseValue] =
                     new ArrayList<PropertyDescriptor>();
             }
             matches.add(prop);
@@ -417,10 +417,10 @@ public abstract class BeanPropertyAccessor {
      * PropertyDescriptors, array 1 contains the write PropertyDescriptors.
      */
     private static PropertyDescriptor[][] getBeanProperties(Class<?> beanType) {
-        List<PropertyDescriptor> readProperties = 
+        List<PropertyDescriptor> readProperties =
             new ArrayList<PropertyDescriptor>();
-        
-        List<PropertyDescriptor> writeProperties = 
+
+        List<PropertyDescriptor> writeProperties =
             new ArrayList<PropertyDescriptor>();
 
         try {

@@ -20,7 +20,7 @@ import java.io.*;
 
 /**
  * Doesn't increment a counter for each byte written. FastDataOutputStream is
- * not thread-safe, but then its uncommon for multiple threads to write to the 
+ * not thread-safe, but then its uncommon for multiple threads to write to the
  * same OutputStream.
  *
  * @author Brian S O'Neill

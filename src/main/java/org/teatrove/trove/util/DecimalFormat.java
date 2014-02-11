@@ -26,7 +26,7 @@ import java.util.Map;
  * Similar to {@link java.text.DecimalFormat}, except rounding is more
  * intuitive. Only formatting is supported, but all patterns are compatible
  * with {@link java.text.DecimalFormat}.
- * 
+ *
  * @author Brian S O'Neill
  * @version
  */
@@ -186,7 +186,7 @@ public class DecimalFormat implements Cloneable {
             mSuffix = StringReplacer.replace(mSuffix, "\u00a4\u00a4", sym);
             mMinusPrefix = StringReplacer.replace(mMinusPrefix, "\u00a4\u00a4", sym);
             mMinusSuffix = StringReplacer.replace(mMinusSuffix, "\u00a4\u00a4", sym);
-            
+
             sym = symbols.getCurrencySymbol();
             mPrefix = StringReplacer.replace(mPrefix, "\u00a4", sym);
             mSuffix = StringReplacer.replace(mSuffix, "\u00a4", sym);
@@ -822,7 +822,7 @@ public class DecimalFormat implements Cloneable {
                 break;
             }
         }
-        
+
         i = parsePrefixOrSuffix(pattern, i, buf);
         mMinusSuffix = new String(buf.toString()).intern();
         if (i < length) {
@@ -862,7 +862,7 @@ public class DecimalFormat implements Cloneable {
                 }
                 else if (c == mPercent) {
                     if (mDecimalScale == 3) {
-                        error("Cannot combine percent and permill " + 
+                        error("Cannot combine percent and permill " +
                               "characters in pattern");
                     }
                     mDecimalScale = 2;
@@ -870,7 +870,7 @@ public class DecimalFormat implements Cloneable {
                 }
                 else if (c == mPerMill) {
                     if (mDecimalScale == 2) {
-                        error("Cannot combine percent and permill " + 
+                        error("Cannot combine percent and permill " +
                               "characters in pattern");
                     }
                     mDecimalScale = 3;
@@ -881,7 +881,7 @@ public class DecimalFormat implements Cloneable {
                 }
             }
         }
-        
+
         if (inQuote != 0) {
             error();
         }

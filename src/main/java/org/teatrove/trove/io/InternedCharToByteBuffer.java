@@ -82,25 +82,25 @@ public class InternedCharToByteBuffer
     public long getByteCount() throws IOException {
         return mBuffer.getByteCount();
     }
-    
+
     public void writeTo(OutputStream out) throws IOException {
         mBuffer.writeTo(out);
     }
-    
+
     public void append(byte b) throws IOException {
         mBuffer.append(b);
     }
-    
+
     public void append(byte[] bytes) throws IOException {
         mBuffer.append(bytes);
     }
-    
+
     public void append(byte[] bytes, int offset, int length)
         throws IOException {
 
         mBuffer.append(bytes, offset, length);
     }
-    
+
     public void appendSurrogate(ByteData s) throws IOException {
         mBuffer.appendSurrogate(s);
     }
@@ -108,25 +108,25 @@ public class InternedCharToByteBuffer
     public void addCaptureBuffer(ByteBuffer buffer) throws IOException {
         mBuffer.addCaptureBuffer(buffer);
     }
-    
+
     public void removeCaptureBuffer(ByteBuffer buffer) throws IOException {
         mBuffer.removeCaptureBuffer(buffer);
     }
-    
+
     public void append(char c) throws IOException {
         mBuffer.append(c);
     }
-    
+
     public void append(char[] chars) throws IOException {
         mBuffer.append(chars);
     }
-    
-    public void append(char[] chars, int offset, int length) 
+
+    public void append(char[] chars, int offset, int length)
         throws IOException {
 
         mBuffer.append(chars, offset, length);
     }
-    
+
     public void append(String str) throws IOException {
         if (str.length() < MIN_LENGTH) {
             mBuffer.append(str);
@@ -153,7 +153,7 @@ public class InternedCharToByteBuffer
                 if (enc != null) {
                     bytes = str.getBytes(enc);
                 }
-                else { 
+                else {
                     // no encoding specified so use default.
                     bytes = str.getBytes();
                 }
@@ -181,7 +181,7 @@ public class InternedCharToByteBuffer
             mBuffer.append(str);
         } */
     }
-    
+
     public void append(String str, int offset, int length) throws IOException {
         mBuffer.append(str, offset, length);
     }
@@ -193,7 +193,7 @@ public class InternedCharToByteBuffer
     public void clear() throws IOException {
         mBuffer.clear();
     }
-    
+
     public void drain() throws IOException {
         mBuffer.drain();
     }

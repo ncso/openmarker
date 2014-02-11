@@ -30,7 +30,7 @@ import org.teatrove.tea.compiler.CompilationUnit;
 /**
  * This contains the results of compiling templates including the templates that
  * were compiled and any errors/warnings for those that failed compilation.
- * 
+ *
  * @author Jonathan Colwell
  */
 public class TemplateCompilationResults implements java.io.Serializable {
@@ -42,8 +42,8 @@ public class TemplateCompilationResults implements java.io.Serializable {
 
     /** The set of successfully reloaded template names */
     Set<String> mReloaded;
-    
-    /** 
+
+    /**
      * The set of reloaded template units.
      * Note that this is transient so we do not transfer across the wire to
      * remote peers in the cluster.
@@ -59,7 +59,7 @@ public class TemplateCompilationResults implements java.io.Serializable {
         mIssues = issues;
         mReloaded = reloaded;
     }
-    
+
     public TemplateCompilationResults(Map<String, CompilationUnit> reloaded,
                                       Map<String, List<TemplateIssue>> issues) {
         mIssues = issues;
@@ -75,22 +75,22 @@ public class TemplateCompilationResults implements java.io.Serializable {
         if (name == null) {
             return false;
         }
-        
+
         mReloaded.add(name);
         return true;
     }
-    
+
     public boolean appendTemplate(String name, CompilationUnit unit) {
         if (name == null) {
             return false;
         }
-        
+
         mReloaded.add(name);
-        
+
         if (mReloadedUnits != null) {
             mReloadedUnits.put(name, unit);
         }
-        
+
         return true;
     }
 
@@ -102,18 +102,18 @@ public class TemplateCompilationResults implements java.io.Serializable {
         mReloaded.addAll(names);
         return true;
     }
-    
+
     public boolean appendTemplates(Map<String, CompilationUnit> names) {
         if (names == null) {
             return false;
         }
-        
+
         mReloaded.addAll(names.keySet());
-        
+
         if (mReloadedUnits != null) {
             mReloadedUnits.putAll(names);
         }
-        
+
         return true;
     }
 
@@ -177,56 +177,56 @@ public class TemplateCompilationResults implements java.io.Serializable {
     public Set<String> getReloadedTemplateNames() {
         return mReloaded;
     }
-    
+
     public Map<String, CompilationUnit> getReloadedTemplates() {
         return mReloadedUnits;
     }
-    
+
     public CompilationUnit getReloadedTemplate(String templateName) {
         if (mReloadedUnits == null) {
             return null;
         }
-        
+
         return mReloadedUnits.get(templateName);
     }
 
     public Map<String, List<TemplateIssue>> getTemplateIssues() {
         return mIssues;
     }
-    
+
     public Map<String, List<TemplateIssue>> getTemplateErrors() {
         Map<String, List<TemplateIssue>> errors =
             new HashMap<String, List<TemplateIssue>>();
-        
+
         for (Map.Entry<String, List<TemplateIssue>> entry : mIssues.entrySet()) {
             List<TemplateIssue> list = new ArrayList<TemplateIssue>();
             for (TemplateIssue issue : entry.getValue()) {
                 if (issue.isError()) { list.add(issue); }
             }
-            
+
             if (!list.isEmpty()) {
                 errors.put(entry.getKey(), list);
             }
         }
-        
+
         return errors;
     }
-    
+
     public Map<String, List<TemplateIssue>> getTemplateWarnings() {
         Map<String, List<TemplateIssue>> warnings =
             new HashMap<String, List<TemplateIssue>>();
-        
+
         for (Map.Entry<String, List<TemplateIssue>> entry : mIssues.entrySet()) {
             List<TemplateIssue> list = new ArrayList<TemplateIssue>();
             for (TemplateIssue issue : entry.getValue()) {
                 if (issue.isWarning()) { list.add(issue); }
             }
-            
+
             if (!list.isEmpty()) {
                 warnings.put(entry.getKey(), list);
             }
         }
-        
+
         return warnings;
     }
 
@@ -259,7 +259,7 @@ public class TemplateCompilationResults implements java.io.Serializable {
 
         return errors;
     }
-    
+
     public List<TemplateIssue> getAllTemplateWarnings() {
         if (mIssues == null || mIssues.isEmpty())
             return null;
@@ -276,17 +276,17 @@ public class TemplateCompilationResults implements java.io.Serializable {
 
         return warnings;
     }
-    
+
     public boolean isSuccessful() {
         for (List<TemplateIssue> issues : mIssues.values()) {
             for (TemplateIssue issue : issues) {
                 if (issue.isError()) { return false; }
             }
         }
-        
+
         return true;
     }
-   
+
     public void setAlreadyReloading(boolean inProgress) {
         mReloadInProgress = inProgress;
     }

@@ -71,4 +71,4 @@ public class DualOutput extends OutputStream {
             mOut2.close();
         }
     }
-}        
+}

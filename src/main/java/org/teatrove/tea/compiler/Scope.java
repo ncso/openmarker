@@ -29,7 +29,7 @@ import java.util.Set;
 
 /**
  * A Scope encapsulates a set of declared variables and references to them.
- * Scopes can be nested, and child scopes have access to variables in the 
+ * Scopes can be nested, and child scopes have access to variables in the
  * parent scope.
  *
  * @author Brian S O'Neill
@@ -39,7 +39,7 @@ public class Scope {
     private Map<Variable, Variable> mVariables;
     private Scope mParent;
     private Collection<Scope> mChildren;
-    
+
     // Set of private Variables declared in this scope.
     private Set<Variable> mPrivateVars;
 
@@ -50,11 +50,11 @@ public class Scope {
     // Contains a list of all the VariableRefs used in this scope.
     private Collection<VariableRef> mVariableRefs =
         new ArrayList<VariableRef>();
-    
+
     public Scope() {
         this(null);
     }
-    
+
     public Scope(Scope parent) {
         if ((mParent = parent) != null) {
             mVariables = parent.mVariables;
@@ -74,7 +74,7 @@ public class Scope {
     public Scope getParent() {
         return mParent;
     }
-    
+
     /**
      * Returns an empty array if this scope has no children.
      */
@@ -139,7 +139,7 @@ public class Scope {
             vars[i] = declareVariable(vars[i]);
         }
     }
-    
+
     /**
      * Returns a declared variable by name. Search begins in this scope and
      * moves up into parent scopes. If not found, null is returned. The
@@ -169,11 +169,11 @@ public class Scope {
                 return var;
             }
         }
-        
+
         if (mParent != null) {
             return mParent.getDeclaredVariable(name);
         }
-        
+
         return null;
     }
 
@@ -186,18 +186,18 @@ public class Scope {
         Collection<Variable> vars = mDeclared.values();
         return vars.toArray(new Variable[vars.size()]);
     }
-    
+
     /**
      * Attempt to bind variable reference to a variable in this scope or a
      * parent scope. If the variable to bind to isn't available or doesn't
      * exist, false is returned.
      *
      * @return true if reference has been bound
-     */    
+     */
     public boolean bindToVariable(VariableRef ref) {
         String name = ref.getName();
         Variable var = getDeclaredVariable(name);
-        
+
         if (var != null) {
             ref.setType(null);
             ref.setVariable(var);
@@ -297,7 +297,7 @@ public class Scope {
                 refs.add(ref);
             }
         }
-        
+
         VariableRef[] refsArray = new VariableRef[refs.size()];
         return refs.toArray(refsArray);
     }
@@ -344,7 +344,7 @@ public class Scope {
      */
     public Variable[] intersect(Scope scope) {
         Collection<Variable> intersection = new ArrayList<Variable>();
-        
+
         // A set of variable names that have been moved into the intersection.
         Set<String> matchedNames = new HashSet<String>(7);
 
@@ -370,14 +370,14 @@ public class Scope {
      *
      * @return variables to promote
      */
-    public Variable[] promote() { 
+    public Variable[] promote() {
         Scope parent = getParent();
         if (parent == null) {
             return new Variable[0];
         }
 
         Collection<Variable> promotion = new ArrayList<Variable>();
-        
+
         // A set of variable names that have been moved into the promotion.
         Set<String> matchedNames = new HashSet<String>(7);
 
@@ -471,7 +471,7 @@ public class Scope {
             Variable var = vars[i];
 
             buf.append(indentMore);
-            
+
             Set<Variable> privateVars = scope.mPrivateVars;
             if (privateVars != null && privateVars.contains(var)) {
                 buf.append("private ");
@@ -506,12 +506,12 @@ public class Scope {
             buf.append(ref.getVariable());
             buf.append('\n');
         }
-        
+
         Scope[] children = scope.getChildren();
         for (int i=0; i<children.length; i++) {
             append(buf, children[i], indentMore);
         }
-        
+
         buf.append(indent);
         buf.append("}\n");
     }

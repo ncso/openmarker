@@ -21,14 +21,14 @@ import java.io.*;
 /**
  * This class corresponds to the CONSTANT_Class_info structure as defined in
  * section 4.4.1 of <i>The Java Virtual Machine Specification</i>.
- * 
+ *
  * @author Brian S O'Neill
  */
 public class ConstantClassInfo extends ConstantInfo {
     private final TypeDesc mType;
     private final ConstantUTFInfo mNameConstant;
-    
-    /** 
+
+    /**
      * Will return either a new ConstantClassInfo object or one already in
      * the constant pool. If it is a new ConstantClassInfo, it will be inserted
      * into the pool.
@@ -37,13 +37,13 @@ public class ConstantClassInfo extends ConstantInfo {
         ConstantInfo ci = new ConstantClassInfo(cp, className);
         return (ConstantClassInfo)cp.addConstant(ci);
     }
-    
+
     /** Used to describe an array class. */
     static ConstantClassInfo make(ConstantPool cp, String className, int dim) {
         ConstantInfo ci = new ConstantClassInfo(cp, className, dim);
         return (ConstantClassInfo)cp.addConstant(ci);
     }
-    
+
     static ConstantClassInfo make(ConstantPool cp, TypeDesc type) {
         ConstantInfo ci = new ConstantClassInfo(cp, type);
         return (ConstantClassInfo)cp.addConstant(ci);
@@ -67,7 +67,7 @@ public class ConstantClassInfo extends ConstantInfo {
         mType = TypeDesc.forClass(className);
         mNameConstant = ConstantUTFInfo.make(cp, desc);
     }
-    
+
     /** Used to describe an array class. */
     private ConstantClassInfo(ConstantPool cp, String className, int dim) {
         super(TAG_CLASS);
@@ -85,7 +85,7 @@ public class ConstantClassInfo extends ConstantInfo {
         mType = type;
         mNameConstant = ConstantUTFInfo.make(cp, desc);
     }
-    
+
     private ConstantClassInfo(ConstantPool cp, TypeDesc type) {
         super(TAG_CLASS);
         String desc;
@@ -106,7 +106,7 @@ public class ConstantClassInfo extends ConstantInfo {
     public int hashCode() {
         return mType.hashCode();
     }
-    
+
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
@@ -117,7 +117,7 @@ public class ConstantClassInfo extends ConstantInfo {
         }
         return false;
     }
-    
+
     public void writeTo(DataOutput dout) throws IOException {
         super.writeTo(dout);
         dout.writeShort(mNameConstant.getIndex());

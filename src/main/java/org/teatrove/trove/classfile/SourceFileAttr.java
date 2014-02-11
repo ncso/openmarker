@@ -19,9 +19,9 @@ package org.teatrove.trove.classfile;
 import java.io.*;
 
 /**
- * This class corresponds to the SourceFile_attribute structure as defined 
+ * This class corresponds to the SourceFile_attribute structure as defined
  * in section 4.7.2 of <i>The Java Virtual Machine Specification</i>.
- * 
+ *
  * @author Brian S O'Neill
  * @see ClassFile
  */
@@ -29,21 +29,21 @@ class SourceFileAttr extends Attribute {
     private String mFileName;
 
     private ConstantUTFInfo mSourcefile;
-    
+
     public SourceFileAttr(ConstantPool cp, String fileName) {
         super(cp, SOURCE_FILE);
-        
+
         mFileName = fileName;
         mSourcefile = ConstantUTFInfo.make(cp, fileName);
     }
-    
+
     /**
      * Returns the source file name.
      */
     public String getFileName() {
         return mFileName;
     }
-    
+
     /**
      * Returns a constant from the constant pool with the source file name.
      */
@@ -57,7 +57,7 @@ class SourceFileAttr extends Attribute {
     public int getLength() {
         return 2;
     }
-    
+
     public void writeDataTo(DataOutput dout) throws IOException {
         dout.writeShort(mSourcefile.getIndex());
     }

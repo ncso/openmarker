@@ -21,25 +21,25 @@ import org.teatrove.trove.util.ConfigSupport;
 import org.teatrove.trove.util.PropertyMap;
 
 /**
- * A support class the provides a default implementation for the 
+ * A support class the provides a default implementation for the
  * PluginFactoryConfig interface.
  *
  * @author Scott Jappinen
  */
 public class PluginFactoryConfigSupport extends ConfigSupport implements PluginFactoryConfig {
-    
+
     private PluginContext mPluginContext;
-    
+
     public PluginFactoryConfigSupport(PropertyMap properties, Log log, PluginContext context) {
         super(properties, log);
         mPluginContext = context;
     }
-    
+
     /**
      * Returns a reference to the PluginContext.
-     * 
+     *
      * @returns PluginContext the PluginContext object.
-     */	
+     */
     public PluginContext getPluginContext() {
         return mPluginContext;
     }

@@ -96,7 +96,7 @@ public class Cache extends SoftHashMap {
     private void adjustMRU(Object key, Object value) {
         synchronized (mUsageMap) {
             Object existing = mUsageMap.get(key);
-            
+
             if (existing != null) {
                 if (value == null && existing instanceof Null) {
                     value = existing;
@@ -111,7 +111,7 @@ public class Cache extends SoftHashMap {
                     }
                 }
             }
-            
+
             mUsageMap.put(key, value);
         }
     }

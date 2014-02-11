@@ -28,7 +28,7 @@ import java.io.IOException;
  */
 public class FileByteData implements ByteData {
     private static final Object NULL = new Object();
-    
+
     private File mFile;
 
     // Thread-local reference to a RandomAccessFile.
@@ -68,11 +68,11 @@ public class FileByteData implements ByteData {
             else {
                 bufSize = (int)length;
             }
-            
+
             byte[] inputBuffer = new byte[bufSize];
 
             raf.seek(0);
-        
+
             int readAmount;
             while ((readAmount = raf.read(inputBuffer, 0, bufSize)) > 0) {
                 out.write(inputBuffer, 0, readAmount);
@@ -98,7 +98,7 @@ public class FileByteData implements ByteData {
             mRAF.set(null);
         }
     }
-    
+
     protected final void finalize() throws IOException {
         reset();
     }

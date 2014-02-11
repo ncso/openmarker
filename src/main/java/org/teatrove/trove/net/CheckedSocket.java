@@ -92,12 +92,12 @@ public class CheckedSocket extends SocketFaceWrapper {
             mExceptionListeners.remove(listener);
         }
     }
-    
+
     public synchronized InputStream getInputStream() throws IOException {
         if (mIn != null) {
             return mIn;
         }
-        
+
         try {
             return mIn = new Input(super.getInputStream());
         }
@@ -110,7 +110,7 @@ public class CheckedSocket extends SocketFaceWrapper {
         if (mOut != null) {
             return mOut;
         }
-        
+
         try {
             return mOut = new Output(super.getOutputStream());
         }
@@ -338,7 +338,7 @@ public class CheckedSocket extends SocketFaceWrapper {
                 throw handleIOException(e);
             }
         }
-        
+
         public int read(byte[] b) throws IOException {
             try {
                 return mStream.read(b);
@@ -347,7 +347,7 @@ public class CheckedSocket extends SocketFaceWrapper {
                 throw handleIOException(e);
             }
         }
-        
+
         public int read(byte[] b, int off, int len) throws IOException {
             try {
                 return mStream.read(b, off, len);
@@ -356,7 +356,7 @@ public class CheckedSocket extends SocketFaceWrapper {
                 throw handleIOException(e);
             }
         }
-        
+
         public long skip(long n) throws IOException {
             try {
                 return mStream.skip(n);
@@ -365,7 +365,7 @@ public class CheckedSocket extends SocketFaceWrapper {
                 throw handleIOException(e);
             }
         }
-        
+
         public int available() throws IOException {
             try {
                 return mStream.available();
@@ -374,7 +374,7 @@ public class CheckedSocket extends SocketFaceWrapper {
                 throw handleIOException(e);
             }
         }
-        
+
         public void close() throws IOException {
             try {
                 mStream.close();
@@ -383,7 +383,7 @@ public class CheckedSocket extends SocketFaceWrapper {
                 throw handleIOException(e);
             }
         }
-        
+
         public void mark(int readlimit) {
             mStream.mark(readlimit);
         }
@@ -417,7 +417,7 @@ public class CheckedSocket extends SocketFaceWrapper {
                 throw handleIOException(e);
             }
         }
-        
+
         public void write(byte[] b) throws IOException {
             try {
                 mStream.write(b);
@@ -426,7 +426,7 @@ public class CheckedSocket extends SocketFaceWrapper {
                 throw handleIOException(e);
             }
         }
-        
+
         public void write(byte[] b, int off, int len) throws IOException {
             try {
                 mStream.write(b, off, len);
@@ -435,7 +435,7 @@ public class CheckedSocket extends SocketFaceWrapper {
                 throw handleIOException(e);
             }
         }
-        
+
         public void flush() throws IOException {
             try {
                 mStream.flush();
@@ -444,7 +444,7 @@ public class CheckedSocket extends SocketFaceWrapper {
                 throw handleIOException(e);
             }
         }
-        
+
         public void close() throws IOException {
             try {
                 mStream.close();

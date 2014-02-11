@@ -21,7 +21,7 @@ import org.teatrove.tea.compiler.SourceInfo;
 /**
  * A StatementList wraps a list of statements as if they were a single
  * statement.
- * 
+ *
  * @author Brian S O'Neill
  * @see Block
  * @see Template#getStatement()
@@ -68,7 +68,7 @@ public class StatementList extends Statement {
     public Statement[] getStatements() {
         return mStatements;
     }
-    
+
     public void setStatements(Statement[] stmts) {
         mStatements = stmts;
     }

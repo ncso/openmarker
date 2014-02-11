@@ -25,29 +25,29 @@ import org.teatrove.trove.util.PropertyMapFactoryProvider;
 import org.teatrove.trove.util.SubstitutionFactory;
 
 public interface ResourceFactory {
-    
+
     /**
      * Get a associated resource per the specified path.  The default method
      * will first check for a local file and then load from the class path.  If
      * no file is found, <code>null</code> is returned.
-     * 
+     *
      * @param path  The name or path of the resource
-     * 
+     *
      * @return  The associated URL of the resource
      */
     URL getResource(String path);
-    
+
     /**
      * Get a associated input stream per the specified path.  The default method
      * will first check for a local file and then load from the class path.  If
      * no file is found, <code>null</code> is returned.
-     * 
+     *
      * @param path  The name or path of the resource
-     * 
+     *
      * @return  The associated input stream of the resource
      */
     InputStream getResourceAsStream(String path);
-    
+
     /**
      * Get the associated resource as a {@link PropertyMap} per the specified
      * path.  This will load the resource per {@link #getResource(String)} and
@@ -57,16 +57,16 @@ public interface ResourceFactory {
      * resource is determined by the path.  For examples, 'properties' files
      * use a properties resource loader whereas 'xml' files use a XML resource
      * loader.  For more information, see {@link PropertyMapFactoryProvider}.
-     * 
+     *
      * @param path  The name or path of the resource
-     * 
+     *
      * @return  The associated list of properties
-     * 
+     *
      * @throws IOException   If an error occurs loading or parsing the resource
      */
-    PropertyMap getResourceAsProperties(String path) 
+    PropertyMap getResourceAsProperties(String path)
         throws IOException;
-    
+
     /**
      * Get the associated resource as a {@link PropertyMap} per the specified
      * path.  This will load the resource per the given input stream and
@@ -76,52 +76,52 @@ public interface ResourceFactory {
      * resource is determined by the path.  For examples, 'properties' files
      * use a properties resource loader whereas 'xml' files use a XML resource
      * loader.  For more information, see {@link PropertyMapFactoryProvider}.
-     * 
+     *
      * @param path  The name or path of the resource
      * @param input  The associated stream to load
-     * 
+     *
      * @return  The associated list of properties
-     * 
+     *
      * @throws IOException   If an error occurs loading or parsing the resource
      */
-    PropertyMap getResourceAsProperties(String path, InputStream input) 
+    PropertyMap getResourceAsProperties(String path, InputStream input)
         throws IOException;
-    
+
     /**
      * Get the associated resource as a {@link PropertyMap} per the specified
      * path.  This will load the resource per {@link #getResource(String)} and
-     * if the resource is not valid, then <code>null</code> is returned.  Any 
+     * if the resource is not valid, then <code>null</code> is returned.  Any
      * properties will be auto-substituted by the specified substitutions.  The
-     * type of resource is determined by the path.  For examples, 'properties' 
-     * files use a properties resource loader whereas 'xml' files use a XML 
-     * resource loader.  For more information, see 
+     * type of resource is determined by the path.  For examples, 'properties'
+     * files use a properties resource loader whereas 'xml' files use a XML
+     * resource loader.  For more information, see
      * {@link PropertyMapFactoryProvider}.
-     * 
+     *
      * @param path  The name or path of the resource
      * @param substitutions  The map of substitutions to replace properties with
-     * 
+     *
      * @return  The associated list of properties
-     * 
+     *
      * @throws IOException   If an error occurs loading or parsing the resource
      */
     PropertyMap getResourceAsProperties(String path, PropertyMap substitutions)
         throws IOException;
-    
+
     /**
      * Get the associated resource as a {@link PropertyMap} per the specified
      * path.  This will load the resource per the given input stream and
-     * if the resource is not valid, then <code>null</code> is returned.  Any 
+     * if the resource is not valid, then <code>null</code> is returned.  Any
      * properties will be auto-substituted by the specified substitutions.  The
-     * type of resource is determined by the path.  For examples, 'properties' 
-     * files use a properties resource loader whereas 'xml' files use a XML 
-     * resource loader.  For more information, see 
+     * type of resource is determined by the path.  For examples, 'properties'
+     * files use a properties resource loader whereas 'xml' files use a XML
+     * resource loader.  For more information, see
      * {@link PropertyMapFactoryProvider}.
-     * 
+     *
      * @param path  The name or path of the resource
      * @param substitutions  The map of substitutions to replace properties with
-     * 
+     *
      * @return  The associated list of properties
-     * 
+     *
      * @throws IOException   If an error occurs loading or parsing the resource
      */
     PropertyMap getResourceAsProperties(String path, InputStream input,

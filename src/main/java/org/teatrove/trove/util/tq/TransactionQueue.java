@@ -570,7 +570,7 @@ public class TransactionQueue {
                 try {
                 	// allow event to be GC'd in case we wait() on next event
                 	event = null;
-                	
+
                     // Phase 1: wait for a transaction
                     try {
                         if ((event = nextTransactionEvent()) == null) {

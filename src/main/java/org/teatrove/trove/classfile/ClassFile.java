@@ -48,7 +48,7 @@ import org.teatrove.trove.classfile.generics.TypeVariableDesc;
  * <p>See <i>The Java Virtual Machine Specification</i> (ISBN 0-201-63452-X)
  * for information on how class files are structured. Section 4.1 describes
  * the ClassFile structure.
- * 
+ *
  * @author Brian S O'Neill, Nick Hagan
  */
 public class ClassFile {
@@ -72,7 +72,7 @@ public class ClassFile {
     private ConstantClassInfo mSuperClass;
 
     // Holds ConstantInfo objects.
-    private List<ConstantClassInfo> mInterfaces = 
+    private List<ConstantClassInfo> mInterfaces =
         new ArrayList<ConstantClassInfo>(2);
     private Set<String> mInterfaceSet = new HashSet<String>(7);
 
@@ -92,7 +92,7 @@ public class ClassFile {
 
     // List of superclass and interface instances
     private Set<Class<?>> mParentClasses = new HashSet<Class<?>>();
-    
+
     /**
      * By default, the ClassFile defines public, non-final, concrete classes.
      * This constructor creates a ClassFile for a class that extends
@@ -501,14 +501,14 @@ public class ClassFile {
 
         return mi;
     }
-    
+
     /**
      * Add a method to this class. This method is handy for implementing
      * methods defined by a pre-existing interface.
      */
     public MethodInfo addMethod(Method method, Class<?> returnType,
                                 Class<?>... paramClasses) {
-        
+
         Modifiers modifiers = new Modifiers(method.getModifiers());
         modifiers.setAbstract(this.getModifiers().isInterface());
 
@@ -543,12 +543,12 @@ public class ClassFile {
 
         return mi;
     }
-    
+
     private TypeVariableDesc[] lookupTypeVariables(Method method) {
         Map<String, TypeVariableDesc> args =
             new LinkedHashMap<String, TypeVariableDesc>();
 
-        
+
         // TODO: better handle this by reading each return type and param
         // type and analyzing for any type variables and attempting to resolve
         // said type variables into declaring class type variables by looking
@@ -567,9 +567,9 @@ public class ClassFile {
                             // else keep walking
                 // if found, use that type
                 // else, declare
-        
 
-        
+
+
         // check if declaring class of method within immediate hiearchy
         // and assume class file type parameters match (see TODO above on how
         // this really should work)
@@ -581,7 +581,7 @@ public class ClassFile {
                 break;
             }
         }
-        
+
         // pull in class instances first if not in hiearchy
         if (!valid) {
             TypeVariable<?>[] cargs = declaringClass.getTypeParameters();
@@ -920,7 +920,7 @@ public class ClassFile {
             //       for it, so we use SYNCHRONIZED instead
             modifier |= Modifier.SYNCHRONIZED;
         }
-        
+
         dout.writeShort(modifier);
 
         dout.writeShort(mThisClass.getIndex());

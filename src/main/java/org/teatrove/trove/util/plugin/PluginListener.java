@@ -19,19 +19,19 @@ package org.teatrove.trove.util.plugin;
 import java.util.EventListener;
 
 /**
- * This interface contains of all the notification callbacks for 
+ * This interface contains of all the notification callbacks for
  * events pertaining to Plugins.
  *
  * @author Scott Jappinen
  */
 public interface PluginListener extends EventListener {
 
-    /** 
+    /**
      * This method is invoked whenever a Plugin has added itself to the PluginContext.
      *
      * @param event a PluginEvent event object.
      */
     public void pluginAdded(PluginEvent event);
-    
+
 }
 

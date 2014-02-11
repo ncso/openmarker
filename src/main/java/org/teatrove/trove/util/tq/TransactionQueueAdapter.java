@@ -22,7 +22,7 @@ package org.teatrove.trove.util.tq;
  *
  * @author Brian S O'Neill
  */
-public abstract class TransactionQueueAdapter 
+public abstract class TransactionQueueAdapter
     implements TransactionQueueListener, UncaughtExceptionListener {
 
     public void transactionQueueFull(TransactionQueueEvent e) {

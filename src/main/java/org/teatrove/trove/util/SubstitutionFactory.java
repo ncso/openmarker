@@ -27,11 +27,11 @@ import org.teatrove.trove.util.resources.ResourceFactory;
 public class SubstitutionFactory {
     private static final Pattern PARSER_PATTERN =
         Pattern.compile("\\$\\{([a-zA-Z0-9_-]+)(:([^}]+))?\\}");
-    
+
     private SubstitutionFactory() {
         super();
     }
-    
+
     @SuppressWarnings("unchecked")
     public static PropertyMap getDefaults() {
         PropertyMap vars = new PropertyMap();
@@ -39,29 +39,29 @@ public class SubstitutionFactory {
         for (Map.Entry<?, ?> entry : System.getProperties().entrySet()) {
             vars.put(entry.getKey().toString(), entry.getValue().toString());
         }
-        
+
         return vars;
     }
-    
+
     public static PropertyMap getSubstitutions(PropertyMap properties)
         throws IOException {
-        
-        return getSubstitutions(properties, 
+
+        return getSubstitutions(properties,
                                 DefaultResourceFactory.getInstance());
     }
-    
+
     @SuppressWarnings("unchecked")
     public static PropertyMap getSubstitutions(PropertyMap properties,
                                                ResourceFactory resourceFactory)
         throws IOException {
-        
+
         PropertyMap subs = new PropertyMap();
-        
+
         // add environment variables
         if (properties == null || properties.getBoolean("env", true)) {
             subs.putAll(System.getenv());
         }
-        
+
         // add system properties
         if (properties == null || properties.getBoolean("system", true)) {
             for (Map.Entry<?, ?> entry : System.getProperties().entrySet()) {
@@ -73,26 +73,26 @@ public class SubstitutionFactory {
         if (properties != null) {
             String file = properties.getString("file");
             if (file != null) {
-                PropertyMap props = 
+                PropertyMap props =
                     resourceFactory.getResourceAsProperties(file);
                 if (props != null) {
                     subs.putAll(props);
                 }
             }
         }
-        
+
         // add factory class
         if (properties != null && resourceFactory != null) {
             PropertyMap factoryMap = properties.subMap("factory");
             if (factoryMap != null && factoryMap.size() > 0) {
                 try { subs.putAll(loadProperties(factoryMap)); }
                 catch (Exception exception) {
-                    throw new IOException("unable to load substitution factory", 
+                    throw new IOException("unable to load substitution factory",
                                           exception);
                 }
             }
         }
-        
+
         // add provided properties
         if (properties != null) {
             PropertyMap props = properties.subMap("properties");
@@ -100,11 +100,11 @@ public class SubstitutionFactory {
                 subs.putAll(props);
             }
         }
-        
+
         // return subs
         return subs;
     }
-    
+
     public static String substitute(String value) {
         return substitute(value, getDefaults());
     }
@@ -139,7 +139,7 @@ public class SubstitutionFactory {
                 else {
                     type = value.substring(idx + 2, current - 1);
                 }
-                
+
                 // attempt to match the value or set the default
                 String match = null;
                 if (vars.containsKey(type)) {
@@ -148,7 +148,7 @@ public class SubstitutionFactory {
                 else if (dflt != null) {
                     match = dflt;
                 }
-                
+
                 // append value if valid, otherwise append match
                 if (match == null) {
                     sb.append("${").append(type).append('}');
@@ -186,7 +186,7 @@ public class SubstitutionFactory {
             String match = vars.get(type);
 
             // TODO: add support for default value via colon matching per group2
-            
+
             // append value if valid, otherwise append match
             if (match == null) { sb.append(matcher.group(0)); }
             else { sb.append(match); }
@@ -203,15 +203,15 @@ public class SubstitutionFactory {
         // return parsed result
         return sb.toString();
     }
-    
-    private static PropertyMap loadProperties(PropertyMap factoryProps) 
+
+    private static PropertyMap loadProperties(PropertyMap factoryProps)
         throws Exception {
-        
+
         String className = null;
         PropertyMapFactory factory = null;
         if (factoryProps != null && factoryProps.size() > 0
             && (className = factoryProps.getString("class")) != null) {
-        
+
             // Load and use custom PropertyMapFactory.
             Class<?> factoryClass = Class.forName(className);
             java.lang.reflect.Constructor<?> ctor =
@@ -219,7 +219,7 @@ public class SubstitutionFactory {
             factory = (PropertyMapFactory)
                 ctor.newInstance(new Object[]{factoryProps.subMap("init")});
         }
-        
+
         // return properties
         return (factory == null ? null : factory.createProperties());
     }

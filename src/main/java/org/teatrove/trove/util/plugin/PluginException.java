@@ -25,19 +25,19 @@ import org.teatrove.trove.util.FilterException;
  * @author Scott Jappinen
  */
 public class PluginException extends FilterException {
-   
+
     public PluginException() {
         super();
     }
-    
+
     public PluginException(String message) {
         super(message);
     }
-    
+
     public PluginException(Throwable rootCause) {
         super(rootCause);
     }
-    
+
     public PluginException(String message, Throwable rootCause) {
         super(message, rootCause);
     }

@@ -17,7 +17,7 @@
 package org.teatrove.tea.engine;
 
 /**
- * Implementations of this class are responsible for providing context 
+ * Implementations of this class are responsible for providing context
  * instances as well as the context type.
  *
  * @author Jonathan Colwell

@@ -43,9 +43,9 @@ public abstract class PatternMatcher {
 
             ClassInjector injector = ClassInjector.getInstance
                 (patternMatcherClass.getClassLoader());
-            
+
             int id = maker.getKey().hashCode();
-            
+
             String baseName = patternMatcherClass.getName() + '$';
             String className = baseName;
             try {
@@ -63,7 +63,7 @@ public abstract class PatternMatcher {
             }
 
             ClassFile cf = maker.createClassFile(className);
-            
+
             /*
             try {
                 String name = cf.getClassName();
@@ -85,7 +85,7 @@ public abstract class PatternMatcher {
             catch (IOException e) {
                 throw new InternalError(e.toString());
             }
-            
+
             try {
                 clazz = injector.loadClass(cf.getClassName());
             }
@@ -130,7 +130,7 @@ public abstract class PatternMatcher {
         char[] chars = new char[strLen + 1];
         lookup.getChars(0, strLen, chars, 0);
         chars[strLen] = '\uffff';
-        
+
         TinyList resultList = new TinyList();
         fillMatchResults(chars, 1, resultList);
 
@@ -147,7 +147,7 @@ public abstract class PatternMatcher {
         char[] chars = new char[strLen + 1];
         lookup.getChars(0, strLen, chars, 0);
         chars[strLen] = '\uffff';
-        
+
         List resultList = new ArrayList();
         fillMatchResults(chars, limit, resultList);
 
@@ -268,7 +268,7 @@ public abstract class PatternMatcher {
                 }
                 mMappedValues[i] = patternMap.get(key);
             }
-            
+
             // Build tree structure for managing pattern matching.
             mPatternRoot = new PatternNode();
             for (int i=0; i<keys.length; i++) {
@@ -292,7 +292,7 @@ public abstract class PatternMatcher {
         public ClassFile createClassFile(String className) {
             ClassFile cf = new ClassFile(className, PatternMatcher.class);
             cf.setSourceFile("PatternMatcher");
-            
+
             // constructor
             Modifiers publicAccess = new Modifiers();
             publicAccess.setPublic(true);
@@ -358,7 +358,7 @@ public abstract class PatternMatcher {
 
             if (c == '*') {
                 LocalVariable savedIndex;
-                
+
                 if (mTempLocals.isEmpty()) {
                     savedIndex =
                         mBuilder.createLocalVariable("temp", mIntType);
@@ -366,10 +366,10 @@ public abstract class PatternMatcher {
                 else {
                     savedIndex = (LocalVariable)mTempLocals.pop();
                 }
-                
+
                 mBuilder.loadLocal(mIndexLocal);
                 mBuilder.storeLocal(savedIndex);
-                
+
                 // Save position of wildcard start.
                 mBuilder.loadLocal(mPositionsLocal);
                 mBuilder.loadConstant(posIndex);
@@ -379,7 +379,7 @@ public abstract class PatternMatcher {
                     mBuilder.math(Opcode.IADD);
                 }
                 mBuilder.storeToArray(TypeDesc.INT);
-                
+
                 if (subNodes == null) {
                     generateWildcard(null, depth, posIndex + 2);
                 }
@@ -392,7 +392,7 @@ public abstract class PatternMatcher {
                         mBuilder.storeLocal(mIndexLocal);
                     }
                 }
-                
+
                 mTempLocals.push(savedIndex);
 
                 if (node.mPattern != null) {
@@ -418,11 +418,11 @@ public abstract class PatternMatcher {
                     }
                     mBuilder.loadFromArray(TypeDesc.CHAR);
                 }
-                
+
                 mBuilder.loadConstant((char)c);
                 mBuilder.ifComparisonBranch(noMatch, "!=");
             }
-            
+
             if (subNodes != null) {
                 int size = subNodes.size();
                 for (int i=0; i<size; i++) {
@@ -430,7 +430,7 @@ public abstract class PatternMatcher {
                         ((PatternNode)subNodes.get(i), depth + 1, posIndex);
                 }
             }
-            
+
             if (node.mPattern != null) {
                 // Matched pattern; save results.
                 generateAddMatchResult(node);
@@ -438,7 +438,7 @@ public abstract class PatternMatcher {
 
             noMatch.setLocation();
         }
-        
+
         private void generateWildcard(PatternNode node, int depth,
                                       int posIndex) {
             Label loopStart = mBuilder.createLabel().setLocation();
@@ -512,7 +512,7 @@ public abstract class PatternMatcher {
                 mIntArrayType,
                 mIntType
             };
-            
+
             mBuilder.invokeStatic(PatternMatcher.class.getName(),
                                   "addMatchResult", mBooleanType, params);
             mBuilder.ifZeroComparisonBranch(mReturnLabel, "==");
@@ -567,10 +567,10 @@ public abstract class PatternMatcher {
 
         public int getMaxWildcardCount() {
             int wildCount = getWildcardCount();
-            
+
             if (mSubNodes != null) {
                 for (int i=0; i<mSubNodes.size(); i++) {
-                    int count = 
+                    int count =
                         ((PatternNode)mSubNodes.get(i)).getMaxWildcardCount();
                     if (count > wildCount) {
                         wildCount = count;
@@ -637,11 +637,11 @@ public abstract class PatternMatcher {
         public int compare(Object a, Object b) {
             String sa = (String)a;
             String sb = (String)b;
-            
+
             int alen = sa.length();
             int blen = sb.length();
             int mlen = Math.min(alen, blen);
-            
+
             for (int i=0; i<mlen; i++) {
                 char ca = sa.charAt(i);
                 char cb = sb.charAt(i);
@@ -662,7 +662,7 @@ public abstract class PatternMatcher {
                     return 1;
                 }
             }
-            
+
             // The shorter string is sorted high.
             if (alen < blen) {
                 return 1;
@@ -670,7 +670,7 @@ public abstract class PatternMatcher {
             else if (alen > blen) {
                 return -1;
             }
-            
+
             return 0;
         }
     }

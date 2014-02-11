@@ -44,7 +44,7 @@ public class NullKeyMap extends AbstractMap implements Serializable {
     public NullKeyMap(Map map) {
         mMap = map;
     }
-    
+
     public int size() {
         return mMap.size();
     }
@@ -106,7 +106,7 @@ public class NullKeyMap extends AbstractMap implements Serializable {
                         }
                     };
                 }
-                
+
                 public boolean contains(Object key) {
                     return containsKey((key == null) ? NULL : key);
                 }
@@ -127,7 +127,7 @@ public class NullKeyMap extends AbstractMap implements Serializable {
                 public int size() {
                     return NullKeyMap.this.size();
                 }
-                
+
                 public void clear() {
                     NullKeyMap.this.clear();
                 }
@@ -179,7 +179,7 @@ public class NullKeyMap extends AbstractMap implements Serializable {
                         }
                     };
                 }
-                
+
                 public boolean contains(Object obj) {
                     if (!(obj instanceof Map.Entry)) {
                         return false;
@@ -220,7 +220,7 @@ public class NullKeyMap extends AbstractMap implements Serializable {
                 public int size() {
                     return NullKeyMap.this.size();
                 }
-                
+
                 public void clear() {
                     NullKeyMap.this.clear();
                 }

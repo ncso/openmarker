@@ -133,7 +133,7 @@ public class TypeChecker {
             }
         }
     }
-    
+
     private void dispatchParseWarning(CompileEvent e) {
         mWarningCount++;
 
@@ -174,7 +174,7 @@ public class TypeChecker {
         dispatchParseError(new CompileEvent(this, CompileEvent.Type.ERROR,
                                             str, info, mUnit));
     }
-    
+
     private void error(String str, String arg, SourceInfo info) {
         str = mFormatter.format(str, arg);
         error(str, info);
@@ -218,7 +218,7 @@ public class TypeChecker {
         dispatchParseWarning(new CompileEvent(this, CompileEvent.Type.WARNING,
                                               str, info, mUnit));
     }
-    
+
     @SuppressWarnings("unused")
     private void warn(String str, String arg, SourceInfo info) {
         str = mFormatter.format(str, arg);
@@ -334,7 +334,7 @@ public class TypeChecker {
     public int getErrorCount() {
         return mErrorCount;
     }
-    
+
     public int getWarningCount() {
         return mWarningCount;
     }
@@ -1323,15 +1323,15 @@ public class TypeChecker {
                 m = methods[0];
             }
 
-            if (expr instanceof TypeExpression && 
+            if (expr instanceof TypeExpression &&
                 !Modifier.isStatic(m.getModifiers())) {
                 error("functioncallexpression.not.static", name, node);
             }
-            
+
             if (ClassUtils.isDeprecated(m)) {
                 warn("functioncallexpression.deprecated", name, node);
             }
-            
+
             node.setCalledMethod(m);
             for (int i=0; i<length; i++) {
                 Type converted =
@@ -1741,13 +1741,13 @@ public class TypeChecker {
                             error("property.not.found", node);
                             return null;
                         }
-    
+
                         // ensure field is static
                         if (!Modifiers.isStatic(field.getModifiers())) {
                             error("field.not.static", node);
                             return null;
                         }
-    
+
                         // save static field and type
                         node.setReadProperty(field);
                         node.setType(new Type(field.getType(),
@@ -1868,7 +1868,7 @@ public class TypeChecker {
                 if (ClassUtils.isDeprecated(rmethod)) {
                     warn("functioncallexpression.deprecated", lookupName, node);
                 }
-                
+
                 node.setReadMethod(rmethod);
             }
 
@@ -2040,14 +2040,14 @@ public class TypeChecker {
 
             if (binaryTypeCheck(node, Number.class)) {
                 Type type = leftType.getCompatibleType(rightType);
-                if (type.hasPrimitivePeer()) { 
+                if (type.hasPrimitivePeer()) {
                     type = type.toPrimitive();
 
                     left.convertTo(type);
                     right.convertTo(type);
                     node.setType(type);
                 }
-                
+
                 // one of the wrappers is not a known primitive, so maintain
                 // types and let generators determine type at runtime and
                 // perform operation then.  If either side is a primitive, we
@@ -2058,12 +2058,12 @@ public class TypeChecker {
                         leftType = leftType.getCompatibleType(Type.INT_TYPE);
                         left.convertTo(leftType);
                     }
-                    
+
                     if (rightType.isPrimitive()) {
                         rightType = rightType.getCompatibleType(Type.INT_TYPE);
                         right.convertTo(rightType);
                     }
-                    
+
                     node.setType(type);
                 }
             }
@@ -2157,7 +2157,7 @@ public class TypeChecker {
                     (rightType.isPrimitive() || rightType.hasPrimitivePeer()))
                 {
                     // ensure primitive type is at least an int
-                    leftType = rightType = 
+                    leftType = rightType =
                         type.toPrimitive().getCompatibleType(Type.INT_TYPE);
                 }
                 else {
@@ -2191,7 +2191,7 @@ public class TypeChecker {
                             left.convertTo(ctype);
                         }
                     }
-                    
+
                     rightType = right.getType();
                     if (rightType.isPrimitive()) {
                         Type ctype = rightType.getCompatibleType(Type.INT_TYPE);
@@ -2203,7 +2203,7 @@ public class TypeChecker {
                 else if (ID == Token.EQ || ID == Token.NE ||
                          Comparable.class.isAssignableFrom(clazz) ||
                          Number.class.isAssignableFrom(clazz)) {
-                    
+
                     // Don't prefer cast; possibly perform string conversion.
                     left.convertTo(leftType, false);
                     right.convertTo(rightType, false);
@@ -2346,7 +2346,7 @@ public class TypeChecker {
 
             // convert to a compatible type
             if (ltype != null && rtype != null) {
-                
+
                 // if both are primitive, compare directly to each other
                 // otherwise, maintain types to do better analysis when
                 // generating code...note that we do not do conversion of
@@ -2355,11 +2355,11 @@ public class TypeChecker {
                 if (ltype.isPrimitive() && rtype.isPrimitive()) {
                     Type compatible = ltype.getCompatibleType(rtype)
                         .getCompatibleType(Type.INT_TYPE);
-                    
+
                     left.convertTo(compatible);
                     right.convertTo(compatible);
                 }
-                
+
                 // otherwise, ensure primitives are in their most valid state
                 else {
                     if (ltype.isPrimitive()) {
@@ -2368,7 +2368,7 @@ public class TypeChecker {
                             left.convertTo(ctype);
                         }
                     }
-                    
+
                     if (rtype.isPrimitive()) {
                         Type ctype = rtype.getCompatibleType(Type.INT_TYPE);
                         if (!rtype.equals(ctype)) {
@@ -2376,7 +2376,7 @@ public class TypeChecker {
                         }
                     }
                 }
-                
+
             }
 
             // result is -1, 0, or 1 (int)

@@ -23,7 +23,7 @@ import java.lang.ref.*;
 /**
  * A JavaBean Introspector that ensures interface properties are properly
  * discovered.
- * 
+ *
  * @author Brian S O'Neill
  */
 public class CompleteIntrospector {
@@ -58,16 +58,16 @@ public class CompleteIntrospector {
     /**
      * A function that returns a Map of all the available properties on
      * a given class including write-only properties. The properties returned
-     * is mostly a superset of those returned from the standard JavaBeans 
+     * is mostly a superset of those returned from the standard JavaBeans
      * Introspector except more properties are made available to interfaces.
-     * 
+     *
      * @return an unmodifiable mapping of property names (Strings) to
      * PropertyDescriptor objects.
      *
      */
     public static Map getAllProperties(Class clazz)
         throws IntrospectionException {
-        
+
         synchronized (cPropertiesCache) {
             Map properties;
 
@@ -97,7 +97,7 @@ public class CompleteIntrospector {
         if (clazz == null || clazz.isPrimitive()) {
             return properties;
         }
-        
+
         BeanInfo info;
         try {
             info = Introspector.getBeanInfo(clazz);
@@ -108,7 +108,7 @@ public class CompleteIntrospector {
 
         if (info != null) {
             PropertyDescriptor[] pdArray = info.getPropertyDescriptors();
-            
+
             // Standard properties.
             int length = pdArray.length;
             for (int i=0; i<length; i++) {

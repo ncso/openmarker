@@ -30,7 +30,7 @@ import java.util.ArrayList;
  */
 public class SpilloverByteBuffer implements ByteBuffer {
     private Group mGroup;
-    
+
     private ByteBuffer mLocalBuffer;
     private ByteBuffer mSpillover;
 
@@ -162,7 +162,7 @@ public class SpilloverByteBuffer implements ByteBuffer {
         if (mSpillover != null) {
             mSpillover.reset();
         }
-        
+
         List<ByteBuffer> captureBuffers;
         if ((captureBuffers = mCaptureBuffers) != null) {
             int size = captureBuffers.size();
@@ -171,13 +171,13 @@ public class SpilloverByteBuffer implements ByteBuffer {
             }
         }
     }
-    
+
     public void clear() throws IOException {
         mLocalBuffer.clear();
         if (mSpillover != null) {
             mSpillover.clear();
         }
-        
+
         List<ByteBuffer> captureBuffers;
         if ((captureBuffers = mCaptureBuffers) != null) {
             int size = captureBuffers.size();

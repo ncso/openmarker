@@ -930,41 +930,41 @@ public class Type implements java.io.Serializable {
         return (clazz == double.class ||
                 clazz == Double.class || clazz == BigDecimal.class);
     }
-    
+
     private static boolean isNumberFloat(Class<?> clazz) {
         return (clazz == float.class || clazz == Float.class);
     }
-    
+
     private static boolean isNumberLong(Class<?> clazz) {
         return (clazz == long.class || clazz == Long.class ||
                 clazz == AtomicLong.class || clazz == BigInteger.class);
     }
-    
+
     private static boolean isNumberInteger(Class<?> clazz) {
         return (clazz == int.class || clazz == Integer.class ||
                 clazz == short.class || clazz == Short.class ||
                 clazz == byte.class || clazz == Byte.class ||
                 clazz == AtomicInteger.class);
     }
-    
+
     private static Class<?> compatibleNumber(Class<?> classA, Class<?> classB) {
         boolean ldouble = isNumberDouble(classA);
         boolean lfloat = isNumberFloat(classA);
         boolean llong = isNumberLong(classA);
         boolean linteger = isNumberInteger(classA);
         boolean lvalid = ldouble || lfloat || llong || linteger;
-        
+
         boolean rdouble = isNumberDouble(classB);
         boolean rfloat = isNumberFloat(classB);
         boolean rlong = isNumberLong(classB);
         boolean rinteger = isNumberInteger(classB);
         boolean rvalid = rdouble || rfloat || rlong || rinteger;
-        
+
         // if either is double, then ensure everything converts to a double
         if (ldouble || rdouble) {
             return Double.class;
         }
-        
+
         // if both are valid and known numbers, then select most compatible
         else if (lvalid && rvalid) {
             if (ldouble || rdouble) { return Double.class; }
@@ -973,7 +973,7 @@ public class Type implements java.io.Serializable {
             else if (linteger || rinteger) { return Integer.class; }
             else { return Number.class; }
         }
-        
+
         // unknown on left or right or both so just use general number
         else { return Number.class; }
     }
@@ -1113,7 +1113,7 @@ public class Type implements java.io.Serializable {
         if (thisNat.equals(otherNat)) {
             return 1;
         }
-        
+
         if (thisNat.isAssignableFrom(otherNat)) {
             return 2;
         }
@@ -1174,16 +1174,16 @@ public class Type implements java.io.Serializable {
      * Check if a type is convertable including support for varargs.  If varargs
      * is true, then this will add 40 to the total cost such that non-varargs
      * will always take precedence.
-     * 
+     *
      * @see #convertableFrom(Type)
      */
     public int convertableFrom(Type other, boolean vararg) {
         int cost = convertableFrom(other);
         if (cost < 0) { return cost; }
-        
+
         return (vararg ? cost + 40 : cost);
     }
-    
+
     private static int typeCode(Class<?> clazz) {
         if (clazz.isPrimitive()) {
             if (clazz == boolean.class) {

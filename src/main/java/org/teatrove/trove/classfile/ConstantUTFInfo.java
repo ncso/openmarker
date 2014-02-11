@@ -21,13 +21,13 @@ import java.io.*;
 /**
  * This class corresponds to the CONSTANT_Utf8_info structure as defined in
  * section 4.4.7 of <i>The Java Virtual Machine Specification</i>.
- * 
+ *
  * @author Brian S O'Neill
  */
 public class ConstantUTFInfo extends ConstantInfo {
     private String mStr;
-    
-    /** 
+
+    /**
      * Will return either a new ConstantUTFInfo object or one already in
      * the constant pool. If it is a new ConstantUTFInfo, it will be inserted
      * into the pool.
@@ -36,12 +36,12 @@ public class ConstantUTFInfo extends ConstantInfo {
         ConstantInfo ci = new ConstantUTFInfo(str);
         return (ConstantUTFInfo)cp.addConstant(ci);
     }
-    
+
     ConstantUTFInfo(String str) {
         super(TAG_UTF8);
         mStr = str;
     }
-    
+
     public String getValue() {
         return mStr;
     }
@@ -49,16 +49,16 @@ public class ConstantUTFInfo extends ConstantInfo {
     public int hashCode() {
         return mStr.hashCode();
     }
-    
+
     public boolean equals(Object obj) {
         if (obj instanceof ConstantUTFInfo) {
             ConstantUTFInfo other = (ConstantUTFInfo)obj;
             return mStr.equals(other.mStr);
         }
-        
+
         return false;
     }
-    
+
     public void writeTo(DataOutput dout) throws IOException {
         super.writeTo(dout);
         dout.writeUTF(mStr);

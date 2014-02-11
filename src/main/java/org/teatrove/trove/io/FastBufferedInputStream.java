@@ -36,7 +36,7 @@ public class FastBufferedInputStream extends FilterInputStream {
     private int mPos;
     private int mMarkPos = -1;
     private int mMarkLimit;
-    
+
     private void ensureOpen() throws IOException {
         if (in == null) {
             throw new IOException("Stream closed");
@@ -86,7 +86,7 @@ public class FastBufferedInputStream extends FilterInputStream {
             mCount = n + mPos;
         }
     }
-    
+
     public int read() throws IOException {
         ensureOpen();
         if (mPos >= mCount) {
@@ -97,7 +97,7 @@ public class FastBufferedInputStream extends FilterInputStream {
         }
         return mBuffer[mPos++] & 0xff;
     }
-    
+
     private int read1(byte[] b, int off, int len) throws IOException {
         int avail = mCount - mPos;
         if (avail <= 0) {
@@ -115,7 +115,7 @@ public class FastBufferedInputStream extends FilterInputStream {
         mPos += cnt;
         return cnt;
     }
-    
+
     public int read(byte b[], int off, int len) throws IOException {
         ensureOpen();
         if ((off | len | (off + len) | (b.length - (off + len))) < 0) {
@@ -124,7 +124,7 @@ public class FastBufferedInputStream extends FilterInputStream {
         else if (len == 0) {
             return 0;
         }
-        
+
         int n = read1(b, off, len);
         if (n <= 0) {
             return n;
@@ -145,34 +145,34 @@ public class FastBufferedInputStream extends FilterInputStream {
             return 0;
         }
         long avail = mCount - mPos;
-        
+
         if (avail <= 0) {
             if (mMarkPos <0) {
                 return in.skip(n);
             }
-            
+
             fill();
             avail = mCount - mPos;
             if (avail <= 0) {
                 return 0;
             }
         }
-        
+
         long skipped = (avail < n) ? avail : n;
         mPos += skipped;
         return skipped;
     }
-    
+
     public int available() throws IOException {
         ensureOpen();
         return (mCount - mPos) + in.available();
     }
-    
+
     public void mark(int readlimit) {
         mMarkLimit = readlimit;
         mMarkPos = mPos;
     }
-    
+
     public void reset() throws IOException {
         ensureOpen();
         if (mMarkPos < 0) {

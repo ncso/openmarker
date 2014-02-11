@@ -18,7 +18,7 @@ public class NullSafeTest extends AbstractTemplateTest {
     public void setup() {
         addContext("DateContext", new DateContext());
     }
-    
+
     @Test
     @SuppressWarnings("deprecation")
     public void testNullSafe() throws Exception {
@@ -77,7 +77,7 @@ public class NullSafeTest extends AbstractTemplateTest {
 
     protected static String TEST_SOURCE_10 =
         "(c == 'blah' ? null : 'valid')?.length";
-    
+
     public static class DateContext {
         public Date currentDate() { return new Date(); }
     }
