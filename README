@@ -1,0 +1,18 @@
+
+**************** clean, compile and run
+
+(
+  set -eu
+  jstdtoolsenv
+  export PATH=${M2_HOME}/bin:${ANT19_HOME}/bin:$PATH
+  export MAVEN_OPTS="-Xmx512m -XX:MaxPermSize=128m"
+  mvn --fail-fast -Dmdep.outputFile=mdep.classpath \
+    dependency:build-classpath clean compile
+  CLASSPATH=target/classes
+  CLASSPATH=${CLASSPATH}:`cat mdep.classpath`
+  export CLASSPATH
+  echo -n "$CLASSPATH" | perl -072 -l012 -pe1
+  java -ea com.acme.labs.App
+)
+
+****************
