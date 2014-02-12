@@ -1,3 +1,6 @@
 *~
 mdep.classpath
 target/
+.classpath
+.project
+.settings/
