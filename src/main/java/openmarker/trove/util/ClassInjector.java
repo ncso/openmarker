@@ -16,18 +16,21 @@
 
 package openmarker.trove.util;
 
-import java.io.OutputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.InputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.lang.ref.*;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.lang.ref.Reference;
+import java.lang.ref.WeakReference;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLStreamHandler;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
@@ -45,13 +48,6 @@ public class ClassInjector extends ClassLoader {
     @SuppressWarnings("unchecked")
     private static Map<ClassLoader, Reference<ClassInjector>> cShared =
         new NullKeyMap(new IdentityMap());
-
-    /**
-     * Returns a shared ClassInjector instance.
-     */
-    public static ClassInjector getInstance() {
-        return getInstance(null);
-    }
 
     /**
      * Returns a shared ClassInjector instance for the given ClassLoader.
@@ -72,9 +68,8 @@ public class ClassInjector extends ClassLoader {
         }
     }
 
-    // Parent ClassLoader, used to load classes that aren't defined by this.
-    private ClassLoader mSuperLoader;
-
+    private final ClassLoader mParent;
+    
     private File[] mRootClassDirs;
     private String mRootPackage;
 
@@ -86,14 +81,6 @@ public class ClassInjector extends ClassLoader {
     private Map<String, byte[]> mGZippedBytecode;
 
     private URLStreamHandler mFaker;
-
-    /**
-     * Construct a ClassInjector that uses the ClassLoader that loaded this
-     * class as a parent, and it has no root class directory or root package.
-     */
-    public ClassInjector() {
-        this(null, (File[])null, null);
-    }
 
     /**
      * Construct a ClassInjector that has no root class directory or root
@@ -168,11 +155,8 @@ public class ClassInjector extends ClassLoader {
                          File[] rootClassDirs,
                          String rootPackage,
                          boolean keepRawBytecode) {
-        super();
-        if (parent == null) {
-            parent = getClass().getClassLoader();
-        }
-        mSuperLoader = parent;
+        super(parent);
+        mParent = parent;
         if (rootClassDirs != null) {
             mRootClassDirs = rootClassDirs.clone();
         }
@@ -208,6 +192,7 @@ public class ClassInjector extends ClassLoader {
         }
     }
 
+    @Override
     public URL getResource(String name) {
 
         if (mGZippedBytecode != null) {
@@ -221,7 +206,11 @@ public class ClassInjector extends ClassLoader {
                 System.out.println("created URL for " + name);
             }
         }
-        return mSuperLoader.getResource(name);
+        if (mParent != null) {
+            return mParent.getResource(name);
+        } else {
+            return getClass().getClassLoader().getResource(name);
+        }
     }
 
     private URLStreamHandler getURLFaker() {
@@ -229,41 +218,6 @@ public class ClassInjector extends ClassLoader {
             mFaker = new URLFaker();
         }
         return mFaker;
-    }
-
-    protected Class<?> loadClass(String name, boolean resolve)
-        throws ClassNotFoundException {
-
-        Class<?> clazz = findLoadedClass(name);
-
-        if (clazz == null) {
-            synchronized (this) {
-                clazz = findLoadedClass(name);
-
-                if (clazz == null) {
-                    clazz = loadFromFile(name);
-
-                    if (clazz == null) {
-                        if (mSuperLoader != null) {
-                            clazz = mSuperLoader.loadClass(name);
-                        }
-                        else {
-                            clazz = findSystemClass(name);
-                        }
-
-                        if (clazz == null) {
-                            throw new ClassNotFoundException(name);
-                        }
-                    }
-                }
-            }
-        }
-
-        if (resolve) {
-            resolveClass(clazz);
-        }
-
-        return clazz;
     }
 
     protected void define(String name, byte[] data) {
@@ -283,73 +237,73 @@ public class ClassInjector extends ClassLoader {
         }
     }
 
-    private Class<?> loadFromFile(String name) throws ClassNotFoundException {
-        if (mRootClassDirs == null) {
-            return null;
-        }
-
-        String fileName = name;
-
-        if (mRootPackage != null) {
-            if (fileName.startsWith(mRootPackage)) {
-                fileName = fileName.substring(mRootPackage.length());
-            }
-            else {
-                return null;
-            }
-        }
-
-        fileName = fileName.replace('.', File.separatorChar);
-        ClassNotFoundException error = null;
-
-        for (int i=0; i<mRootClassDirs.length; i++) {
-            File file = new File(mRootClassDirs[i], fileName + ".class");
-
-            if (file.exists()) {
-                try {
-                    byte[] buffer = new byte[(int)file.length()];
-                    int avail = buffer.length;
-                    int offset = 0;
-                    InputStream in = new FileInputStream(file);
-
-                    int len = -1;
-                    while ( (len = in.read(buffer, offset, avail)) > 0 ) {
-                        offset += len;
-
-                        if ( (avail -= len) <= 0 ) {
-                            avail = buffer.length;
-                            byte[] newBuffer = new byte[avail * 2];
-                            System.arraycopy(buffer, 0, newBuffer, 0, avail);
-                            buffer = newBuffer;
-                        }
-                    }
-
-                    in.close();
-
-                    try {
-                        return defineClass(name, buffer, 0, offset);
-                    }
-                    catch (Throwable ex) {
-                        error = new ClassNotFoundException(ex.getMessage(), ex);
-                        throw error;
-                    }
-                }
-                catch (IOException e) {
-                    if (error == null) {
-                        error = new ClassNotFoundException
-                            (fileName + ": " + e.toString());
-                    }
-                }
-            }
-        }
-
-        if (error != null) {
-            throw error;
-        }
-        else {
-            return null;
-        }
-    }
+//    private Class<?> loadFromFile(String name) throws ClassNotFoundException {
+//        if (mRootClassDirs == null) {
+//            return null;
+//        }
+//
+//        String fileName = name;
+//
+//        if (mRootPackage != null) {
+//            if (fileName.startsWith(mRootPackage)) {
+//                fileName = fileName.substring(mRootPackage.length());
+//            }
+//            else {
+//                return null;
+//            }
+//        }
+//
+//        fileName = fileName.replace('.', File.separatorChar);
+//        ClassNotFoundException error = null;
+//
+//        for (int i=0; i<mRootClassDirs.length; i++) {
+//            File file = new File(mRootClassDirs[i], fileName + ".class");
+//
+//            if (file.exists()) {
+//                try {
+//                    byte[] buffer = new byte[(int)file.length()];
+//                    int avail = buffer.length;
+//                    int offset = 0;
+//                    InputStream in = new FileInputStream(file);
+//
+//                    int len = -1;
+//                    while ( (len = in.read(buffer, offset, avail)) > 0 ) {
+//                        offset += len;
+//
+//                        if ( (avail -= len) <= 0 ) {
+//                            avail = buffer.length;
+//                            byte[] newBuffer = new byte[avail * 2];
+//                            System.arraycopy(buffer, 0, newBuffer, 0, avail);
+//                            buffer = newBuffer;
+//                        }
+//                    }
+//
+//                    in.close();
+//
+//                    try {
+//                        return defineClass(name, buffer, 0, offset);
+//                    }
+//                    catch (Throwable ex) {
+//                        error = new ClassNotFoundException(ex.getMessage(), ex);
+//                        throw error;
+//                    }
+//                }
+//                catch (IOException e) {
+//                    if (error == null) {
+//                        error = new ClassNotFoundException
+//                            (fileName + ": " + e.toString());
+//                    }
+//                }
+//            }
+//        }
+//
+//        if (error != null) {
+//            throw error;
+//        }
+//        else {
+//            return null;
+//        }
+//    }
 
     private class Stream extends ByteArrayOutputStream {
         private String mName;
@@ -359,6 +313,7 @@ public class ClassInjector extends ClassLoader {
             mName = name;
         }
 
+        @Override
         public void close() {
             synchronized (mDefined) {
                 if (mDefined.get(mName) == null) {
@@ -371,6 +326,7 @@ public class ClassInjector extends ClassLoader {
 
     private class URLFaker extends URLStreamHandler {
 
+        @Override
         protected URLConnection openConnection(URL u) throws IOException {
             return new ClassInjector.ResourceConnection(u);
         }
@@ -385,8 +341,10 @@ public class ClassInjector extends ClassLoader {
         }
 
         // not really needed here but it was abstract.
+        @Override
         public void connect() {}
 
+        @Override
         public InputStream getInputStream() throws IOException {
 
             try {

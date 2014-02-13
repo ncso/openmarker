@@ -109,35 +109,17 @@ public class Compiler {
     private Set<String> mImports = new HashSet<String>();
     { mImports.add("java.lang"); mImports.add("java.util"); }
 
-    public Compiler() {
-        this(ClassInjector.getInstance());
-    }
-
     public Compiler(ClassInjector injector) {
         this(injector, TEMPLATE_PKG);
     }
 
-    public Compiler(String rootPackage) {
-        this(ClassInjector.getInstance(), rootPackage);
-    }
-
     public Compiler(ClassInjector injector, String rootPackage) {
-        this(ClassInjector.getInstance(), rootPackage, null);
-    }
-
-    public Compiler(String rootPackage, File rootDestDir) {
-        this(ClassInjector.getInstance(), rootPackage, rootDestDir);
+        this(injector, rootPackage, null);
     }
 
     public Compiler(ClassInjector injector,
                     String rootPackage, File rootDestDir) {
         this(injector, rootPackage, rootDestDir, "UTF-8", 0);
-    }
-
-    public Compiler(String rootPackage, File rootDestDir, String encoding,
-                    long precompiledTolerance) {
-        this(ClassInjector.getInstance(), rootPackage, rootDestDir,
-             encoding, precompiledTolerance);
     }
 
     public Compiler(ClassInjector injector, String rootPackage,

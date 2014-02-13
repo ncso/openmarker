@@ -21,7 +21,7 @@ public class ResourceCompilerTest {
     @Before
     public void init() {
         provider = new ResourceCompilationProvider();
-        compiler = new Compiler(new ClassInjector());
+        compiler = new Compiler(ClassInjector.getInstance(this.getClass().getClassLoader()));
         compiler.addCompilationProvider(provider);
     }
 

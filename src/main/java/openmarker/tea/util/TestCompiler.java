@@ -22,6 +22,7 @@ import java.io.PrintStream;
 import openmarker.tea.compiler.Compiler;
 import openmarker.tea.runtime.DefaultContext;
 import openmarker.tea.runtime.TemplateLoader;
+import openmarker.trove.util.ClassInjector;
 
 /**
  * A compiler implementation suitable for testing from a command console.
@@ -85,7 +86,7 @@ public class TestCompiler extends Compiler {
                         String rootPackage,
                         File rootDestDir) {
 
-        super(rootPackage, rootDestDir);
+        super(ClassInjector.getInstance(TestCompiler.class.getClassLoader()), rootPackage, rootDestDir);
         addCompilationProvider(new FileCompilationProvider(rootSourceDir));
     }
 

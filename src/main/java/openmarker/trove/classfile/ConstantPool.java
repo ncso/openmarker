@@ -16,8 +16,16 @@
 
 package openmarker.trove.classfile;
 
-import java.util.*;
-import java.io.*;
+import java.io.DataInput;
+import java.io.DataOutput;
+import java.io.IOException;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.Vector;
 
 /**
  * This class corresponds to the constant_pool structure as defined in

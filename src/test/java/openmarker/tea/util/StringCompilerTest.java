@@ -20,7 +20,7 @@ public class StringCompilerTest {
 
     @Before
     public void init() {
-        compiler = new Compiler(new ClassInjector());
+        compiler = new Compiler(ClassInjector.getInstance(this.getClass().getClassLoader()));
         provider = new StringCompilationProvider();
         provider.setTemplateSource("test", "<% template test() 'test' %>");
         provider.setTemplateSource("abc", "<% template abc() 'abc' %>");

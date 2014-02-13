@@ -84,7 +84,7 @@ public class MergedClassTest {
     @Test
     public void testGetConstructorWithGenerics() throws Exception {
 
-        ClassInjector injector = ClassInjector.getInstance();
+        ClassInjector injector = ClassInjector.getInstance(this.getClass().getClassLoader());
 
         // build first constructor that purely merges general play context
         Constructor<?> ctor1 = MergedClass.getConstructor2
@@ -113,7 +113,7 @@ public class MergedClassTest {
         // to ensure generics flow through from one merge to another
         Constructor<?> ctor2 = MergedClass.getConstructor2
         (
-            ClassInjector.getInstance(),
+            ClassInjector.getInstance(this.getClass().getClassLoader()),
             new Class[] { ctor1.getDeclaringClass(), Dog.class }
         );
 
@@ -165,7 +165,7 @@ public class MergedClassTest {
         // generate ctor
         Constructor<?> ctor = MergedClass.getConstructor
         (
-            ClassInjector.getInstance(),
+            ClassInjector.getInstance(this.getClass().getClassLoader()),
             new Class[] { Dog.class, Cat.class },
             new String[] { "Dog$", "Cat$" }
         );

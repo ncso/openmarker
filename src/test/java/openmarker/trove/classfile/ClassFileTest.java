@@ -42,7 +42,7 @@ public class ClassFileTest {
         builder.loadConstant(testValue);
         builder.returnValue(TypeDesc.STRING);
 
-        ClassInjector injector = ClassInjector.getInstance();
+        ClassInjector injector = ClassInjector.getInstance(this.getClass().getClassLoader());
         OutputStream os = injector.getStream(className);
         cf.writeTo(os);
         os.close();
@@ -81,7 +81,7 @@ public class ClassFileTest {
 
         getName.addRuntimeVisibleAnnotation(TypeDesc.forClass(Deprecated.class));
 
-        ClassInjector injector = ClassInjector.getInstance();
+        ClassInjector injector = ClassInjector.getInstance(this.getClass().getClassLoader());
         OutputStream os = injector.getStream(className);
         cf.writeTo(os);
         os.close();
